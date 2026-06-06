@@ -1,0 +1,4 @@
+# ECAPA-TDNN baseline config
+model: ecapa_tdnn
+num_classes: 6
+embedding_dim: 192

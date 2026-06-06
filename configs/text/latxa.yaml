@@ -1,0 +1,10 @@
+# Latxa QLoRA fine-tuning config
+model_name: hitz-zentroa/Latxa-7b-v1.1
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+batch_size: 4
+lr: 2e-4
+epochs: 3
+max_length: 256
+quantization: 4bit

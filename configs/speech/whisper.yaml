@@ -1,0 +1,7 @@
+# Whisper fine-tuning config
+model_name: openai/whisper-medium
+freeze_encoder: true
+batch_size: 8
+lr: 1e-4
+epochs: 5
+max_audio_length_sec: 30

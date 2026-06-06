@@ -1,0 +1,7 @@
+# XLSR fine-tuning config
+model_name: facebook/wav2vec2-xls-r-300m
+num_labels: 6
+batch_size: 8
+lr: 3e-5
+epochs: 10
+freeze_feature_extractor: true

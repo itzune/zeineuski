@@ -1,0 +1,46 @@
+[project]
+name = "zeineuski"
+version = "0.1.0"
+description = "Fine-grained dialect identification for Basque (Euskara)"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Zeineuski Team" },
+]
+keywords = ["basque", "dialect-identification", "euskara", "euskalkiak", "nlp"]
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "accelerate>=1.13.0",
+    "bitsandbytes>=0.49.2",
+    "click>=8.4.1",
+    "datasets>=5.0.0",
+    "evaluate>=0.4.6",
+    "fasttext>=0.9.3",
+    "librosa>=0.11.0",
+    "peft>=0.19.1",
+    "pyyaml>=6.0.3",
+    "scikit-learn>=1.9.0",
+    "soundfile>=0.14.0",
+    "torch>=2.12.0",
+    "transformers>=5.10.2",
+    "wandb>=0.27.2",
+]
+
+[project.scripts]
+zeineuski = "src.cli:main"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.1.0",
+    "pre-commit>=4.6.0",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.16",
+]

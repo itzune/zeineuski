@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+data/
+!data/reference/
+models/
+*.pth
+*.bin
+wandb/
+.env
+*.egg-info/
+dist/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.DS_Store

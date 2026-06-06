@@ -1,0 +1,7 @@
+# Text preprocessing config
+min_chars: 20
+max_chars: 2000
+keep_diacritics: true
+dedup_threshold: 0.95
+language_filter: true
+language_confidence_threshold: 0.7

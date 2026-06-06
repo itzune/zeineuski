@@ -1,0 +1,8 @@
+# fastText baseline config
+model: fasttext
+char_ngram_range: [3, 6]
+word_ngrams: 2
+dim: 100
+lr: 0.1
+epoch: 25
+loss: softmax

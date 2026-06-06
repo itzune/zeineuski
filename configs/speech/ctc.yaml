@@ -1,0 +1,4 @@
+# CTC-DID config
+model_name: facebook/wav2vec2-xls-r-300m
+streaming: true
+chunk_duration_sec: 1.0
