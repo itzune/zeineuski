@@ -4,7 +4,12 @@ xnli_eu_mt,batua,400212,jsonl,CC-BY-NC,2026-06-06,data/raw/text/xnli_eu/eu_mt/,H
 xnli_eu_native,batua,621,jsonl,CC-BY-NC,2026-06-06,data/raw/text/xnli_eu/eu_native/,HiTZ/xnli-eu native speaker translations. Small test set only.
 basqueparl,batua,342666,jsonl,public,2026-06-06,data/raw/text/basqueparl/sample_50k/,HiTZ/basqueparl. 2012-2020 parliament transcriptions. eu+es. Speaker metadata present (party, birth year) but no location. Sampled 50k.
 wikipedia_eu,batua,416347,jsonl,CC-BY-SA,2026-06-06,data/raw/text/wikipedia_eu/sample_50k/,Wikipedia Basque 20231101 dump. Batua only. Sampled 50k.
-xnli_dialectal,western/central/nav-lab,pending,jsonl,CC-BY-NC,pending,,XNLI dialectal splits (HiTZ 2026). Not yet on Hugging Face. Request from HiTZ.
+xnli_dialectal_test_western,western,5010,tsv,CC-BY-NC,2026-06-06,data/raw/text/xnli_dialectal/xnlieu-test-western.tsv,XNLI test parallel translation into Western dialect. From hitz-zentroa/Catalog-of-Basque-Dialects.
+xnli_dialectal_test_central,central,5010,tsv,CC-BY-NC,2026-06-06,data/raw/text/xnli_dialectal/xnlieu-test-central.tsv,XNLI test parallel translation into Central dialect.
+xnli_dialectal_test_navlab,nav-lab,5010,tsv,CC-BY-NC,2026-06-06,data/raw/text/xnli_dialectal/xnlieu-test-navarrese-lapurdian.tsv,XNLI test parallel translation into Navarrese-Lapurdian.
+xnli_dialectal_native_western,western,621,tsv,CC-BY-NC,2026-06-06,data/raw/text/xnli_dialectal/xnlieu-native-western.tsv,XNLI native parallel translation into Western dialect.
+xnli_dialectal_native_central,central,621,tsv,CC-BY-NC,2026-06-06,data/raw/text/xnli_dialectal/xnlieu-native-central.tsv,XNLI native parallel translation into Central dialect.
+xnli_dialectal_native_navlab,nav-lab,621,tsv,CC-BY-NC,2026-06-06,data/raw/text/xnli_dialectal/xnlieu-native-navarrese-lapurdian.tsv,XNLI native parallel translation into Navarrese-Lapurdian.
 basphycowest,western,pending,jsonl,CC-BY-NC,pending,,BasPhyCowest (HiTZ 2026). Western Basque only. Not yet on Hugging Face.
 klasikoak,all dialects (pre-Batua authors),pending,html/txt,CC-BY-SA,pending,,https://klasikoak.armiarma.eus/ - classical Basque literature from all dialects. Reachable, needs scraping.
 twitter_basque,mixed,pending,jsonl,research-only,pending,,Basque social media corpus. Academic Twitter API archive or existing HiTZ corpus.

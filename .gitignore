@@ -3,6 +3,9 @@ __pycache__/
 .venv/
 data/
 !data/reference/
+!data/raw/text/*.csv
+!data/raw/text/*.tsv
+!data/raw/text/xnli_dialectal/
 models/
 *.pth
 *.bin

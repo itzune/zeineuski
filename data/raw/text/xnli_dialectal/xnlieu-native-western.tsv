@@ -1,0 +1,622 @@
+prem_id	premise	hypothesis_id	hypothesis	label
+prem1	Zozketie notarixo baten aurrien eitten da eta zenbaki ekiprobabliek esleitzeko programa informatiko baten bidez eitten da.	prem1_hyp0	Ordenagailu bat eta notario bat behar dira zozketa egiteko.	0
+prem1	Zozketie notarixo baten aurrien eitten da eta zenbaki ekiprobabliek esleitzeko programa informatiko baten bidez eitten da.	prem1_hyp1	Zozketa guztietan notario bera izaten da normalean.	1
+prem1	Zozketie notarixo baten aurrien eitten da eta zenbaki ekiprobabliek esleitzeko programa informatiko baten bidez eitten da.	prem1_hyp2	Zozketa zenbakidun papertxoak ontzi batean sartu eta ausaz bat hartuta egiten da.	2
+prem2	Enrike Eizagirre eta Ane Sarasketa Arratixako dantza kilikagarria eskeintzen.	prem2_hyp0	Enrike eta Ane dantza-pausuak egiten.	0
+prem2	Enrike Eizagirre eta Ane Sarasketa Arratixako dantza kilikagarria eskeintzen.	prem2_hyp2	Enrike Izagirre eta Ane Sarasketa izozkia jaten ari ziren.	2
+prem2	Enrike Eizagirre eta Ane Sarasketa Arratixako dantza kilikagarria eskeintzen.	prem2_hyp1	Anek eta Enrikek galtza urdinak dituzte.	1
+prem3	Sorgintxulo gaztetxie 1998. urtien okupau zan Karmelo eleizaren lokal hutsetan.	prem3_hyp1	Hainbat kontzertu eskaintzen dira Sorgintxulo gaztetxean.	1
+prem3	Sorgintxulo gaztetxie 1998. urtien okupau zan Karmelo eleizaren lokal hutsetan.	prem3_hyp0	Sorgintxulo gaztetxearen jabea Karmelo eliza zen.	0
+prem3	Sorgintxulo gaztetxie 1998. urtien okupau zan Karmelo eleizaren lokal hutsetan.	prem3_hyp2	Sorgintxulo gaztetxea udaletxeak eman zion gazte talde bati.	2
+prem4	Bederatzi kantuz osatutako diskuen hardcorie rock eta metalagaz nahasten da.	prem4_hyp0	Diskoak hamar kantu baino gutxiago ditu guztira.	0
+prem4	Bederatzi kantuz osatutako diskuen hardcorie rock eta metalagaz nahasten da.	prem4_hyp2	Doinu lasaiak dira nagusi diskoan.	2
+prem4	Bederatzi kantuz osatutako diskuen hardcorie rock eta metalagaz nahasten da.	prem4_hyp1	Abesti bakoitzaren iraupena hiru minutu ingurukoa da, baina sei minutuko bat ere badago.	1
+prem5	"Etzi helduko da ""Ballerina"" filmie zinema aretoetara, euskeraz."	prem5_hyp1	"Animaziozko filma da ""Ballerina"" eta Frantzian egina."	1
+prem5	"Etzi helduko da ""Ballerina"" filmie zinema aretoetara, euskeraz."	prem5_hyp2	"Hilabete barru arte ezingo da ""Ballerina"" zineman ikusi."	2
+prem5	"Etzi helduko da ""Ballerina"" filmie zinema aretoetara, euskeraz."	prem5_hyp0	Ballerina filma euskaraz ikusi ahal izango da.	0
+prem6	Gaur kaleratu da Solte talde santutxuarraren lan barria.	prem6_hyp0	Santutxuko Solte taldeak lan berria egin du.	0
+prem6	Gaur kaleratu da Solte talde santutxuarraren lan barria.	prem6_hyp2	Solte taldea duela hiru urte desagertu zen.	2
+prem6	Gaur kaleratu da Solte talde santutxuarraren lan barria.	prem6_hyp1	Azken bost urteetan geldirik egon ondoren etorri da diskoa.	1
+prem7	Txirrita bertsolarixe irakurten ez ekixen personie izen arren, sekulako sena eukan batutako informazinuaren ganeko irakurketak eitteko.	prem7_hyp0	Txirritak ez zuen bere bizitza osoan liburu bat bera ere irakurri.	0
+prem7	Txirrita bertsolarixe irakurten ez ekixen personie izen arren, sekulako sena eukan batutako informazinuaren ganeko irakurketak eitteko.	prem7_hyp1	Basarri bertsolariari, berriz, asko gustatzen zitzaion eleberriak irakurtzea.	1
+prem7	Txirrita bertsolarixe irakurten ez ekixen personie izen arren, sekulako sena eukan batutako informazinuaren ganeko irakurketak eitteko.	prem7_hyp2	Kafea hartzen zuen bitartean, egunkaria irakurtzen zuen Txirritak goizero.	2
+prem8	Lanek orrialde bi baino ez dabez izango, A4 formatuen (bertikalien).	prem8_hyp1	Arial 12 tamaina erabili behar da derrigorrez idazteko.	1
+prem8	Lanek orrialde bi baino ez dabez izango, A4 formatuen (bertikalien).	prem8_hyp0	Lanak egiteko A4 formatua erabili beharko da.	0
+prem8	Lanek orrialde bi baino ez dabez izango, A4 formatuen (bertikalien).	prem8_hyp2	Lau orrialdeko lanak ere onartuko dira.	2
+prem9	Benetan bitxixe izen zan Antton honen bizimodue, eta bizilekue lilluragarrixaue oraindino!	prem9_hyp0	Antton bizi izan zen lekua bitxia zen.	0
+prem9	Benetan bitxixe izen zan Antton honen bizimodue, eta bizilekue lilluragarrixaue oraindino!	prem9_hyp2	Bizimodu lasaia izan zuen Anttonek, abentura handirik gabekoa.	2
+prem9	Benetan bitxixe izen zan Antton honen bizimodue, eta bizilekue lilluragarrixaue oraindino!	prem9_hyp1	Anttonek bi alaba izan zituen oso gazterik.	1
+prem10	Santurtzi Elkartegixe Santurtziko El çrbol industrialdien dau, A-8 autobidearen inguruetan.	prem10_hyp0	Santurtzi Elkartegia ez dago A-8 autobidetik urrun.	0
+prem10	Santurtzi Elkartegixe Santurtziko El çrbol industrialdien dau, A-8 autobidearen inguruetan.	prem10_hyp1	El Árbol industrialdean 27 enpresa daude denera.	1
+prem10	Santurtzi Elkartegixe Santurtziko El çrbol industrialdien dau, A-8 autobidearen inguruetan.	prem10_hyp2	Santurtzi Elkartegia Portugaleten dago, izenagatik ematen ez duen arren.	2
+prem11	"Azkenengo urteotan Europan ein dan animazinozko koprodukzino haundixenetakue da ""Ballerina""."	prem11_hyp0	"Europan egina da ""Ballerina"" animaziozko filma."	0
+prem11	"Azkenengo urteotan Europan ein dan animazinozko koprodukzino haundixenetakue da ""Ballerina""."	prem11_hyp1	Filmeko protagonista neska da.	1
+prem11	"Azkenengo urteotan Europan ein dan animazinozko koprodukzino haundixenetakue da ""Ballerina""."	prem11_hyp2	"Ameriketako Estatu Batuetan egina izan arren, Europan kokatzen da ""Ballerina""-ko istorioa."	2
+prem12	Egixe da, bide batez, liburue irakurritte eukinde hobeto ulertzen diezela hainbat pasarte, seguruenez.	prem12_hyp1	Liburuan beldurrezkoak diren pasarte batzuk aldatu egin dituzte.	1
+prem12	Egixe da, bide batez, liburue irakurritte eukinde hobeto ulertzen diezela hainbat pasarte, seguruenez.	prem12_hyp0	Pasarte batzuk zailagoak dira ulertzen liburua irakurri gabe.	0
+prem12	Egixe da, bide batez, liburue irakurritte eukinde hobeto ulertzen diezela hainbat pasarte, seguruenez.	prem12_hyp2	Liburua irakurri gabe izateak ez du batere eraginik.	2
+prem13	Miren etxeko leiho onduen zigarro bat erretan ari zala, Lucia gerturau jakon, eta, bere gizonaren aurrien, Miren ikutzen hasi zan.	prem13_hyp0	Miren etxeko leihoaren alboan zegoela, Lucia bera ukitzen hasi zen.	0
+prem13	Miren etxeko leiho onduen zigarro bat erretan ari zala, Lucia gerturau jakon, eta, bere gizonaren aurrien, Miren ikutzen hasi zan.	prem13_hyp2	Lucia iritsi zenean ez zen Mirenengana hurbiltzera ausartu, bere gizona aurrean baitzegoen.	2
+prem13	Miren etxeko leiho onduen zigarro bat erretan ari zala, Lucia gerturau jakon, eta, bere gizonaren aurrien, Miren ikutzen hasi zan.	prem13_hyp1	Mirenen gizona telebista ikusten ari zen Lucia etorri zenean.	1
+prem14	"Euskadi irratiko ""Sukalde dema"" irrati saiuen hirugarren urtie hasiko dabe udagoixen honetan."	prem14_hyp0	Sukalde dema saioak urte bat baino gehiago darama euskadi irratian.	0
+prem14	"Euskadi irratiko ""Sukalde dema"" irrati saiuen hirugarren urtie hasiko dabe udagoixen honetan."	prem14_hyp1	Sukalde dema saioan aurkezleak aldatu ziren lehenengo urtea eta gero.	1
+prem14	"Euskadi irratiko ""Sukalde dema"" irrati saiuen hirugarren urtie hasiko dabe udagoixen honetan."	prem14_hyp2	"Urtebete bakarrik iraun zuen ""Sukalde dema"" saioak euskadi irratian."	2
+prem15	Ganera istripu-partie ez daukie ez euskeraz ezta euskera-erderaz be.	prem15_hyp0	Euskarazko istripu-parterik ez daukate.	0
+prem15	Ganera istripu-partie ez daukie ez euskeraz ezta euskera-erderaz be.	prem15_hyp1	Auto gorrian izan zuen istripua duela bi aste.	1
+prem15	Ganera istripu-partie ez daukie ez euskeraz ezta euskera-erderaz be.	prem15_hyp2	Euskara hutsean dagoen istripu-parte bat dutela esan didate.	2
+prem16	Espainian, ezkonduen %60 dibortzixetan diez.	prem16_hyp2	Erdia baino gutxiago dira ezkondu eta gero banatzen direnak.	2
+prem16	Espainian, ezkonduen %60 dibortzixetan diez.	prem16_hyp1	Espainiar estatuan gero eta gutxiago dira elizatik ezkontzen direnak.	1
+prem16	Espainian, ezkonduen %60 dibortzixetan diez.	prem16_hyp0	Ezkonduen erdia baino gehiago banatu egiten da Espainian.	0
+prem17	Irudikatzen ez dan herri bat ezin da existidu.	prem17_hyp2	Irudikatzen ez den herri bat ikusi genuen atzo.	2
+prem17	Irudikatzen ez dan herri bat ezin da existidu.	prem17_hyp0	Existitzen diren herri guztiak irudikatu daitezke.	0
+prem17	Irudikatzen ez dan herri bat ezin da existidu.	prem17_hyp1	Badaude herri batzuk etxe guztiak zuriak dituztenak.	1
+prem18	Euskal preso politikuen arluen biher eittiegaittik 48 personaren kontra eindako eskaera fiskalen barri izen dou azkenengo egunotan, hareetako batzuk 20 urte baino gehixaukuek.	prem18_hyp0	Fiskaltzak zenbait pertsonarentzat zigorrak eskatu ditu.	0
+prem18	Euskal preso politikuen arluen biher eittiegaittik 48 personaren kontra eindako eskaera fiskalen barri izen dou azkenengo egunotan, hareetako batzuk 20 urte baino gehixaukuek.	prem18_hyp1	Preso politikoen gaian lan egiten duten gehienak Gipuzkoarrak dira.	1
+prem18	Euskal preso politikuen arluen biher eittiegaittik 48 personaren kontra eindako eskaera fiskalen barri izen dou azkenengo egunotan, hareetako batzuk 20 urte baino gehixaukuek.	prem18_hyp2	Fiskaltzak ontzat eman du preso politikoen gaian ari direnek egiten duten lana.	2
+prem19	Oin arte euskera maila eskasarengaittik, selektibidadien nota orokorra asko bajetan jaken bertako ikasleei.	prem19_hyp1	Iaz inoiz izan diren nota baxuenak izan ziren selektibitateko azterketetan.	1
+prem19	Oin arte euskera maila eskasarengaittik, selektibidadien nota orokorra asko bajetan jaken bertako ikasleei.	prem19_hyp0	Hizkuntza mailak eragina zuen selektibitateko nota orokorrean.	0
+prem19	Oin arte euskera maila eskasarengaittik, selektibidadien nota orokorra asko bajetan jaken bertako ikasleei.	prem19_hyp2	Euskara mailak ez zuen garrantzirik selektibitateko notan.	2
+prem20	Lagunak dino, mundu guztixen ibili arren, gaixotzen dan egunien bertan itzuliko dala Euskal Herrire.	prem20_hyp1	Laguna ez zen Euskal Herrian jaio.	1
+prem20	Lagunak dino, mundu guztixen ibili arren, gaixotzen dan egunien bertan itzuliko dala Euskal Herrire.	prem20_hyp0	Munduan zehar dabil laguna.	0
+prem20	Lagunak dino, mundu guztixen ibili arren, gaixotzen dan egunien bertan itzuliko dala Euskal Herrire.	prem20_hyp2	Lagunak betiko munduan zehar ibiltzeko asmoa duela dio.	2
+prem21	40 urte baino gehixau pasau diezen arren 'Alien, zortzigarren bidaiaria' filmie ez da zahartzen.	prem21_hyp0	Duela lau hamarkada baino gehiago egin zen 'Alien, zortzigarren bidaiaria' filma.	0
+prem21	40 urte baino gehixau pasau diezen arren 'Alien, zortzigarren bidaiaria' filmie ez da zahartzen.	prem21_hyp1	Alien, zortzigarren bidaiaria' filmak ez zuen bereziki kritika onik jaso hasieran.	1
+prem21	40 urte baino gehixau pasau diezen arren 'Alien, zortzigarren bidaiaria' filmie ez da zahartzen.	prem21_hyp2	Alien, zortzigarren bidaiaria' filma laster estreinatuko da.	2
+prem22	Gure biherra askotan oso gatxa, oso gogorra eta oso baltza izen leike, eta noizien behin umorera joteko biherra dou.	prem22_hyp1	Lankideen artean harreman ona dugu, nahiz eta batzuetan desadostasun batzuk ere izaten ditugun.	1
+prem22	Gure biherra askotan oso gatxa, oso gogorra eta oso baltza izen leike, eta noizien behin umorera joteko biherra dou.	prem22_hyp0	Gogorra izaten da gure lana behin baino gehiagotan.	0
+prem22	Gure biherra askotan oso gatxa, oso gogorra eta oso baltza izen leike, eta noizien behin umorera joteko biherra dou.	prem22_hyp2	Lanean oso serio egon behar izaten dugu beti.	2
+prem23	Jakina da osasun sistema publiko batera gerturatzen dan edozeinek aurkituko dauela akatsa eta zeozergaz hasarretako bidie.	prem23_hyp0	Osasun sistema publikoan akatsak egoten dira.	0
+prem23	Jakina da osasun sistema publiko batera gerturatzen dan edozeinek aurkituko dauela akatsa eta zeozergaz hasarretako bidie.	prem23_hyp1	Osasun sistema publikoko medikuak haserre daude hartu diren neurriekin.	1
+prem23	Jakina da osasun sistema publiko batera gerturatzen dan edozeinek aurkituko dauela akatsa eta zeozergaz hasarretako bidie.	prem23_hyp2	Hemengo osasun sistema publikoa perfektua dela esan daiteke.	2
+prem24	Beraz, gazte jentierentzat auzo alkartie ez da erakargarrixe.	prem24_hyp0	Auzo elkartera hurbiltzen den jende gehiena heldua da.	0
+prem24	Beraz, gazte jentierentzat auzo alkartie ez da erakargarrixe.	prem24_hyp1	Auzo elkarteak hogei urte bete zituen iaz.	1
+prem24	Beraz, gazte jentierentzat auzo alkartie ez da erakargarrixe.	prem24_hyp2	Gazte asko dabil auzo elkartean azken aldian.	2
+prem25	Foru Aldundixek sortu eban sarixe, Antton Abbadie sarixe, ondo merezidutako laudorixue izen da.	prem25_hyp0	Merezi zuen Antton Abbadie saria jasotzea.	0
+prem25	Foru Aldundixek sortu eban sarixe, Antton Abbadie sarixe, ondo merezidutako laudorixue izen da.	prem25_hyp1	Antton Abbadie sariaz gain beste batzuk ere jaso ditu.	1
+prem25	Foru Aldundixek sortu eban sarixe, Antton Abbadie sarixe, ondo merezidutako laudorixue izen da.	prem25_hyp2	Foru Aldundiari Antton Abbadie saria eman zioten.	2
+prem26	Liburu honetan, hareen adierazpenak eta berbakeraren xehetasunak jaso diez.	prem26_hyp0	Haiek adierazitakoak liburuan jasota geratu dira.	0
+prem26	Liburu honetan, hareen adierazpenak eta berbakeraren xehetasunak jaso diez.	prem26_hyp1	Liburua idatzi duena pertsona ezaguna da.	1
+prem26	Liburu honetan, hareen adierazpenak eta berbakeraren xehetasunak jaso diez.	prem26_hyp2	Liburuan ezer gutxi dago hizkerari buruz.	2
+prem27	Bertan ataratako argazkixekaz etorkizuneko eraikuntzie konparetie interesgarrixe izango da.	prem27_hyp0	Argazkiak atera dira bertan.	0
+prem27	Bertan ataratako argazkixekaz etorkizuneko eraikuntzie konparetie interesgarrixe izango da.	prem27_hyp1	Etorkizuneko eraikuntza hobea izango da.	1
+prem27	Bertan ataratako argazkixekaz etorkizuneko eraikuntzie konparetie interesgarrixe izango da.	prem27_hyp2	Aspergarria da eraikuntzak konparatzen aritzea.	2
+prem28	Pilotalekuak 65 jarleku dekoz mobikortasun urriko personentzat, eta Trinketak 16.	prem28_hyp0	Pilotalekuak eserleku gehiago ditu mugikortasun urriko pertsonentzat Trinketak baino.	0
+prem28	Pilotalekuak 65 jarleku dekoz mobikortasun urriko personentzat, eta Trinketak 16.	prem28_hyp1	Jende gehiago joan ohi da Pilotalekura partiduak ikustera Trinketara baino.	1
+prem28	Pilotalekuak 65 jarleku dekoz mobikortasun urriko personentzat, eta Trinketak 16.	prem28_hyp2	Trinketak Pilotalekuak adina eserleku baditu gutxienez mugikortasun urriko pertsonentzat.	2
+prem29	Donostiako Akuariumien bisita gidaua ein barri dot urrixen.	prem29_hyp0	Urrian Donostian egon nintzen.	0
+prem29	Donostiako Akuariumien bisita gidaua ein barri dot urrixen.	prem29_hyp1	Akuariumean hiru aldiz egon naiz guztira.	1
+prem29	Donostiako Akuariumien bisita gidaua ein barri dot urrixen.	prem29_hyp2	Udazken osoan Akuariumera joan gabe egon naiz.	2
+prem30	Aldaketa betien murgildute gauz, barriz, eta tartien hizkuntza erespideen barrikuspenien be bagabiz.	prem30_hyp0	Besteak beste, hizkuntza irizpideak berrikusten ari gara.	0
+prem30	Aldaketa betien murgildute gauz, barriz, eta tartien hizkuntza erespideen barrikuspenien be bagabiz.	prem30_hyp1	Aldaketaren helburu nagusia hizkuntza gehiago ikasteko aukera erraztea da.	1
+prem30	Aldaketa betien murgildute gauz, barriz, eta tartien hizkuntza erespideen barrikuspenien be bagabiz.	prem30_hyp2	Aldaketa batzuk egiteko asmoa genuela zirudien, baina azkenean berdin jarraitzea erabaki dugu.	2
+prem31	Iluntasunien sortu diez gure burmuinak gobernetan dabezan kondaira interesgarrixenak.	prem31_hyp0	Gure burmuineko kondaira interesgarrienak iluntasunean sortuak dira.	0
+prem31	Iluntasunien sortu diez gure burmuinak gobernetan dabezan kondaira interesgarrixenak.	prem31_hyp1	Ezin dugu jakin nondik datozen kondaira interesgarri guztiak.	1
+prem31	Iluntasunien sortu diez gure burmuinak gobernetan dabezan kondaira interesgarrixenak.	prem31_hyp2	Gure burmuineko kondaira interesgarri guztiak argitan sortzen dira.	2
+prem32	Lehenengo egunien hiru taldegaz topau ginen; bakarra zan euskeraz.	prem32_hyp0	Lehen egunean topo egindako taldeen herena euskaraz zen.	0
+prem32	Lehenengo egunien hiru taldegaz topau ginen; bakarra zan euskeraz.	prem32_hyp1	Lehen eguneko taldeak oso heterogeneoak ziren, adin eta kultura ezberdinetako jendea zegoen.	1
+prem32	Lehenengo egunien hiru taldegaz topau ginen; bakarra zan euskeraz.	prem32_hyp2	Lehen egunean topatutako talde gehienak euskaraz ziren.	2
+prem33	Donostian erderazko ikastarotan ume asko dabil.	prem33_hyp0	Donostian gurasoek ume asko gaztelaniazko ikastaroetara eramaten dituzte.	0
+prem33	Donostian erderazko ikastarotan ume asko dabil.	prem33_hyp1	Donostian haur ikastaroak arratsaldeetan dira.	1
+prem33	Donostian erderazko ikastarotan ume asko dabil.	prem33_hyp2	Donostian gaztelaniazko ikastaroak hutsik daude.	2
+prem34	Bidaia-txartela berreskuretako, egoitza elektronikoko zure espedientera sartu biher dozu.	prem34_hyp0	Egoitza elektronikoan zure espedientera sartuz berreskuratu dezakezu bidaia-txartela.	0
+prem34	Bidaia-txartela berreskuretako, egoitza elektronikoko zure espedientera sartu biher dozu.	prem34_hyp1	Egoitza elektronikoko zure espedientera sartu eta astebeteko tartean berreskuratuko duzu bidaia-txartela.	1
+prem34	Bidaia-txartela berreskuretako, egoitza elektronikoko zure espedientera sartu biher dozu.	prem34_hyp2	Bidaia-txartela berreskuratzeko telefonoz deitzearekin nahikoa da.	2
+prem35	Orekie eta botakaz trebezixe irabazteko ondo etorri jako ikastarue eittie.	prem35_hyp0	Ikastaroari esker oreka hobetu eta botekin trebezia irabazi du.	0
+prem35	Orekie eta botakaz trebezixe irabazteko ondo etorri jako ikastarue eittie.	prem35_hyp1	Ikastaroari esker elastikotasuna asko hobetu du.	1
+prem35	Orekie eta botakaz trebezixe irabazteko ondo etorri jako ikastarue eittie.	prem35_hyp2	Ikastaroa egiteak ez dio ezertarako balio izan.	2
+prem36	60 urtien atarixen bixok, hasiak gara oin arte ikusezinak izen jakuzan kontuei erreparetan, osasunari, gero eta sarriago hilten diezen lagunei.	prem36_hyp0	61 urte baino gutxiago dauzkagu biok.	0
+prem36	60 urtien atarixen bixok, hasiak gara oin arte ikusezinak izen jakuzan kontuei erreparetan, osasunari, gero eta sarriago hilten diezen lagunei.	prem36_hyp1	60 urteren atarian hobe da iraganari ez erreparatzea.	1
+prem36	60 urtien atarixen bixok, hasiak gara oin arte ikusezinak izen jakuzan kontuei erreparetan, osasunari, gero eta sarriago hilten diezen lagunei.	prem36_hyp2	Adinean gora egiteak ez du osasunaren eta heriotzaren inguruko gure ikuspegia aldatu.	2
+prem37	Zozketie ein eta atuen, eskeinitako plazak adjudiketan diez.	prem37_hyp0	Plazak zozketa bidez esleitzen dira.	0
+prem37	Zozketie ein eta atuen, eskeinitako plazak adjudiketan diez.	prem37_hyp1	Plazak adjudikatzeko zozketa informatikoki egiten da.	1
+prem37	Zozketie ein eta atuen, eskeinitako plazak adjudiketan diez.	prem37_hyp2	Plazak zozketa egin eta bi astetara adjudikatzen dira.	2
+prem38	Zapatuko ekitaldixe leune eta politte izen zan.	prem38_hyp0	Larunbatekoa ekitaldi atsegina izan zen.	0
+prem38	Zapatuko ekitaldixe leune eta politte izen zan.	prem38_hyp1	Larunbateko ekitaldia etxetik ikusi nuen.	1
+prem38	Zapatuko ekitaldixe leune eta politte izen zan.	prem38_hyp2	Larunbateko ekitaldia ez zen nire gustukoa izan, gogortasuna falta zitzaion.	2
+prem39	Maitasun erromantikue sistema patriarkalaren biziraupena bermatzeko dispositibue da.	prem39_hyp0	Sistema patriarkalak bizirik iraun dezan erabiltzen da maitasun erromantikoa.	0
+prem39	Maitasun erromantikue sistema patriarkalaren biziraupena bermatzeko dispositibue da.	prem39_hyp1	Sistema patriarkalak biziraun dezan hainbat dispositibo daude.	1
+prem39	Maitasun erromantikue sistema patriarkalaren biziraupena bermatzeko dispositibue da.	prem39_hyp2	Sistema patriarkala maitasun erromantikoaren biziraupena bermatzeko dispositiboa da.	2
+prem40	46 urte eukezan eta bat-bateko herixotziek eruen eban geure albotik.	prem40_hyp0	46 urterekin hil zen bat-batean.	0
+prem40	46 urte eukezan eta bat-bateko herixotziek eruen eban geure albotik.	prem40_hyp1	Bizitza zoriontsua izan zuen.	1
+prem40	46 urte eukezan eta bat-bateko herixotziek eruen eban geure albotik.	prem40_hyp2	Gaixotasun luze batek hil zuen.	2
+prem41	Igaz 15 film bikoiztu ebazan euskerara Zinema Euskaraz programak, eta 2017a be martxa onien hasi dau.	prem41_hyp0	Zinema Euskaraz programak filmak euskarara bikoizten ditu.	0
+prem41	Igaz 15 film bikoiztu ebazan euskerara Zinema Euskaraz programak, eta 2017a be martxa onien hasi dau.	prem41_hyp1	Zinema Euskaraz programak eginiko bikoizketa guztiak gaztelaniatik euskarara izan dira.	1
+prem41	Igaz 15 film bikoiztu ebazan euskerara Zinema Euskaraz programak, eta 2017a be martxa onien hasi dau.	prem41_hyp2	Badirudi Zinema Euskaraz programak oso film gutxi bikoiztuko dituela 2017an ere.	2
+prem42	Aurreko astien Bilboko Okupazino Buleguek lau urte bete ebazan.	prem42_hyp0	Bilboko Okupazio Bulegoak laugarren urteurrena ospatu zuen.	0
+prem42	Aurreko astien Bilboko Okupazino Buleguek lau urte bete ebazan.	prem42_hyp1	Bilboko Okupazio Bulegoak langile berriak kontratatuko ditu datorren hilabetean.	1
+prem42	Aurreko astien Bilboko Okupazino Buleguek lau urte bete ebazan.	prem42_hyp2	Bi urte igaro dira Bilboko Okupazio Bulegoak itxi zuenetik.	2
+prem43	Getarixan kultur eskeintzie laukoiztu ein da ni bertan bizi nintzanetik.	prem43_hyp0	Getarian gero eta kultur eskaintza gehiago dago.	0
+prem43	Getarixan kultur eskeintzie laukoiztu ein da ni bertan bizi nintzanetik.	prem43_hyp1	Getariako kultur eskaintzaren laurdena antzerkia da.	1
+prem43	Getarixan kultur eskeintzie laukoiztu ein da ni bertan bizi nintzanetik.	prem43_hyp2	Lehen Getarian, bertan bizi ez nintzenean, kultur eskaintza handiagoa zegoen.	2
+prem44	Paperien aurkezteaz gain, formatu digitalien be aurkeztuko diez, posible bada.	prem44_hyp2	Formatu digitalean bakarrik aurkeztuko dira.	2
+prem44	Paperien aurkezteaz gain, formatu digitalien be aurkeztuko diez, posible bada.	prem44_hyp0	Paperean eta formatu digitalean aurkeztuko dira.	0
+prem44	Paperien aurkezteaz gain, formatu digitalien be aurkeztuko diez, posible bada.	prem44_hyp1	Paperean hurrengo astean aurkeztuko dira.	1
+prem45	Diseinatzaile eta liburu ilustratzaile oparo eta puntakue izen arren, komikigintzari eindako ekarpena ez da txikixaue izen.	prem45_hyp1	Argitaratu berri duen komiki bildumak arrakasta handia izan du adin txikikoen artean.	1
+prem45	Diseinatzaile eta liburu ilustratzaile oparo eta puntakue izen arren, komikigintzari eindako ekarpena ez da txikixaue izen.	prem45_hyp2	Komikilaria da eta batzuetan ilustrazioak egiten ditu.	2
+prem45	Diseinatzaile eta liburu ilustratzaile oparo eta puntakue izen arren, komikigintzari eindako ekarpena ez da txikixaue izen.	prem45_hyp0	Komikigintzari ere ekarpen handia egin dio.	0
+prem46	Artxandako Funikularra, S.A. oso-osorik Bilboko Udalarena dan merkataritza-soziedadie da.	prem46_hyp0	Bilboko Udala Artxandako Funikularraren jabea da.	0
+prem46	Artxandako Funikularra, S.A. oso-osorik Bilboko Udalarena dan merkataritza-soziedadie da.	prem46_hyp2	Bilboko Udalak parte hartzeren bat du Artxandako Funikularrean.	2
+prem46	Artxandako Funikularra, S.A. oso-osorik Bilboko Udalarena dan merkataritza-soziedadie da.	prem46_hyp1	Bilboko Udalaren ustiakuntzako aurrekontuak merkataritza-sozietateak egiten dituen jarduera guztietatik eratorritakoak biltzen ditu.	1
+prem47	Gipuzkuako kostaldien bale asko ibili zan garai batien, baina 4 bale ezaun aitatzen dauz Xabier Alberdi historialarixek Euskadi Irratixen eindako alkarrizketan.	prem47_hyp1	Gipuzkoako kostaldean bizi ziren gainerako baleak beste kostalde batzuetan ere bizi zirela aipatu du Xabier Alberdik.	1
+prem47	Gipuzkuako kostaldien bale asko ibili zan garai batien, baina 4 bale ezaun aitatzen dauz Xabier Alberdi historialarixek Euskadi Irratixen eindako alkarrizketan.	prem47_hyp0	Xabier Alberdi historialaria da eta ondo ezagutzen ditu inguruko itsasoetako baleak.	0
+prem47	Gipuzkuako kostaldien bale asko ibili zan garai batien, baina 4 bale ezaun aitatzen dauz Xabier Alberdi historialarixek Euskadi Irratixen eindako alkarrizketan.	prem47_hyp2	Xabier Alberdik, Euskadi Irratiko elkarrizketan, Gipuzkoako kostaldean sekula ez dela balearik ibili aipatzen du.	2
+prem48	Ulia mendixen izen gara aspaldiko partez.	prem48_hyp2	Urteak dira ez garela mendian egon.	2
+prem48	Ulia mendixen izen gara aspaldiko partez.	prem48_hyp0	Orain dela asko ez ginela Ulia mendira joaten.	0
+prem48	Ulia mendixen izen gara aspaldiko partez.	prem48_hyp1	Ulia mendia oso polita iruditu zaigu.	1
+prem49	Zerbitzu-enpresentzako eraikin nagusixek 19 modulu dekoz.	prem49_hyp1	Zerbitzu-enpresentzako eraikin nagusiak 19 modulu eta hiru pisu ditu.	1
+prem49	Zerbitzu-enpresentzako eraikin nagusixek 19 modulu dekoz.	prem49_hyp2	Zerbitzu-enpresentzako eraikin nagusiak moduluak izan ditzake, baina ez da nahitaezkoa.	2
+prem49	Zerbitzu-enpresentzako eraikin nagusixek 19 modulu dekoz.	prem49_hyp0	Zerbitzu-enpresentzako eraikin nagusia 19 moduluk osatzen dute.	0
+prem50	Europar Batasuna Uspace izeneko ordenantza bat dabil martxan jarten, automatizautako dronentzako aireko eremu baimenduak sortzeko.	prem50_hyp0	Uspace ordenantzak automatizatutako dronentzat aire eremu baimenduak sortuko ditu.	0
+prem50	Europar Batasuna Uspace izeneko ordenantza bat dabil martxan jarten, automatizautako dronentzako aireko eremu baimenduak sortzeko.	prem50_hyp2	Europar Batasunean aireko dron automatizatuak debekatuko dituen ordenantza bat sartuko da indarrean laster.	2
+prem50	Europar Batasuna Uspace izeneko ordenantza bat dabil martxan jarten, automatizautako dronentzako aireko eremu baimenduak sortzeko.	prem50_hyp1	Uspace ordenantza 2030ean jarriko da martxan.	1
+prem51	Dublingo lur-hartzie oso-oso deserosue izen da, asko mobidu da hegazkine, alde batetik bestera.	prem51_hyp1	Dublingo luhartzean bidaiariak beldurrez garrasika hasi dira.	1
+prem51	Dublingo lur-hartzie oso-oso deserosue izen da, asko mobidu da hegazkine, alde batetik bestera.	prem51_hyp0	Dublingo lur-hartzea oso-oso deserosoa izan da, asko mugitu da hegazkina, alde batetik bestera.	0
+prem51	Dublingo lur-hartzie oso-oso deserosue izen da, asko mobidu da hegazkine, alde batetik bestera.	prem51_hyp2	Dublingo lur-hartzeak beti izaten dira oso lasaiak, turbulentziarik gabeak.	2
+prem52	Jakina da Joxan Goikoetxeak hartu-emon estue izen ebala Xabier Letegaz, bere bizitzako azkenengo urtietan batez be.	prem52_hyp2	Xabier Letek eta Joxan Goikoetxeak gaztetan izan zuten harreman handiena.	2
+prem52	Jakina da Joxan Goikoetxeak hartu-emon estue izen ebala Xabier Letegaz, bere bizitzako azkenengo urtietan batez be.	prem52_hyp0	Xabier Letek eta Joxan Goikoetxeak harreman handia izan zuten.	0
+prem52	Jakina da Joxan Goikoetxeak hartu-emon estue izen ebala Xabier Letegaz, bere bizitzako azkenengo urtietan batez be.	prem52_hyp1	Xabier Lete eta Joxan Goikoetxea adinkideak dira.	1
+prem53	Garai Zekenak antzezlana aurkeztu dau Arriaga Bilboko antzokixek, Henrik Ibsen norvegiar dramaturguaren klasiko haundietako batien oinarritute.	prem53_hyp1	Arriaga Bilboko antzokiak aurkeztutako Garai Zekenak antzezlana ikusgarria da.	1
+prem53	Garai Zekenak antzezlana aurkeztu dau Arriaga Bilboko antzokixek, Henrik Ibsen norvegiar dramaturguaren klasiko haundietako batien oinarritute.	prem53_hyp2	Arriaga Bilboko antzokiak aurkeztuko duen Garai Zekenak antzezlana Henrik Ibsen norvegiar dramaturgoaren klasiko handietako batean oinarritzen da.	2
+prem53	Garai Zekenak antzezlana aurkeztu dau Arriaga Bilboko antzokixek, Henrik Ibsen norvegiar dramaturguaren klasiko haundietako batien oinarritute.	prem53_hyp0	Garai Zekenak antzezlana Henrik Ibsen norvegiar dramaturgoaren klasiko handietako batean oinarritzen da.	0
+prem54	Zapatuen, urriaren 31n, Billurrezko Zinemaldiko pelikula bat ikusten jueteko konbitte jaso ge–un.	prem54_hyp0	Beldurrezko Zinemaldiko pelikula bat ikustera gonbidatu gintuzten.	0
+prem54	Zapatuen, urriaren 31n, Billurrezko Zinemaldiko pelikula bat ikusten jueteko konbitte jaso ge–un.	prem54_hyp2	Beldurrezko Zinemaldiko pelikula bat ikustera gonbidatu genuen.	2
+prem54	Zapatuen, urriaren 31n, Billurrezko Zinemaldiko pelikula bat ikusten jueteko konbitte jaso ge–un.	prem54_hyp1	Larunbatean Beldurrezko Zinemaldiko bi pelikula ikusi genituen.	1
+prem55	"Zarautzen sortu barri dan jaialdixe da Adarretatik, udako musikako festibaletan lekutxo bat ein guran datorrena, eta ""bazterreko musikak erdigunera"" ekartie helburu dauena."	prem55_hyp1	Adarretatik jaialdiak jendetza bildu zuen Zarauzko kaleetan.	1
+prem55	"Zarautzen sortu barri dan jaialdixe da Adarretatik, udako musikako festibaletan lekutxo bat ein guran datorrena, eta ""bazterreko musikak erdigunera"" ekartie helburu dauena."	prem55_hyp0	Bazterreko musika ikustarazten duen udako musika jaialdi berria sortu dute Zarautzen: Adarretatik. 	0
+prem55	"Zarautzen sortu barri dan jaialdixe da Adarretatik, udako musikako festibaletan lekutxo bat ein guran datorrena, eta ""bazterreko musikak erdigunera"" ekartie helburu dauena."	prem55_hyp2	"Zarauzko Adarretatik udako musika jaialdiak urteak daramatza ""bazterreko musikak erdigunera"" ekartzeko lana egiten."	2
+prem56	Europako alkarteek gogor salatu dabe Goioagaren kontrako auzixe.	prem56_hyp2	Goioagaren aurkako auziak gogor salatu ditu Europako elkarteak.	2
+prem56	Europako alkarteek gogor salatu dabe Goioagaren kontrako auzixe.	prem56_hyp0	Europako elkarteak ez daude ados Goioagaren aurkako auziarekin.	0
+prem56	Europako alkarteek gogor salatu dabe Goioagaren kontrako auzixe.	prem56_hyp1	Goioagaren aurkako auziak salaketa ugari izan ditu.	1
+prem57	Solte taldiek 'IXA' azkenengo diskuaren (Taupaka elkartie, 2016) Eraldatutako mundue abestixagaz bideoklip barritzailie prestau dau.	prem57_hyp1	Solte musika taldeak erritmo biziak erabiltzen ditu, horren adierazle da 'Eraldatutako mundua' kanta.	1
+prem57	Solte taldiek 'IXA' azkenengo diskuaren (Taupaka elkartie, 2016) Eraldatutako mundue abestixagaz bideoklip barritzailie prestau dau.	prem57_hyp2	Solte muska taldearen lehen diskoa da 'IXA'.	2
+prem57	Solte taldiek 'IXA' azkenengo diskuaren (Taupaka elkartie, 2016) Eraldatutako mundue abestixagaz bideoklip barritzailie prestau dau.	prem57_hyp0	Solte taldearen azken diskoa 'IXA' da.	0
+prem58	Bihergin askok ez dakixe zer dauen ondo eta zer txarto, ez dakixe zelan jokau.	prem58_hyp0	Ongia eta gaizkiaren artean bereiztea ez da erraza langile askorentzat.	0
+prem58	Bihergin askok ez dakixe zer dauen ondo eta zer txarto, ez dakixe zelan jokau.	prem58_hyp2	Langileek ez daukate zalantzarik, beti dakite nola jokatu behar duten.	2
+prem58	Bihergin askok ez dakixe zer dauen ondo eta zer txarto, ez dakixe zelan jokau.	prem58_hyp1	Langileei asko eragiten die nola jokatu ez jakiteak.	1
+prem59	Leku gomendagarri bat ezautu ge–un aurreko asteburuen. Famili giruen sortutako eta ikutu hego-amerikarra dauen etxe moltso txiki bat da.	prem59_hyp1	Aurreko asteburuan ezagututako etxe multzo txikia izekok gomendatu zidan, familia giroan sortutakoa da eta ukitu hego-amerikarra dauka. 	1
+prem59	Leku gomendagarri bat ezautu ge–un aurreko asteburuen. Famili giruen sortutako eta ikutu hego-amerikarra dauen etxe moltso txiki bat da.	prem59_hyp0	Aurreko asteburuan ukitu hego-amerikarra duen etxe multzo txiki batean egon ginen.	0
+prem59	Leku gomendagarri bat ezautu ge–un aurreko asteburuen. Famili giruen sortutako eta ikutu hego-amerikarra dauen etxe moltso txiki bat da.	prem59_hyp2	Aurreko asteburuan ezagututako etxe multzo txikia ez da gomendatzeko modukoa.	2
+prem60	Sarituek hainbat informatika eta marrazketa material jasoko dabe, eta komiki irabazlie Mahatserriko BERTON aldizkarixen argitaratuko da.	prem60_hyp2	Komiki sarituak Mahatserriko BERTON aldizkarian argitaratuko dira. 	2
+prem60	Sarituek hainbat informatika eta marrazketa material jasoko dabe, eta komiki irabazlie Mahatserriko BERTON aldizkarixen argitaratuko da.	prem60_hyp0	Sarituek informatika eta marrazketa materiala irabaziko dute.	0
+prem60	Sarituek hainbat informatika eta marrazketa material jasoko dabe, eta komiki irabazlie Mahatserriko BERTON aldizkarixen argitaratuko da.	prem60_hyp1	Parte-hartzaile bakoitzak komiki bakarra aurkeztu ahal izango du.	1
+prem61	Zemendixen 3an kaleratuko dau Zea Mays taldiek bere zortzigarren lana, 'Harro' izenekue.	prem61_hyp1	Bost kidek osatzen dute Zea Mays taldea.	1
+prem61	Zemendixen 3an kaleratuko dau Zea Mays taldiek bere zortzigarren lana, 'Harro' izenekue.	prem61_hyp2	Zea Mays taldeak ez du disko bat bera ere argitaratu.	2
+prem61	Zemendixen 3an kaleratuko dau Zea Mays taldiek bere zortzigarren lana, 'Harro' izenekue.	prem61_hyp0	Zea Mays taldeak disko berri bat argitaratuko du.	0
+prem62	Arrantzale tripulazino bardinak irabazi eban kontxako lehenengo banderie Oriorako.	prem62_hyp0	Oriok eskuratu zuen kontxako lehen bandera.	0
+prem62	Arrantzale tripulazino bardinak irabazi eban kontxako lehenengo banderie Oriorako.	prem62_hyp2	Hondarribiak irabazi zuen kontxako lehen bandera.	2
+prem62	Arrantzale tripulazino bardinak irabazi eban kontxako lehenengo banderie Oriorako.	prem62_hyp1	Orioko tripulazioak horiz jantzi ohi da.	1
+prem63	Seme-alabakaz izen barri naz Erroman.	prem63_hyp1	Nere seme-alabek asko maite naute.	1
+prem63	Seme-alabakaz izen barri naz Erroman.	prem63_hyp0	Duela gutxi Italian egon naiz.	0
+prem63	Seme-alabakaz izen barri naz Erroman.	prem63_hyp2	Ez naiz inoiz Italian izan.	2
+prem64	"Xabier Letek idatzi eta zuzendu eban ""Gabon, Txirrita"" antzerki obrie 1982an taularatu zan."	prem64_hyp2	Xabier Letek ez zuen antzerki obrarik idatzi.	2
+prem64	"Xabier Letek idatzi eta zuzendu eban ""Gabon, Txirrita"" antzerki obrie 1982an taularatu zan."	prem64_hyp0	Gabon Txirrita antzerki obra baten izena da.	0
+prem64	"Xabier Letek idatzi eta zuzendu eban ""Gabon, Txirrita"" antzerki obrie 1982an taularatu zan."	prem64_hyp1	Xabier Lete abeslari bikaina zen.	1
+prem65	"Orain gitxi ""ORM Edurretako Erresuman"" pantailaratu eban, eta laster ""Batman Lego filma"" estreinauko dau."	prem65_hyp2	ORM Elurretako Erresuman pantailaratuko den azken filma izango da.	2
+prem65	"Orain gitxi ""ORM Edurretako Erresuman"" pantailaratu eban, eta laster ""Batman Lego filma"" estreinauko dau."	prem65_hyp0	Animazio-filmak euskaratu ohi dira.	0
+prem65	"Orain gitxi ""ORM Edurretako Erresuman"" pantailaratu eban, eta laster ""Batman Lego filma"" estreinauko dau."	prem65_hyp1	Geroz eta jende gutxiago joaten da filmak ikustera.	1
+prem66	Amazonek eskeintzen dau adimen artifiziala eskoletarako eta hodeixe eta Alexa echo dot eta Alexa echo plus.	prem66_hyp2	Eskoletara zuzendutako adimen artifizialeko produkturik ez dago.	2
+prem66	Amazonek eskeintzen dau adimen artifiziala eskoletarako eta hodeixe eta Alexa echo dot eta Alexa echo plus.	prem66_hyp0	Amazonek produktu ugari ditu adimen artifizialaren inguruan.	0
+prem66	Amazonek eskeintzen dau adimen artifiziala eskoletarako eta hodeixe eta Alexa echo dot eta Alexa echo plus.	prem66_hyp1	Amazonen produktuak merkeak izaten dira.	1
+prem67	Euskerieri lehenengo hurbilketie eitteko, interesgarrixe da Deustuko Unibersidadiek bere garaixen plazaratutako euskerie ikasteko metodue.	prem67_hyp0	Deustuko Unibertsitateak metodo bat garatu du euskara ikasteko.	0
+prem67	Euskerieri lehenengo hurbilketie eitteko, interesgarrixe da Deustuko Unibersidadiek bere garaixen plazaratutako euskerie ikasteko metodue.	prem67_hyp1	Deustuko Unibertsitateak hainbat eskola eta fakultate ditu.	1
+prem67	Euskerieri lehenengo hurbilketie eitteko, interesgarrixe da Deustuko Unibersidadiek bere garaixen plazaratutako euskerie ikasteko metodue.	prem67_hyp2	Deustuko Unibertsitateak gaztelera ikasteko materiala garatu du soilik.	2
+prem68	Zure euskera mailie zein dan jakin gurako bazeunke, horretarako aukerie be emoten dau sarixek.	prem68_hyp0	Aukera dago norberaren euskara maila zein den neurtzeko.	0
+prem68	Zure euskera mailie zein dan jakin gurako bazeunke, horretarako aukerie be emoten dau sarixek.	prem68_hyp1	Euskararen erabilpen maila txikitzen ari da azken boladan.	1
+prem68	Zure euskera mailie zein dan jakin gurako bazeunke, horretarako aukerie be emoten dau sarixek.	prem68_hyp2	Norberaren euskara maila jakiteko elkarrizketa presentziala egin behar da nahitaez.	2
+prem69	Ziurtagirixek egoitza elektronikuaren titularraren identifikazinue jasoten dau, eta dispositibo seguru baten edo bide baliokide baten bidez bialtzen da.	prem69_hyp1	Ez dago teknika bakarra titularraren identifikazioa ziurtatzeko.	1
+prem69	Ziurtagirixek egoitza elektronikuaren titularraren identifikazinue jasoten dau, eta dispositibo seguru baten edo bide baliokide baten bidez bialtzen da.	prem69_hyp2	Ziurtagiriak titularraren informazioa gordina igortzen du, zifratu gabe.	2
+prem69	Ziurtagirixek egoitza elektronikuaren titularraren identifikazinue jasoten dau, eta dispositibo seguru baten edo bide baliokide baten bidez bialtzen da.	prem69_hyp0	Ziurtagiria lagun bakoitzaren identitatea bermatzen saiatzen da.	0
+prem70	Oin dala aste bi grazixie eitten eban zeozer gaur guztiz erreta egon leike.	prem70_hyp1	Lagun bati grazia egiten diona beste bati ez zaio gustatzen.	1
+prem70	Oin dala aste bi grazixie eitten eban zeozer gaur guztiz erreta egon leike.	prem70_hyp2	Jendeari gustatzen zaio txiste berdinak behin eta berriz entzutea.	2
+prem70	Oin dala aste bi grazixie eitten eban zeozer gaur guztiz erreta egon leike.	prem70_hyp0	Txisteen iraupena mugatua da, ez da betirako.	0
+prem71	Instalazino modernuek dekoz, dobako wifia leku komunetan, eta segurtasun-zerbitzu iraunkorra 24 ordutan.	prem71_hyp0	Internetera konekta zaitezke toki horretara joaten bazara.	0
+prem71	Instalazino modernuek dekoz, dobako wifia leku komunetan, eta segurtasun-zerbitzu iraunkorra 24 ordutan.	prem71_hyp2	Gauean segurtasun-eza nabaria da espazio horretan.	2
+prem71	Instalazino modernuek dekoz, dobako wifia leku komunetan, eta segurtasun-zerbitzu iraunkorra 24 ordutan.	prem71_hyp1	Espazio hori alokatzea oso garestia da.	1
+prem72	Billur apur bat pasau dou hilebete honetan David Robert Michellek zuzendutako 'It Follows' filmiagaz.	prem72_hyp1	It follows' filma 'It' filmaren jarraipena da.	1
+prem72	Billur apur bat pasau dou hilebete honetan David Robert Michellek zuzendutako 'It Follows' filmiagaz.	prem72_hyp0	It follows' beldurrezko filma da.	0
+prem72	Billur apur bat pasau dou hilebete honetan David Robert Michellek zuzendutako 'It Follows' filmiagaz.	prem72_hyp2	David Robert Michell zuzendariak komediak egiten ditu soilik.	2
+prem73	Ganerako 5 eraikinek bina solairu dekiez; beheko solairuan industria-moduluak dauz, eta goiko solairuan bulego-moduluak.	prem73_hyp0	Eraikinak industriarako prestatuak daude.	0
+prem73	Ganerako 5 eraikinek bina solairu dekiez; beheko solairuan industria-moduluak dauz, eta goiko solairuan bulego-moduluak.	prem73_hyp2	Eraikin guztiek solairu bakarra dute.	2
+prem73	Ganerako 5 eraikinek bina solairu dekiez; beheko solairuan industria-moduluak dauz, eta goiko solairuan bulego-moduluak.	prem73_hyp1	Eraikinak oso modernoak dira.	1
+prem74	Ea korrikalari guztixek gehixau erabilten doun euskerie aurrerantzien!	prem74_hyp2	Korrika egiten duen orok euskaraz ere egiten du.	2
+prem74	Ea korrikalari guztixek gehixau erabilten doun euskerie aurrerantzien!	prem74_hyp0	Korrikalari askok ez dute euskara erabiltzen.	0
+prem74	Ea korrikalari guztixek gehixau erabilten doun euskerie aurrerantzien!	prem74_hyp1	Korrika egitea osasungarria da oro har.	1
+prem75	Oraindino badou eretxi publikuen eragiteko gaitasuna.	prem75_hyp2	Iritzi publikoa finkoa da.	2
+prem75	Oraindino badou eretxi publikuen eragiteko gaitasuna.	prem75_hyp0	Iritzi publikoa aldatu daiteke.	0
+prem75	Oraindino badou eretxi publikuen eragiteko gaitasuna.	prem75_hyp1	Jendeak askotariko iritziak ditu.	1
+prem76	Ikasbil webgunien milaka eta milaka artikulu, testu, bideo eta audio dauz.	prem76_hyp2	Iskanbil webgunean soilik testua dago.	2
+prem76	Ikasbil webgunien milaka eta milaka artikulu, testu, bideo eta audio dauz.	prem76_hyp1	Iskanbil interneteko webgune ezaguna da.	1
+prem76	Ikasbil webgunien milaka eta milaka artikulu, testu, bideo eta audio dauz.	prem76_hyp0	Interneten ezin da testu, bideo eta audiorik aurkitu.	0
+prem77	Egoitza elektronikuaren izapideen kataloguen aurkituko dozu prozedurie, izapide eta zerbitzu bakotxari buruzko informazino zihetza.	prem77_hyp2	Izapide eta zerbitzuak ikasteko ez da inolako dokumentaziorik behar.	2
+prem77	Egoitza elektronikuaren izapideen kataloguen aurkituko dozu prozedurie, izapide eta zerbitzu bakotxari buruzko informazino zihetza.	prem77_hyp1	Egoitza elektronikoan sartzea konplexua da oso.	1
+prem77	Egoitza elektronikuaren izapideen kataloguen aurkituko dozu prozedurie, izapide eta zerbitzu bakotxari buruzko informazino zihetza.	prem77_hyp0	Izapidea eta zerbitzuen funtzionamendua azaltzen duen dokumentazioa atzigarri dago.	0
+prem78	Sondikako Enpresa Zentro horretan industria-moduluak eta bulego-moduluak dauz, 5 eraikinetan banatuta.	prem78_hyp0	Hainbat enpresek dute beren egoitza Sondikan kokatuta.	0
+prem78	Sondikako Enpresa Zentro horretan industria-moduluak eta bulego-moduluak dauz, 5 eraikinetan banatuta.	prem78_hyp2	Sondikako Enpresa Zentroak bi eraikin ditu.	2
+prem78	Sondikako Enpresa Zentro horretan industria-moduluak eta bulego-moduluak dauz, 5 eraikinetan banatuta.	prem78_hyp1	Sondikako Enpresa Zentroa Bizkaiko garrantzitsuenetakoa da.	1
+prem79	Bost lagun gara, eta gaztiena neu naz.	prem79_hyp0	Adin desberdineko lagunak gaude taldean.	0
+prem79	Bost lagun gara, eta gaztiena neu naz.	prem79_hyp2	Bost lagunek urte eta egun berean jaio ginen.	2
+prem79	Bost lagun gara, eta gaztiena neu naz.	prem79_hyp1	Musean jolas nahiko bagenu, bostetatik bat kanpo geratuko litzateke.	1
+prem80	Epailiek sei hilebeteko espetxera zigortu ebazan auzoko lau gazte.	prem80_hyp2	Epaileak auzoko lau gazteak absolbitu zituen.	2
+prem80	Epailiek sei hilebeteko espetxera zigortu ebazan auzoko lau gazte.	prem80_hyp1	Espetxe zigorra bi urte baino txikiagoa denez, lau gazteak ez dira kartzelara sartuko.	1
+prem80	Epailiek sei hilebeteko espetxera zigortu ebazan auzoko lau gazte.	prem80_hyp0	Auzoan hainbat gazte daude espetxe-zigorrak jaso dituztenak.	0
+prem81	Miren eta Andrearen erlazinue klandestinue izen zan hasikeratik, bikotie normatibatik kanpo zeuelako.	prem81_hyp2	Miren eta Andrearen erlazioa erabat arrunta izan zen.	2
+prem81	Miren eta Andrearen erlazinue klandestinue izen zan hasikeratik, bikotie normatibatik kanpo zeuelako.	prem81_hyp1	Erlazio homosexualak normaltasunez bizi behar dira.	1
+prem81	Miren eta Andrearen erlazinue klandestinue izen zan hasikeratik, bikotie normatibatik kanpo zeuelako.	prem81_hyp0	Miren eta Andrea harreman sentimentala dute.	0
+prem82	Nazinoarteko festibala izanda, badauz kanpoko proposamenak be, euskal taldeen presentzixie nausi dan arren.	prem82_hyp1	Festibalak musika zuzenean bizitzeko aukera paregabeak dira.	1
+prem82	Nazinoarteko festibala izanda, badauz kanpoko proposamenak be, euskal taldeen presentzixie nausi dan arren.	prem82_hyp2	Festibal honetan talde euskaldun bakarra jo zuen.	2
+prem82	Nazinoarteko festibala izanda, badauz kanpoko proposamenak be, euskal taldeen presentzixie nausi dan arren.	prem82_hyp0	Nazioarteko taldeak jotzen dute festibal honetan.	0
+prem83	Hirugarren urtez jarraixen, Santutxu Mendizale Taldiek ibilaldi neurtua antolatu dau, urriaren 20rako, zapatue.	prem83_hyp0	Santutxu Mendizale Taldeak mendi irteerak antolatu ohi ditu.	0
+prem83	Hirugarren urtez jarraixen, Santutxu Mendizale Taldiek ibilaldi neurtua antolatu dau, urriaren 20rako, zapatue.	prem83_hyp1	Santutxu Mendizale Taldeko ibilaldietara jende ugari azaltzen da.	1
+prem83	Hirugarren urtez jarraixen, Santutxu Mendizale Taldiek ibilaldi neurtua antolatu dau, urriaren 20rako, zapatue.	prem83_hyp2	Santutxu Mendizale Taldea iaz osatu zen.	2
+prem84	R 'N' R estilue zein hegoaldeko rocka lantzen dauzan letra eta konponketa landuak diez diskokuek.	prem84_hyp2	Diskoaren kanta guztiak instrumentalak dira.	2
+prem84	R 'N' R estilue zein hegoaldeko rocka lantzen dauzan letra eta konponketa landuak diez diskokuek.	prem84_hyp1	Hegoaldeko rock kantetan gitarrak dira nagusi.	1
+prem84	R 'N' R estilue zein hegoaldeko rocka lantzen dauzan letra eta konponketa landuak diez diskokuek.	prem84_hyp0	Diskoa osatzen duten kanten estilo nagusia rock dela esan daiteke.	0
+prem85	Guraso bat umeei argazkixek atara eta konbitte berezixe prestetan dabil 60 umeri banatzeko.	prem85_hyp2	Guraso bati atera diote argazkia haurrek.	2
+prem85	Guraso bat umeei argazkixek atara eta konbitte berezixe prestetan dabil 60 umeri banatzeko.	prem85_hyp1	Haurrek beti ateratzen dira ondo argazkietan.	1
+prem85	Guraso bat umeei argazkixek atara eta konbitte berezixe prestetan dabil 60 umeri banatzeko.	prem85_hyp0	Haurrek gonbidapen berezia jasoko dute.	0
+prem86	Istiluetan hamaika lagun identifikau eta atxilotu ebazan Ertzaintzak.	prem86_hyp1	Atxilotutako jende asko libre geratuko da.	1
+prem86	Istiluetan hamaika lagun identifikau eta atxilotu ebazan Ertzaintzak.	prem86_hyp2	Istiluetan parte hartutako lagun guztiak atxilotu zituen Ertzainak.	2
+prem86	Istiluetan hamaika lagun identifikau eta atxilotu ebazan Ertzaintzak.	prem86_hyp0	Ertzainak lagun asko atxilotu zituen.	0
+prem87	Xabier Lete musikari edo idazle izen aurretik antzerkiko aktore izen zan.	prem87_hyp0	Xabier Lete hainbat arlotan ibilitako artista izan zen.	0
+prem87	Xabier Lete musikari edo idazle izen aurretik antzerkiko aktore izen zan.	prem87_hyp2	Xabier Letek ez zuen inongo arlo artistikoa landu abesten hasi zen arte.	2
+prem87	Xabier Lete musikari edo idazle izen aurretik antzerkiko aktore izen zan.	prem87_hyp1	Xabier Leteren ahotsa oso atsegina zen.	1
+prem88	Azkenengo egunien, Logro–ora iristeko 3 kilometro bakarrik falta zienien, Maria la de los Higos-en alabie ezautu eban.	prem88_hyp2	Maria de los Higos-en semeak gizonezkoak ziren denak.	2
+prem88	Azkenengo egunien, Logro–ora iristeko 3 kilometro bakarrik falta zienien, Maria la de los Higos-en alabie ezautu eban.	prem88_hyp1	Maria de los Higos-en alaba oso jatorra da.	1
+prem88	Azkenengo egunien, Logro–ora iristeko 3 kilometro bakarrik falta zienien, Maria la de los Higos-en alabie ezautu eban.	prem88_hyp0	Hainbat egun pasa nituen Logroñoko bidean.	0
+prem89	Ederto dakiu ni ez nazela bere moduko hegaztixe eta bera be ez dala egokixe lotuta leku bati egoteko.	prem89_hyp2	Bera nahiago du etxean geratu kanpotik bidaiatzen ibili baino.	2
+prem89	Ederto dakiu ni ez nazela bere moduko hegaztixe eta bera be ez dala egokixe lotuta leku bati egoteko.	prem89_hyp1	Izaera desberdin daude, eta bata ez da bestea baino hobea.	1
+prem89	Ederto dakiu ni ez nazela bere moduko hegaztixe eta bera be ez dala egokixe lotuta leku bati egoteko.	prem89_hyp0	Bion izaera oso desberdina da.	0
+prem90	Okupazino Buleguaren laugarren urteurrena ospatuko dabe urriaren 20an	prem90_hyp1	Datorren urtean Donostian ospatuko dute Okupazio Bulegoaren urteurrena.	1
+prem90	Okupazino Buleguaren laugarren urteurrena ospatuko dabe urriaren 20an	prem90_hyp2	Okupazio Bulegoaren laugarren urteurrena ospatu zuten iaz.	2
+prem90	Okupazino Buleguaren laugarren urteurrena ospatuko dabe urriaren 20an	prem90_hyp0	Okupazio Bulegoaren urteurrena udazkenean ospatzen da.	0
+prem91	Guraso edo tutoreek erabagita euskerie izengo da parte-hartzaileek erabiliko daben hizkuntzie	prem91_hyp2	Guraso eta tutoreek euskaraz hitz egingo dutela erabaki dute parte-hartzaileek.	2
+prem91	Guraso edo tutoreek erabagita euskerie izengo da parte-hartzaileek erabiliko daben hizkuntzie	prem91_hyp0	Parte-hartzaileek euskaraz hitz egingo dutela erabaki dute guraso eta tutoreek.	0
+prem91	Guraso edo tutoreek erabagita euskerie izengo da parte-hartzaileek erabiliko daben hizkuntzie	prem91_hyp1	Guraso eta tutoreek erabaki dute euskaraz hitz egingo dutela haurrekin. 	1
+prem92	Lagun Arok Antiguako Benta Berriko sukurtsalien gaztelania hutsien idatzitako oharrak jarri dauz atearen alde bixetara.	prem92_hyp2	Lagun Arok Antiguako Benta Berriko sukurtsalean jarritako oharrak ingelesez idatzita zeuden.	2
+prem92	Lagun Arok Antiguako Benta Berriko sukurtsalien gaztelania hutsien idatzitako oharrak jarri dauz atearen alde bixetara.	prem92_hyp1	Lagun Arok Antiguako Benta Berriko sukurtsalean jarritako oharrak ondo idatzita zeuden.	1
+prem92	Lagun Arok Antiguako Benta Berriko sukurtsalien gaztelania hutsien idatzitako oharrak jarri dauz atearen alde bixetara.	prem92_hyp0	Lagun Arok Antiguako Benta Berriko sukurtsalean jarritako oharrak erdaraz idatzita zeuden.	0
+prem93	Polizixa guztixen torturen salaketak jaso die, Ertzaintzarenak tartien.	prem93_hyp2	Ertzaintza tortura salaketetatik libre geratu da.	2
+prem93	Polizixa guztixen torturen salaketak jaso die, Ertzaintzarenak tartien.	prem93_hyp1	Ertzaintzak polizien tortura kasuak salatu ditu.	1
+prem93	Polizixa guztixen torturen salaketak jaso die, Ertzaintzarenak tartien.	prem93_hyp0	Ertzaintzak ere tortura egin duela salatu dute.	0
+prem94	Madalenak eitteko nire ahiztiek amama Jexuxaren errezetie berreskuratu gure izen dau.	prem94_hyp0	Amona Jexuxak madalenak egiteko errezeta zeukan.	0
+prem94	Madalenak eitteko nire ahiztiek amama Jexuxaren errezetie berreskuratu gure izen dau.	prem94_hyp2	Madalenak egiteko amona Jexuxak nire ahizparen errezeta berreskuratu nahi izan du.	2
+prem94	Madalenak eitteko nire ahiztiek amama Jexuxaren errezetie berreskuratu gure izen dau.	prem94_hyp1	Nire ahizpari bakarrik Amona Jexuxak egindako madalenak gustatzen zaizkio.	1
+prem95	Ez da aurrez aurreko identifikazinorik eskatzen BAK aktibetako eta bialtzeko: Internet bidez eitten da.	prem95_hyp0	Internet bidez eskatu dezakezu BAK aktibatu eta bidal diezazutela.	0
+prem95	Ez da aurrez aurreko identifikazinorik eskatzen BAK aktibetako eta bialtzeko: Internet bidez eitten da.	prem95_hyp2	Internet bidez eskatu behar duzu BAK aktibatu eta bidal diezazutela.	2
+prem95	Ez da aurrez aurreko identifikazinorik eskatzen BAK aktibetako eta bialtzeko: Internet bidez eitten da.	prem95_hyp1	Internet bidez eskatu dezakezu BAK baliogabe diezazutela.	1
+prem96	Hiru argazki bakarrik gorde ahal izen dodaz.	prem96_hyp2	Lau argazki bakarrik gordeta dauzkat.	2
+prem96	Hiru argazki bakarrik gorde ahal izen dodaz.	prem96_hyp1	Lau argazki zituen gordeta.	1
+prem96	Hiru argazki bakarrik gorde ahal izen dodaz.	prem96_hyp0	Ez dut lau argazki gordetzeko aukerarik izan.	0
+prem97	Zapatuen, urriaren 31n, Billurrezko Zinemaldiko pelikula bat ikusten jueteko konbitte jaso ge–un.	prem97_hyp2	Beldurrezko Zinemaldiko pelikula batean parte hartzeko gonbidatu gintuzten.	2
+prem97	Zapatuen, urriaren 31n, Billurrezko Zinemaldiko pelikula bat ikusten jueteko konbitte jaso ge–un.	prem97_hyp1	Beldurrezko Zinemaldiko pelikula bat ikustera joan ginen.	1
+prem97	Zapatuen, urriaren 31n, Billurrezko Zinemaldiko pelikula bat ikusten jueteko konbitte jaso ge–un.	prem97_hyp0	Beldurrezko Zinemaldiko pelikula bat ikusteko gonbidatu gintuzten.	0
+prem98	Euskadiko Kutxak barriro be errenta-aitorpena eitteko euskerarik ez dakixen bihergin bat jarri dau Antiguako Matia kaleko sukurtsalien, Donostian.	prem98_hyp1	Euskadiko Kutxako Antiguako Matia kaleko sukurtsaleko langileek erdaraz bakarrik hitz egiten dute.	1
+prem98	Euskadiko Kutxak barriro be errenta-aitorpena eitteko euskerarik ez dakixen bihergin bat jarri dau Antiguako Matia kaleko sukurtsalien, Donostian.	prem98_hyp2	Euskadiko Kutxako Antiguako Matia kaleko sukurtsaleko langileek euskaraz bakarrik hitz egiten dute.	2
+prem98	Euskadiko Kutxak barriro be errenta-aitorpena eitteko euskerarik ez dakixen bihergin bat jarri dau Antiguako Matia kaleko sukurtsalien, Donostian.	prem98_hyp0	Euskadiko Kutxako Antiguako Matia kaleko sukurtsaleko errenta-aitorpena egiten laguntzen duen langilea erdaldun hutsa da.	0
+prem99	Erizainen arteko umoriek eroangarrixau eitten dau guztixe.	prem99_hyp0	Erizainek bere artean bromak egiten badituzte, dena hobeto eramaten da.	0
+prem99	Erizainen arteko umoriek eroangarrixau eitten dau guztixe.	prem99_hyp1	Erizainak umore onez egoteak asko laguntzen die pazienteei.	1
+prem99	Erizainen arteko umoriek eroangarrixau eitten dau guztixe.	prem99_hyp2	Erizainek umorea erabiltzeko debekua dute.	2
+prem100	Pandemixak ekarri dauzan begi bistako kalteez gainera, gertautakuek asko eta asko nabarmendu eta azaleratu dauz Europar Batasunaren ahulezixek eta, bestiek beste, salatu ditu Europako barrikuntza teknologikuaren gainbeherie eta lidergo industrial faltie.	prem100_hyp2	Gertatutakoak garbi utzi du, pandemiak eragindako kalteez gain, Europar Batasuna ahula dela baina berrikuntza teknologiko eta industrialaren munduko liderra dela.	2
+prem100	Pandemixak ekarri dauzan begi bistako kalteez gainera, gertautakuek asko eta asko nabarmendu eta azaleratu dauz Europar Batasunaren ahulezixek eta, bestiek beste, salatu ditu Europako barrikuntza teknologikuaren gainbeherie eta lidergo industrial faltie.	prem100_hyp1	Gertatutakoak garbi utzi du, pandemiak eragindako kalteak direla medio, Europar Batasunak munduan berrikuntza teknologiko eta industrialaren lidergoa berreskuratu behar duela.	1
+prem100	Pandemixak ekarri dauzan begi bistako kalteez gainera, gertautakuek asko eta asko nabarmendu eta azaleratu dauz Europar Batasunaren ahulezixek eta, bestiek beste, salatu ditu Europako barrikuntza teknologikuaren gainbeherie eta lidergo industrial faltie.	prem100_hyp0	Gertatutakoak garbi utzi du, pandemiak eragindako kalteez bestealde, Europar Batasuna ahula dela eta ez dela berrikuntza teknologiko eta industrialaren munduko liderra.	0
+prem101	Plazarik eskuratzen ez daben personak itxaron zerrendan sartzen diez, zozketien ordena berien.	prem101_hyp2	Plazarik eskuratzen ez baduzu, zozketa batean sartuko zara, itxaronzerrendako hurrenkera erabikitzeko.	2
+prem101	Plazarik eskuratzen ez daben personak itxaron zerrendan sartzen diez, zozketien ordena berien.	prem101_hyp1	Plaza eskuratzen ez duten pertsonek zozketa batean parte hartzeko aukera dute.	1
+prem101	Plazarik eskuratzen ez daben personak itxaron zerrendan sartzen diez, zozketien ordena berien.	prem101_hyp0	Plazarik lortu ezean, itxaronzerrendan sartuko zara, zozketaren ordena mantenduz.	0
+prem102	Ez bagara irudiketan, irudikauak izango gara.	prem102_hyp1	Ez bagara irudikatzen, guri buruzko iritzi okerrak ugarituko dira.	1
+prem102	Ez bagara irudiketan, irudikauak izango gara.	prem102_hyp0	Geuk geure burua irudikatzen ez badugu, besteek irudikatuko gaituzte.	0
+prem102	Ez bagara irudiketan, irudikauak izango gara.	prem102_hyp2	Ez bagara irudikatzen, guri buruzko irudikapenak existitzeari utziko dio.	2
+prem103	Eusko Jaurlaritzak azpimarratu dau 2003an hasi zala Ertzaintza Tratu Txarren Prebentzinorako Protokolue ezarten atxilotuen lege-bermie indartzeko.	prem103_hyp0	Ertzaintza Tratu Txarren Prebentziorako Protokoloa 2003tik dago indarrean atxilotuen eskubideak bermatzeko, Eusko Jaurlaritzaren arabera.	0
+prem103	Eusko Jaurlaritzak azpimarratu dau 2003an hasi zala Ertzaintza Tratu Txarren Prebentzinorako Protokolue ezarten atxilotuen lege-bermie indartzeko.	prem103_hyp2	Eusko Jaurlaritzaren esanetan, Ertzaintza Tratu Txarren Prebentziorako Protokoloa 2003an hasi zen ezartzen, presoen askatze prozesua arintzeko.	2
+prem103	Eusko Jaurlaritzak azpimarratu dau 2003an hasi zala Ertzaintza Tratu Txarren Prebentzinorako Protokolue ezarten atxilotuen lege-bermie indartzeko.	prem103_hyp1	Eusko Jaurlaritza 2003ko urtarrilean hasi zen Ertzaintza Tratu Txarren Prebentziorako Protokoloa lantzen atxilotuen lege-bermea indartzeko.	1
+prem104	Heteropatriarkauaren kalte-ordainak etxietako barrunbietan dauz, eta maitasun erromantikuen eraikitako hartu-emon afektibo-sexualak diez horreen adierazpide.	prem104_hyp2	Maitasun erromantikoan eraikitako harreman afektibo-sexualak heteropatriarkatuaren aurka borrokatzera ohituta daude.	2
+prem104	Heteropatriarkauaren kalte-ordainak etxietako barrunbietan dauz, eta maitasun erromantikuen eraikitako hartu-emon afektibo-sexualak diez horreen adierazpide.	prem104_hyp1	Maitasun erromantikoan eraikitako harreman afektibo-sexualek adierazten dutena aintzat hartu behar da.	1
+prem104	Heteropatriarkauaren kalte-ordainak etxietako barrunbietan dauz, eta maitasun erromantikuen eraikitako hartu-emon afektibo-sexualak diez horreen adierazpide.	prem104_hyp0	Maitasun erromantikoan eraikitako harreman afektibo-sexualek frogatzen dute heteropatriarkatuaren eragina nonahi dela.	0
+prem105	Ebook-ien irakurri doten lehenengo liburue izen da eta gustau jat esperientzixie	prem105_hyp2	Ebook formatuko liburu bat jada irakurri arren, gustatu zait esperientzia.	2
+prem105	Ebook-ien irakurri doten lehenengo liburue izen da eta gustau jat esperientzixie	prem105_hyp1	Ez nuen espero ebook-ean irakurriko nuen lehen liburua hain esperientzia polita izatea.	1
+prem105	Ebook-ien irakurri doten lehenengo liburue izen da eta gustau jat esperientzixie	prem105_hyp0	Hau ebook formatuan irakurri dudan liburu bakarra da eta atsegin zen esperientzia. 	0
+prem106	Masterizazinoko biherrien oraingo honetan be Andy Hippy Baldwin ibili da, Londreseko Metropolis estudixuen.	prem106_hyp1	Andy Hippy Baldwin-ek masterizazio lan guztia Londreseko Metropolis estudioan egin du.	1
+prem106	Masterizazinoko biherrien oraingo honetan be Andy Hippy Baldwin ibili da, Londreseko Metropolis estudixuen.	prem106_hyp2	Masterizazio lanean lehenbizikoz aritu da Andy Hippy Baldwin, Londreseko Metropolis estudioan.	2
+prem106	Masterizazinoko biherrien oraingo honetan be Andy Hippy Baldwin ibili da, Londreseko Metropolis estudixuen.	prem106_hyp0	Londreseko Metropolis estudioko Andy Hippy Baldwin-ek berriro lagundu du masterizazio lanean.	0
+prem107	2018ko gabonilaren 4an soziedadiaren izena eta xedie aldatu ebazan, bere jarduera-eremue Ibar Ezkerrera eta Txorierrira zabaltzeko asmoz.	prem107_hyp0	2018ko urte bukaeran aldatu ziren sozietatearen izena eta xedea, bere ekintzak Ibar Ezkerrean eta Txorierrian ere eskaintzeko xedearekin.	0
+prem107	2018ko gabonilaren 4an soziedadiaren izena eta xedie aldatu ebazan, bere jarduera-eremue Ibar Ezkerrera eta Txorierrira zabaltzeko asmoz.	prem107_hyp2	2018ko abenduaren 4an sozietatearen izena eta xedea aldatu zituen, bere jarduera-eremua Bilboko eremu guztietara hedatzeko asmoarekin. 	2
+prem107	2018ko gabonilaren 4an soziedadiaren izena eta xedie aldatu ebazan, bere jarduera-eremue Ibar Ezkerrera eta Txorierrira zabaltzeko asmoz.	prem107_hyp1	2018ko urtean sozietatearen izena eta xedea aldatzeaz gain, jarduera mota ere aldatu zuen.	1
+prem108	Sari banaketa honek euskeratik eindako itzulpengintza balixuen jartie deko helburu.	prem108_hyp2	Sari banaketa honek euskarara egindako itzulpengintza balioan jartzea du helburu.	2
+prem108	Sari banaketa honek euskeratik eindako itzulpengintza balixuen jartie deko helburu.	prem108_hyp1	Sari banaketa honen helburu bakarra euskaratik egindako itzulpengintza balioan jartzea da.	1
+prem108	Sari banaketa honek euskeratik eindako itzulpengintza balixuen jartie deko helburu.	prem108_hyp0	Sari banaketa honen xedea euskaratik egiten den itzulpenen balioa goraipatzea da.	0
+prem109	Aspaldixen sartu ginan istilu honetan eta daborduko ez deko atzera bueltaik.	prem109_hyp2	Orain dela gutxi sartu ginen borroka honetan eta ez du atzera bueltarik.	2
+prem109	Aspaldixen sartu ginan istilu honetan eta daborduko ez deko atzera bueltaik.	prem109_hyp1	Aspaldi hasi ginen borrokatzen eta ez dugu irabazteko modurik.	1
+prem109	Aspaldixen sartu ginan istilu honetan eta daborduko ez deko atzera bueltaik.	prem109_hyp0	Aspalditik dugu istilu hau eta ezin dugu atzera egin.	0
+prem110	Eskubidiek irabazteko legeren bat apurtu biherra dau beti.	prem110_hyp0	Eskubide gehiago erdietsi nahi izanez gero, debekatuta dagoen zerbait egin behar da beti.	0
+prem110	Eskubidiek irabazteko legeren bat apurtu biherra dau beti.	prem110_hyp2	Eskubide gehiago beti lortzen dira legeak errespetatzen badira.	2
+prem110	Eskubidiek irabazteko legeren bat apurtu biherra dau beti.	prem110_hyp1	Zenbat eta lege gehiago hautsi, orduan eta eskubide gehiago irabazi.	1
+prem111	Gidarixek datu interesgarrixek emon dauz eta oso entretenigarrixe izen da.	prem111_hyp0	Gidariak eskaini dituen datu interesgarriek esperientzia entretenigarri bihurtu dute.	0
+prem111	Gidarixek datu interesgarrixek emon dauz eta oso entretenigarrixe izen da.	prem111_hyp2	Gidariak eskainitako datuen interesa eskasekoa izan arren, esperientzia entretenigarria izan da.	2
+prem111	Gidarixek datu interesgarrixek emon dauz eta oso entretenigarrixe izen da.	prem111_hyp1	Gidaria entretenitu da beretzat interesgarria izan diren datuak emanez.	1
+prem112	Aspaldiko ametsa zan Praga ezautzie.	prem112_hyp2	Praga ezagutzen du aspalditik.	2
+prem112	Aspaldiko ametsa zan Praga ezautzie.	prem112_hyp1	Praga ezagutu duela amestu du.	1
+prem112	Aspaldiko ametsa zan Praga ezautzie.	prem112_hyp0	Praga ezagutzeko gogo handia izan du denbora luzez.	0
+prem113	Euskeriaren munduen gabizanok ondo asko dakiu ze nekagarrixe dan gure interesen defentsie.	prem113_hyp2	Euskararen munduan gabiltzanok ongi pasatzen dugu gure interesak defendatuz.	2
+prem113	Euskeriaren munduen gabizanok ondo asko dakiu ze nekagarrixe dan gure interesen defentsie.	prem113_hyp1	Euskararen munduan gabiltzanok gure interesak defendatzeaz nekatuta gaude.	1
+prem113	Euskeriaren munduen gabizanok ondo asko dakiu ze nekagarrixe dan gure interesen defentsie.	prem113_hyp0	Euskararen munduan gabiltzanok badakigu gure interesak defentatzeak nola nekatzen duen.	0
+prem114	Amazonek dronekaz banaketak eitteko patentie sartu dau.	prem114_hyp1	Amazonek patenteak sartzeko dronak banatu ditu.	1
+prem114	Amazonek dronekaz banaketak eitteko patentie sartu dau.	prem114_hyp2	Amazon dronekin banaketak egiteko patentea noiz sartu zain dago.	2
+prem114	Amazonek dronekaz banaketak eitteko patentie sartu dau.	prem114_hyp0	Paketeak dronekin banatzeko patentea bidali du Amazonek.	0
+prem115	Santutxuar ugeri hurbildu da Gaztetxe ingurure itxieraren kontra protestetan.	prem115_hyp0	Santutxun bizi den jende asko etorri da gaztetxea irekita mantentzeko eskatzera.	0
+prem115	Santutxuar ugeri hurbildu da Gaztetxe ingurure itxieraren kontra protestetan.	prem115_hyp1	Santutxuar ugarik inguratu dute gaztetxea itxieraren aurka protestatzeko.	1
+prem115	Santutxuar ugeri hurbildu da Gaztetxe ingurure itxieraren kontra protestetan.	prem115_hyp2	Santutxuar ugari hurbildu da gaztetxea ixteko eskatzera.	2
+prem116	Musikie oso garrantzitsue izen da nire bizitzan.	prem116_hyp2	Musikak nire bizitzan duen oraingo garrantzia berria da.	2
+prem116	Musikie oso garrantzitsue izen da nire bizitzan.	prem116_hyp1	Musika oso garrantzitsua omen da bizitzan.	1
+prem116	Musikie oso garrantzitsue izen da nire bizitzan.	prem116_hyp0	Musikaren garrantzia sumatu dut bizitzan zehar.	0
+prem117	Indderra bera naturala da, beraz bere erabilerak ezin dau ona edo txarra izen balixo absolutu baten moduen.	prem117_hyp1	Indarra erabiltzeaz baliatu dena ona edo txarra den esatea ezin dugu normalizatu.	1
+prem117	Indderra bera naturala da, beraz bere erabilerak ezin dau ona edo txarra izen balixo absolutu baten moduen.	prem117_hyp0	Indarra naturala denez, bere erabilera ona edo txarra den esateko modu absoluturik ez dago.	0
+prem117	Indderra bera naturala da, beraz bere erabilerak ezin dau ona edo txarra izen balixo absolutu baten moduen.	prem117_hyp2	Indarraren erabilera ona edo txarra den jakiteko, balio absolutuak ezin naturalagoak dira.	2
+prem118	Une zehatzetan jentieren erantzuna eta konpromisue argi eta garbi azaltzen da.	prem118_hyp0	Une zehatzetan jendeak erantzuten du arazoei.	0
+prem118	Une zehatzetan jentieren erantzuna eta konpromisue argi eta garbi azaltzen da.	prem118_hyp1	Jendea beti dago prest edozer egiteko.	1
+prem118	Une zehatzetan jentieren erantzuna eta konpromisue argi eta garbi azaltzen da.	prem118_hyp2	Une zehatzetan jendea beldurtzen da	2
+prem119	Gazteok Eraikitzen dinamikaren barruan proponidutako 18 proiektuei ekarpenak eittie izango da bixerko egunaren helburue.	prem119_hyp0	Proiektuen artean gaztetxe berri bat eraikitzea dago.	0
+prem119	Gazteok Eraikitzen dinamikaren barruan proponidutako 18 proiektuei ekarpenak eittie izango da bixerko egunaren helburue.	prem119_hyp2	Biharko ekarpena hurrengo astera mugituko da.	2
+prem119	Gazteok Eraikitzen dinamikaren barruan proponidutako 18 proiektuei ekarpenak eittie izango da bixerko egunaren helburue.	prem119_hyp1	Gazteok Eraikitzen 2018ko martxoan sortu zen.	1
+prem120	Nik bestiaren hizkuntzie ikesten badot, baina bestiek ez badau nirie errespetetan, bere hizkuntzan berba eittie ez da irekitze keinue, mendekotasun eta sumisino keinue baino	prem120_hyp2	Beste hizkuntzak errespetatzea beharrezkoa da.	2
+prem120	Nik bestiaren hizkuntzie ikesten badot, baina bestiek ez badau nirie errespetetan, bere hizkuntzan berba eittie ez da irekitze keinue, mendekotasun eta sumisino keinue baino	prem120_hyp1	Beste hizkuntzak ikastea ona da pertsonentzat.	1
+prem120	Nik bestiaren hizkuntzie ikesten badot, baina bestiek ez badau nirie errespetetan, bere hizkuntzan berba eittie ez da irekitze keinue, mendekotasun eta sumisino keinue baino	prem120_hyp0	Beste pertsona nire hizkuntza ez badu errespetatzen gauza bat argi dago, beren gurasoek ez zuten ondo zaindu bere semeak.	0
+prem121	Paraje ederra da mendixek eta itxosuek bat eitten daben hau.	prem121_hyp2	Mendiak eta itsasoak zaborrez beteta dauda.	2
+prem121	Paraje ederra da mendixek eta itxosuek bat eitten daben hau.	prem121_hyp1	Mundua leku ederrez beteta dago.	1
+prem121	Paraje ederra da mendixek eta itxosuek bat eitten daben hau.	prem121_hyp0	Mendia eta itsasoa topatzen diren tokian edertasuna aurkitu dezakezu.	0
+prem122	Norberaren alkarte, enpresa edo erakundearen dinamikiari astindu bat emoteko tresnak proponiduten diez bertan.	prem122_hyp1	Dinamika aldatzea jendearen adimena irekitzen du.	1
+prem122	Norberaren alkarte, enpresa edo erakundearen dinamikiari astindu bat emoteko tresnak proponiduten diez bertan.	prem122_hyp2	Dinamika aldatzea arazo asko ekarri dezake, adibidez deserosotasuna.	2
+prem122	Norberaren alkarte, enpresa edo erakundearen dinamikiari astindu bat emoteko tresnak proponiduten diez bertan.	prem122_hyp0	Dinamika aldatzeko modu hoberena bestearen larruan sartzea da.	0
+prem123	Lucia gizon bategaz ezkondute dau.	prem123_hyp2	Lucia dibortziatua da.	2
+prem123	Lucia gizon bategaz ezkondute dau.	prem123_hyp0	Gizon bat Luciarekin ezkonduta dago.	0
+prem123	Lucia gizon bategaz ezkondute dau.	prem123_hyp1	Gizonezkoak eta emakumeak maiz ezkontzen dira.	1
+prem124	Ez dau Euskal Herrixen antzerkixe Letek besteko ikuspuntutatik praktikau dauenik	prem124_hyp2	Letek ez du hainbeste ikuspuntutatik lan egin.	2
+prem124	Ez dau Euskal Herrixen antzerkixe Letek besteko ikuspuntutatik praktikau dauenik	prem124_hyp1	500 urtez egin dira antzezlanak.	1
+prem124	Ez dau Euskal Herrixen antzerkixe Letek besteko ikuspuntutatik praktikau dauenik	prem124_hyp0	Lete sari asko irabazi zuen bere antzerki antzezlanagatik.	0
+prem125	Igaz erabagi neban 40. urteurrena goitik eta sarri ospatu biher neuela.	prem125_hyp2	Nire 40 urteurrena ahaztu nuen.	2
+prem125	Igaz erabagi neban 40. urteurrena goitik eta sarri ospatu biher neuela.	prem125_hyp1	Urteurrenak garrantzitsuak dira.	1
+prem125	Igaz erabagi neban 40. urteurrena goitik eta sarri ospatu biher neuela.	prem125_hyp0	Nire 40 urteurrenean munduko festa izan nuen.	0
+prem126	Alderdi politiko guztixetako ordezkarixek dekozan Administrazino Kontseiluek zuzentzen dau soziedadie, eta Batzar Nausixe Udalbatzar bera da.	prem126_hyp0	Alderdi politikoen artean PP, PNV, PSO, eta Sumar daude.	0
+prem126	Alderdi politiko guztixetako ordezkarixek dekozan Administrazino Kontseiluek zuzentzen dau soziedadie, eta Batzar Nausixe Udalbatzar bera da.	prem126_hyp2	Udalbatzarra ez da politikariena, funtzionarioena eta herritarrena baizik.	2
+prem126	Alderdi politiko guztixetako ordezkarixek dekozan Administrazino Kontseiluek zuzentzen dau soziedadie, eta Batzar Nausixe Udalbatzar bera da.	prem126_hyp1	Udalbatzarra Eusko Jaurlaritzarekin batera egiten du lan.	1
+prem127	Hasikeratik helburue finkau eben: elebidun orekauek izetie gure seme-alabak.	prem127_hyp0	Gure helburua da seme-alabak izatea.	0
+prem127	Hasikeratik helburue finkau eben: elebidun orekauek izetie gure seme-alabak.	prem127_hyp1	Denon seme-alabak elebidun izan beharko zuten.	1
+prem127	Hasikeratik helburue finkau eben: elebidun orekauek izetie gure seme-alabak.	prem127_hyp2	Ez dute seme-alabarik nahi.	2
+prem128	2016ko maiatzaren 1ien, ADES Espeleologixa Alkartiek labar-arte moltso garrantzitsue aurkitu eban Lekittoko Armintxe kobazuluen.	prem128_hyp1	Labar-artea zaharrena K.a. 600. urtekoa da.	1
+prem128	2016ko maiatzaren 1ien, ADES Espeleologixa Alkartiek labar-arte moltso garrantzitsue aurkitu eban Lekittoko Armintxe kobazuluen.	prem128_hyp2	Labar-artea graffiti bat izan zen.	2
+prem128	2016ko maiatzaren 1ien, ADES Espeleologixa Alkartiek labar-arte moltso garrantzitsue aurkitu eban Lekittoko Armintxe kobazuluen.	prem128_hyp0	Labar-artea bisoi baten ehizari buruzkoa zen.	0
+prem129	Eta ogi goxue erosi dou mormoien baserrixen.	prem129_hyp1	Ogiak ona dago bat edo bi egunetarako.	1
+prem129	Eta ogi goxue erosi dou mormoien baserrixen.	prem129_hyp2	Mormoiei erosi diegun ogia gogorra eta zapore gabekoa da	2
+prem129	Eta ogi goxue erosi dou mormoien baserrixen.	prem129_hyp0	Mormoiek egin duten ogia oso goxoa da.	0
+prem130	Tortura salatu ze–uen arren ez zan zabaldu barria.	prem130_hyp2	Tortura egin zutela mundua ezustean hartu zuen.	2
+prem130	Tortura salatu ze–uen arren ez zan zabaldu barria.	prem130_hyp1	Norbait torturatzea munduko gauza txarrena da.	1
+prem130	Tortura salatu ze–uen arren ez zan zabaldu barria.	prem130_hyp0	3 urtez egon ziren torturatzen gizajo hori.	0
+prem131	Umorie oso aldakorra da, asko fluktuetan dau.	prem131_hyp0	Betidanik dakigu bere umorea aldakorra dela.	0
+prem131	Umorie oso aldakorra da, asko fluktuetan dau.	prem131_hyp1	Pertsona baten umorea ez da beti berdina.	1
+prem131	Umorie oso aldakorra da, asko fluktuetan dau.	prem131_hyp2	Beti pozik dago.	2
+prem132	Izen be Donostire juen zaitekez garraio publikuen, edo inguruko auzoren batien aparkau, edo ordainpeko parking batien.	prem132_hyp2	Ez joan Donostiara dena oso gareztia da.	2
+prem132	Izen be Donostire juen zaitekez garraio publikuen, edo inguruko auzoren batien aparkau, edo ordainpeko parking batien.	prem132_hyp1	Bilbotik Donostiara autobuses garraioa ordu bat eta erdi da gutxi gora behera.	1
+prem132	Izen be Donostire juen zaitekez garraio publikuen, edo inguruko auzoren batien aparkau, edo ordainpeko parking batien.	prem132_hyp0	Garraio publiko bat hartzen baduzue hartu autobusa, ez pentsa trena hartzean ere.	0
+prem133	Arratsaldeko seiretan hasiko da dokumentala Uztaldi gaztetxien.	prem133_hyp2	Uztaldi gaztetxeari telebista apurtu zaio.	2
+prem133	Arratsaldeko seiretan hasiko da dokumentala Uztaldi gaztetxien.	prem133_hyp1	Uztaldi gaztetxea gazteez beteta dago.	1
+prem133	Arratsaldeko seiretan hasiko da dokumentala Uztaldi gaztetxien.	prem133_hyp0	Uztaldi gaztetxea arratsaldeetan irekita dago.	0
+prem134	Monogamia fidelak aintzen dauzan amaiera zoriontsuek ez diez uste bezain ohikuek.	prem134_hyp1	Monogamia eta poligamia kontrakoak dira.	1
+prem134	Monogamia fidelak aintzen dauzan amaiera zoriontsuek ez diez uste bezain ohikuek.	prem134_hyp2	Monogamia maitagarrien ipuinetan bezala beti amaiera zoriontsua dakar.	2
+prem134	Monogamia fidelak aintzen dauzan amaiera zoriontsuek ez diez uste bezain ohikuek.	prem134_hyp0	Amaiera zoriontsua izateko lan egin behar duzu.	0
+prem135	Indderrez inposautako errealidade bati aurre eitteko indderra biherrezkue da, lehenik eta behin.	prem135_hyp1	Errealitate bati aurre egiteko lehenik prest egon behar zara.	1
+prem135	Indderrez inposautako errealidade bati aurre eitteko indderra biherrezkue da, lehenik eta behin.	prem135_hyp0	Indarra bakarrik ez da nahikoa, iraunkortasuna ere behar da.	0
+prem135	Indderrez inposautako errealidade bati aurre eitteko indderra biherrezkue da, lehenik eta behin.	prem135_hyp2	Indarrez inposatutako errealitate baten aurka lehen urratsa komunikazioa da.	2
+prem136	Astialdiko Begirale eta Zuzendari ikastaruekaz batera, Eusko Jaurlaritzak luzatutako Titulazino Ofizialen artien dau.	prem136_hyp0	Astialdiko Begirale 150 orduko ikastaroa da eta modu estentsiboan zein intentsiboan egin daiteke.	0
+prem136	Astialdiko Begirale eta Zuzendari ikastaruekaz batera, Eusko Jaurlaritzak luzatutako Titulazino Ofizialen artien dau.	prem136_hyp2	Astialdiko Begirale ikastaroa gobernu zentrala luzatutako Titulazio Ofizialen artean dago.	2
+prem136	Astialdiko Begirale eta Zuzendari ikastaruekaz batera, Eusko Jaurlaritzak luzatutako Titulazino Ofizialen artien dau.	prem136_hyp1	Ikastaroak modu hoberenak dira gauza berriak ikasteko.	1
+prem137	ON Bizkaia Sarixek jarduera ekonomikue eta lanpostuak sortzeko enpresek eindako ekarpena goraipatzen dabe.	prem137_hyp2	Sortzen diren behin-behineko lanpostuak dira eta horregatik ez genuke premio bat eman behar.	2
+prem137	ON Bizkaia Sarixek jarduera ekonomikue eta lanpostuak sortzeko enpresek eindako ekarpena goraipatzen dabe.	prem137_hyp1	Gaur egungo lanak gero eta aurreratuagoak dira orain dela 1000 urterekin alderatuta.	1
+prem137	ON Bizkaia Sarixek jarduera ekonomikue eta lanpostuak sortzeko enpresek eindako ekarpena goraipatzen dabe.	prem137_hyp0	Urte honetan 1.300.000 lanpostu berriak sortu dira.	0
+prem138	Plazer haundixe izen zan gora ailegetie.	prem138_hyp1	Helburuak betetzea izugarria da	1
+prem138	Plazer haundixe izen zan gora ailegetie.	prem138_hyp0	Gora iritsi genuenean bistak ederrak ziren.	0
+prem138	Plazer haundixe izen zan gora ailegetie.	prem138_hyp2	Ez genuen gora iritsi Mikelek hanka apurtu zuelako.	2
+prem139	Ikastaro zehatzak antolatuko diez urtien ziher gai desbardinak jorratzeko: espazixuek, psikomotrizidadie...	prem139_hyp1	Ikastaroen helburua beti da jendeari gauza berriak irkatea.	1
+prem139	Ikastaro zehatzak antolatuko diez urtien ziher gai desbardinak jorratzeko: espazixuek, psikomotrizidadie...	prem139_hyp0	Ikastaroen artean arte moderno abstraktua hoberena da, Mikel dagoeneko izena eman du.	0
+prem139	Ikastaro zehatzak antolatuko diez urtien ziher gai desbardinak jorratzeko: espazixuek, psikomotrizidadie...	prem139_hyp2	Ikastaroak alferrikakoak dira, jendea ez duelako ezer ikasten ez badute lan egiten.	2
+prem140	Gogoeta sakonak einda dekoz gure artearen egoeriaren inguruen.	prem140_hyp0	Gurfe arteari buruz asko hitz egin dugu.	0
+prem140	Gogoeta sakonak einda dekoz gure artearen egoeriaren inguruen.	prem140_hyp2	Ez zaigu axola ematen gure artea.	2
+prem140	Gogoeta sakonak einda dekoz gure artearen egoeriaren inguruen.	prem140_hyp1	Bakoitzak duen artea bakarra da.	1
+prem141	Kanpaina antikapitalistaren barruan aste honetan ekimen gehixau antolatu dabez.	prem141_hyp2	Kanpaina antikapitalista bertan behera utzi dute, ez baizen jendea agertu.	2
+prem141	Kanpaina antikapitalistaren barruan aste honetan ekimen gehixau antolatu dabez.	prem141_hyp0	Ekimen berrien artean kontzertu bat dago.	0
+prem141	Kanpaina antikapitalistaren barruan aste honetan ekimen gehixau antolatu dabez.	prem141_hyp1	Kanpaina antikapitalistak eta kanpaina antisozialistak kontrakoak dira.	1
+prem142	"Helbide horreek aldatzeko, egoitza elektronikoko ""Nire Datuak"" atalera sartu biher dozu."	prem142_hyp1	Helbide elektronikoak mezuak bidaltzeko erabiltzen dira.	1
+prem142	"Helbide horreek aldatzeko, egoitza elektronikoko ""Nire Datuak"" atalera sartu biher dozu."	prem142_hyp2	Ezinezkoa da  helbideak aldatzea web orria erori delako.	2
+prem142	"Helbide horreek aldatzeko, egoitza elektronikoko ""Nire Datuak"" atalera sartu biher dozu."	prem142_hyp0	"Nire Datuak sartu eta gero, ""OK"" botoia sakatu behar duzu."	0
+prem143	Biherra eitteko eta hartu-emonak izateko modue aldatu dau eraldaketa digitalak.	prem143_hyp1	Eraldaketa digitala mundua behar duen hurrengo aurrerapena da.	1
+prem143	Biherra eitteko eta hartu-emonak izateko modue aldatu dau eraldaketa digitalak.	prem143_hyp0	Jendeak denbora gehiago mugikorrean eta ordenagailuan irauten du.	0
+prem143	Biherra eitteko eta hartu-emonak izateko modue aldatu dau eraldaketa digitalak.	prem143_hyp2	Jendeak beti bezala lan egiten du.	2
+prem144	Beti dau kexarako bidie, batez be norbera danien ahul eta laguntza inoz ez danien perfektue izeten.	prem144_hyp0	Laguntzarekin edonork edozer egin dezake.	0
+prem144	Beti dau kexarako bidie, batez be norbera danien ahul eta laguntza inoz ez danien perfektue izeten.	prem144_hyp2	Ez dago inor ahul, lan egin nahi ez duen jendea baizik.	2
+prem144	Beti dau kexarako bidie, batez be norbera danien ahul eta laguntza inoz ez danien perfektue izeten.	prem144_hyp1	Guztiok behar dugu laguntza noizbehinka.	1
+prem145	Ez ekixen hilda euenik.	prem145_hyp2	Ez zegoen hilda, lotan zegoen.	2
+prem145	Ez ekixen hilda euenik.	prem145_hyp1	Hilik dauden pertsonak ez dira mugitzen.	1
+prem145	Ez ekixen hilda euenik.	prem145_hyp0	Hil zegoela zirudien.	0
+prem146	Guztiz hunkitute gelditu nintzan ezusteko agur honegaz.	prem146_hyp2	Ezusteko horri buruz duela aste ugari izen nuen berri.	2
+prem146	Guztiz hunkitute gelditu nintzan ezusteko agur honegaz.	prem146_hyp1	Ezustekoak onak edo txarrak izan daitezke.	1
+prem146	Guztiz hunkitute gelditu nintzan ezusteko agur honegaz.	prem146_hyp0	Zorionez ezusteko ona izan zen.	0
+prem147	Samsungek badeko smart school bat eta proponiduten dau klasiek emotie bere Samsung Gear VR antiejuekaz eta MagiclWB S2 arbelekaz.	prem147_hyp1	Samsung telebistak, mugikorrak eta kamerak egiten du.	1
+prem147	Samsungek badeko smart school bat eta proponiduten dau klasiek emotie bere Samsung Gear VR antiejuekaz eta MagiclWB S2 arbelekaz.	prem147_hyp0	Samsung munduko klase teknologikoena edukiko du.	0
+prem147	Samsungek badeko smart school bat eta proponiduten dau klasiek emotie bere Samsung Gear VR antiejuekaz eta MagiclWB S2 arbelekaz.	prem147_hyp2	Samsung ezin du klaseak eman VR betaurrekoekin, haurrak jolasten egongo zirelako.	2
+prem148	Getarizako berbakerie eta ahozko ondarie batzen dabezan GETARIAKO AHOTSAK egitasmuaren emoitzie da GETAIKO EUSKERA liburue.	prem148_hyp0	GETAIKO EUSKERA liburuan Getariako hizkera aurkitu daiteke.	0
+prem148	Getarizako berbakerie eta ahozko ondarie batzen dabezan GETARIAKO AHOTSAK egitasmuaren emoitzie da GETAIKO EUSKERA liburue.	prem148_hyp2	GETAIKO EUSKERA liburuan Bizkaiko euskara jasotzen da.	2
+prem148	Getarizako berbakerie eta ahozko ondarie batzen dabezan GETARIAKO AHOTSAK egitasmuaren emoitzie da GETAIKO EUSKERA liburue.	prem148_hyp1	Ez zait gustatzen GETAIKO EUSKERA liburua.	1
+prem149	Digitalizazinuaren hasikeretan, webguniek sortu zien, eta komunikazinue demokratizetako aukerak eskeini ebezan.	prem149_hyp0	Digitalizazioaren hastapenetan, webguneak ezagunagoak bihurtu ziren.	0
+prem149	Digitalizazinuaren hasikeretan, webguniek sortu zien, eta komunikazinue demokratizetako aukerak eskeini ebezan.	prem149_hyp1	Digitalazioa orain dela asko gertatu zen.	1
+prem149	Digitalizazinuaren hasikeretan, webguniek sortu zien, eta komunikazinue demokratizetako aukerak eskeini ebezan.	prem149_hyp2	Digitalazio hasieran, komunikazio aukerak suntsitu ziren.	2
+prem150	Sari-banaketarako neska gazte bi azaldu zien, sarrerie euskeraz eta tarteka be bai, baina euki nagusixe erderaz.	prem150_hyp1	Sari-banaketa Lekeition izan zen.	1
+prem150	Sari-banaketarako neska gazte bi azaldu zien, sarrerie euskeraz eta tarteka be bai, baina euki nagusixe erderaz.	prem150_hyp2	Neskek ingelesez hitz egin zuten sari-banaketan.	2
+prem150	Sari-banaketarako neska gazte bi azaldu zien, sarrerie euskeraz eta tarteka be bai, baina euki nagusixe erderaz.	prem150_hyp0	Neskek gehiago hitz egin zuten gaztelaniaz euskaraz baino.	0
+prem151	Guztiz gomendagarrixe da San Anton mendixe (sague) ezautzie.	prem151_hyp1	San Anton Mendia Espainian dago.	1
+prem151	Guztiz gomendagarrixe da San Anton mendixe (sague) ezautzie.	prem151_hyp0	San Anton media ezagutzeak merezi du.	0
+prem151	Guztiz gomendagarrixe da San Anton mendixe (sague) ezautzie.	prem151_hyp2	San Anton mendia oso itsusia da.	2
+prem152	Liligaz eta aurrez aurre topo ein ge–un.	prem152_hyp0	Lili ikusi genuen.	0
+prem152	Liligaz eta aurrez aurre topo ein ge–un.	prem152_hyp2	Lili orain dela asko ez dugula ikusten.	2
+prem152	Liligaz eta aurrez aurre topo ein ge–un.	prem152_hyp1	Lili oso polita zegoen.	1
+prem153	Euzkixe gero eta gorrixaue dan zirkunferentzixie baino ezta nerabiaren begixetan.	prem153_hyp2	Nerabeak gauza guztietaz konturatzen dira.	2
+prem153	Euzkixe gero eta gorrixaue dan zirkunferentzixie baino ezta nerabiaren begixetan.	prem153_hyp1	Nerabeak oso dibertigarriak dira.	1
+prem153	Euzkixe gero eta gorrixaue dan zirkunferentzixie baino ezta nerabiaren begixetan.	prem153_hyp0	Nerabeek ez dute kasu handirik egiten beste gauza guztiei.	0
+prem154	Solte taldiek 'IXA' azken diskuaren (Taupaka elkartie, 2016) Eraldatutako mundua abestixagaz bideoklip barritzailie prestau dau.	prem154_hyp1	Abestia ospetsua handia irabazi du denbora gutxian.	1
+prem154	Solte taldiek 'IXA' azken diskuaren (Taupaka elkartie, 2016) Eraldatutako mundua abestixagaz bideoklip barritzailie prestau dau.	prem154_hyp2	Solte taldea erretiratu egin dira eta ez dute ezer gehiago egingo.	2
+prem154	Solte taldiek 'IXA' azken diskuaren (Taupaka elkartie, 2016) Eraldatutako mundua abestixagaz bideoklip barritzailie prestau dau.	prem154_hyp0	Solte taldeak bideoklip berri bat prestatu du.	0
+prem155	Eraldaketa digitalak paradigma aldaketa haundixe dakar kulturaren eta sormenaren arluen.	prem155_hyp2	Eraldaketa digitalak paradigma aldaketa txikia dakar kultura eta sormen-arloan.	2
+prem155	Eraldaketa digitalak paradigma aldaketa haundixe dakar kulturaren eta sormenaren arluen.	prem155_hyp1	Eraldaketa digitala oraindik berrikuntza asko ekar ditzake gure gizartean.	1
+prem155	Eraldaketa digitalak paradigma aldaketa haundixe dakar kulturaren eta sormenaren arluen.	prem155_hyp0	Eraldaketa digitalak aukera gehiago ematen dizkizu kultura eta sormen-arloan.	0
+prem156	Europar Batasuna edozenbat hamarkada luzetan ibili da lehen munduaren erreferentzixie izeten demokraziaz, bardintasunaz, segurtasunaz eta ondoizateaz.	prem156_hyp2	Estatu Batuak izan dira lehen munduko erreferentzia demokraziaz, berdintasunaz, segurtasunaz eta ongizateaz.	2
+prem156	Europar Batasuna edozenbat hamarkada luzetan ibili da lehen munduaren erreferentzixie izeten demokraziaz, bardintasunaz, segurtasunaz eta ondoizateaz.	prem156_hyp1	Europar Batasunean hainbat herrialde daude.	1
+prem156	Europar Batasuna edozenbat hamarkada luzetan ibili da lehen munduaren erreferentzixie izeten demokraziaz, bardintasunaz, segurtasunaz eta ondoizateaz.	prem156_hyp0	Europar Batasuna haibat arlotan lehen munduko erreferentzia da.	0
+prem157	Logika komertzialagaz beitzen dou bizitzie: dana errez, eroso, aldagarri, kalidadeko eta merke.	prem157_hyp0	Bizitza logika komertzialaren bitartez begiratzen badugu dena errazagoa izango litzateke.	0
+prem157	Logika komertzialagaz beitzen dou bizitzie: dana errez, eroso, aldagarri, kalidadeko eta merke.	prem157_hyp2	Logika komertzialarekin begiratzen dugu bizitza: dena zail, deseroso, aldaezin, erdipurdiko eta garesti.	2
+prem157	Logika komertzialagaz beitzen dou bizitzie: dana errez, eroso, aldagarri, kalidadeko eta merke.	prem157_hyp1	Logika komertziala gaur eguneko kontzeptu berri bat da.	1
+prem158	Entzutegi Nazionalien, epailearen aurrien, ez eben aitorpena berretsi.	prem158_hyp0	Epaileari ez zioten aitortu, aitortu beharrekoa.	0
+prem158	Entzutegi Nazionalien, epailearen aurrien, ez eben aitorpena berretsi.	prem158_hyp2	Dena aitortu zuten epailearen aurrean.	2
+prem158	Entzutegi Nazionalien, epailearen aurrien, ez eben aitorpena berretsi.	prem158_hyp1	Entzutegi Nazionalean erabaki hartzen dira.	1
+prem159	Joseph Camino saria jasoko dau Antton Olariagak Santutxun, euskal komikixaren inguruko Parrapien Komiki Egunak jardunaldien barruan.	prem159_hyp2	Joseph Caminok saria Madrilen jasoko du.	2
+prem159	Joseph Camino saria jasoko dau Antton Olariagak Santutxun, euskal komikixaren inguruko Parrapien Komiki Egunak jardunaldien barruan.	prem159_hyp1	Joseph Camino 2015ean hil zen.	1
+prem159	Joseph Camino saria jasoko dau Antton Olariagak Santutxun, euskal komikixaren inguruko Parrapien Komiki Egunak jardunaldien barruan.	prem159_hyp0	Antton Olariagak Joseph Camino saria irabaziko du egindako lanagatik.	0
+prem160	Atzo une batez Nancho Novo aktore galiziarra ikusi neban telebisinuen Jesusen aitaren paperien, serio demonino.	prem160_hyp2	Nacho Novo aktoreak beti betetzen ditu umorezko paperak.	2
+prem160	Atzo une batez Nancho Novo aktore galiziarra ikusi neban telebisinuen Jesusen aitaren paperien, serio demonino.	prem160_hyp1	Nacho Novo aktorea 1958ko irailaren 17an jaio zen.	1
+prem160	Atzo une batez Nancho Novo aktore galiziarra ikusi neban telebisinuen Jesusen aitaren paperien, serio demonino.	prem160_hyp0	Atzo une batez serio demonio pelikula ikusi nuen.	0
+prem161	Garagarrilaren 13an inaugurautako lokala irailaren 28an itxiazo eban Ertzaintzak epailiek sinautako hustutzeko agindue betearazota.	prem161_hyp1	Lokala asko gustatzen zitzaidan.	1
+prem161	Garagarrilaren 13an inaugurautako lokala irailaren 28an itxiazo eban Ertzaintzak epailiek sinautako hustutzeko agindue betearazota.	prem161_hyp2	Uztailaren 13an inauguratutako lokala irekita jarraitzen du eta ez sekula itxi.	2
+prem161	Garagarrilaren 13an inaugurautako lokala irailaren 28an itxiazo eban Ertzaintzak epailiek sinautako hustutzeko agindue betearazota.	prem161_hyp0	Lokalak hil bat baino pixka bat gehiago egon da irekita.	0
+prem162	Gau batien, Lucia eta Miren ardo batzuen bueltan ebizela, Andrea gonbidau eben nagusiaren etxera, eta erlazino sexualak izen ebezan hirurek.	prem162_hyp0	Harreman sexualak izan zituzten egunean, nagusiaren etxean egon ziren.	0
+prem162	Gau batien, Lucia eta Miren ardo batzuen bueltan ebizela, Andrea gonbidau eben nagusiaren etxera, eta erlazino sexualak izen ebezan hirurek.	prem162_hyp1	Harreman sexualak edukitzerakoan kontu handia izan behar da sexu-transmisioko gaixotasunekin.	1
+prem162	Gau batien, Lucia eta Miren ardo batzuen bueltan ebizela, Andrea gonbidau eben nagusiaren etxera, eta erlazino sexualak izen ebezan hirurek.	prem162_hyp2	Lucia, Miren eta Andrea birjinak dira.	2
+prem163	Laster jakinarazoko da pelikulie zein aretok proiektauko dauen.	prem163_hyp2	Berandu jakinaraziko dute zein aretotan proiektatu den.	2
+prem163	Laster jakinarazoko da pelikulie zein aretok proiektauko dauen.	prem163_hyp1	Jendea pelikula ikusteko irrikaz dago.	1
+prem163	Laster jakinarazoko da pelikulie zein aretok proiektauko dauen.	prem163_hyp0	Pelikula areto batean ikusiko da.	0
+prem164	Gure arlue sufridue da, eta moldatzeko gaitasun haundia dekogu.	prem164_hyp2	Gure arloan ez dugu ezer egiten, oso aspergarria da.	2
+prem164	Gure arlue sufridue da, eta moldatzeko gaitasun haundia dekogu.	prem164_hyp1	Sufritua izan arren, asko gustatzen zaigu gure arloa.	1
+prem164	Gure arlue sufridue da, eta moldatzeko gaitasun haundia dekogu.	prem164_hyp0	Lan neketsu asko egiten dira gure arloan.	0
+prem165	Urdu–ako ekonomia bultzatzie dau helburu eta Euskadiko Garapen Agentzietako Garapen Sareko kidie da.	prem165_hyp1	Urduña Araban dago kokatuta.	1
+prem165	Urdu–ako ekonomia bultzatzie dau helburu eta Euskadiko Garapen Agentzietako Garapen Sareko kidie da.	prem165_hyp2	Euskadiko Garapen Agentzietako Garapen Sareak ez du kiderik.	2
+prem165	Urdu–ako ekonomia bultzatzie dau helburu eta Euskadiko Garapen Agentzietako Garapen Sareko kidie da.	prem165_hyp0	Urduñako ekonomiari lagundu nahi dio.	0
+prem166	Denpora urrixaue dabenek be badabe ikastaro laburrauek eitteko aukerie.	prem166_hyp0	Denbora urriago duten pertsonetan ere pentsatzen dute.	0
+prem166	Denpora urrixaue dabenek be badabe ikastaro laburrauek eitteko aukerie.	prem166_hyp1	Ez nekien horrelako aukerarik zegoela ikastaro horretan.	1
+prem166	Denpora urrixaue dabenek be badabe ikastaro laburrauek eitteko aukerie.	prem166_hyp2	Denbora urriagoa dutenek ere badute ikastaro luzeagoak egiteko aukera.	2
+prem167	Hiru urte eta erdiz auzoko gazteen topaleku izen eta gero, Lakomi Gaztetxiek 2011ko azaruen itxi ebazan atiek.	prem167_hyp1	Denbora asko igaro nuen Lakomi Gaztetzean.	1
+prem167	Hiru urte eta erdiz auzoko gazteen topaleku izen eta gero, Lakomi Gaztetxiek 2011ko azaruen itxi ebazan atiek.	prem167_hyp2	Lakomi Gaztetxea 10 urte iraun zuen irekita.	2
+prem167	Hiru urte eta erdiz auzoko gazteen topaleku izen eta gero, Lakomi Gaztetxiek 2011ko azaruen itxi ebazan atiek.	prem167_hyp0	Gaur egun Lakomi Gaztetxea ez dago irekita.	0
+prem168	1972xen Zeruko Argia-n hasi eta nortasun haundiko estilo barritzaileagaz, euskal umore grafikuaren historiari irauli bat emon eutson.	prem168_hyp0	Euskal umore grafikoaren historian Zeruko Argia-k eragina izan zuen.	0
+prem168	1972xen Zeruko Argia-n hasi eta nortasun haundiko estilo barritzaileagaz, euskal umore grafikuaren historiari irauli bat emon eutson.	prem168_hyp2	2015an Zeruko Argia-n hasi eta nortasun handiko estilo berritzailearekin, euskal umore grafikoaren historiari irauli bat eman zion.	2
+prem168	1972xen Zeruko Argia-n hasi eta nortasun haundiko estilo barritzaileagaz, euskal umore grafikuaren historiari irauli bat emon eutson.	prem168_hyp1	1972an Zeruko Argia-z gain beste gauza batzuk gertatu ziren.	1
+prem169	Gaztetape hondartzie harriz beteta dau; baina olagarro politt bategaz ein ge–un topo.	prem169_hyp2	Gaztetape hondartzan ez dago olagarrorik.	2
+prem169	Gaztetape hondartzie harriz beteta dau; baina olagarro politt bategaz ein ge–un topo.	prem169_hyp0	Gaztetape hondartza ez dago hondarrez betea.	0
+prem169	Gaztetape hondartzie harriz beteta dau; baina olagarro politt bategaz ein ge–un topo.	prem169_hyp1	Olagarroa oso pozoitsua zenez, ez gara inoiz berriro joan Gaztetape hondartzara.	1
+prem170	Osasunez nahiko ondo dabil eta lanien be tinko dirau, batez be gelen alokairuagaz.	prem170_hyp2	Hainbat gaixotasun ditu eta lanean kaskar samar dabil.	2
+prem170	Osasunez nahiko ondo dabil eta lanien be tinko dirau, batez be gelen alokairuagaz.	prem170_hyp1	Denbora batez kaskar samar ibili da, baina orain hobeto dabil.	1
+prem170	Osasunez nahiko ondo dabil eta lanien be tinko dirau, batez be gelen alokairuagaz.	prem170_hyp0	Gela alokairuetan lan ona egiten du.	0
+prem171	"Oso pozik eta eindako lana zaleekaz konpartiduteko ""gogotsu"" agertu diez taldekidiek."	prem171_hyp1	Zaleak izugarrizko irrika dute dena entzuteko.	1
+prem171	"Oso pozik eta eindako lana zaleekaz konpartiduteko ""gogotsu"" agertu diez taldekidiek."	prem171_hyp2	Taldekideak goibel egon dira.	2
+prem171	"Oso pozik eta eindako lana zaleekaz konpartiduteko ""gogotsu"" agertu diez taldekidiek."	prem171_hyp0	Taldekideak oso pozik daude egindako lanarekin.	0
+prem172	Demokrazixak ez gaittu aske eingo.	prem172_hyp2	Demokraziak askatu egingo gaitu	2
+prem172	Demokrazixak ez gaittu aske eingo.	prem172_hyp1	Demokrazia egitura politiko bat da.	1
+prem172	Demokrazixak ez gaittu aske eingo.	prem172_hyp0	Demokraziak preso egingo gaitu.	0
+prem173	Kaleetatik jasotako animalixek etorkizun duina izen deien, katuak adoptetako mezue jendarteratzie dau xede.	prem173_hyp0	Kaleetatik jasotako animaliek baldintza txarragoak dituzte, adoptatuak baino.	0
+prem173	Kaleetatik jasotako animalixek etorkizun duina izen deien, katuak adoptetako mezue jendarteratzie dau xede.	prem173_hyp2	Adoptatutako katuak kaleratzea du xede.	2
+prem173	Kaleetatik jasotako animalixek etorkizun duina izen deien, katuak adoptetako mezue jendarteratzie dau xede.	prem173_hyp1	Kaleetan katu asko daude.	1
+prem174	Ez diez aldaketak berehalakuen igarriko akaso, baina modu progresibuen pausuek norabide barri batien emoteko erespidiek finkatzen gabiz.	prem174_hyp0	Aldaketak apurka-apurka nabarituko dira.	0
+prem174	Ez diez aldaketak berehalakuen igarriko akaso, baina modu progresibuen pausuek norabide barri batien emoteko erespidiek finkatzen gabiz.	prem174_hyp2	Norabide zahar batean emateko irizpideak finkatzen dihardugu.	2
+prem174	Ez diez aldaketak berehalakuen igarriko akaso, baina modu progresibuen pausuek norabide barri batien emoteko erespidiek finkatzen gabiz.	prem174_hyp1	Aldaketak lortzeko mentalitate ekina izan behar da.	1
+prem175	Egun batien Amancay Gazta–aga Sagarzazuk (Guayaquil, 1980) Pandoraren kutxie zabaldu eta mila koloreko mundua deskubridu eban.	prem175_hyp2	 Amancay Gaztañaga Sagarzazu k Pandoraren kutxa itxita mantendu zuen.	2
+prem175	Egun batien Amancay Gazta–aga Sagarzazuk (Guayaquil, 1980) Pandoraren kutxie zabaldu eta mila koloreko mundua deskubridu eban.	prem175_hyp1	 Amancay Gaztañaga Sagarzazu k gipuzkoarra da.	1
+prem175	Egun batien Amancay Gazta–aga Sagarzazuk (Guayaquil, 1980) Pandoraren kutxie zabaldu eta mila koloreko mundua deskubridu eban.	prem175_hyp0	Pandoraren kutxa irekiz gero, mila koloreko mundua deskubritu dezakezu.	0
+prem176	Umorie erabilitte eta alaitasunagaz gauza asko lortzen diez umiekaz.	prem176_hyp2	Umorea eta alaitasuna umeekin erabiliz gero, zutaz aprobetxatuko dira	2
+prem176	Umorie erabilitte eta alaitasunagaz gauza asko lortzen diez umiekaz.	prem176_hyp1	Umeak batzuetan oso neketsuak dira.	1
+prem176	Umorie erabilitte eta alaitasunagaz gauza asko lortzen diez umiekaz.	prem176_hyp0	Umeei asko gustatzen zaie umorea eta alaitasuna.	0
+prem177	Zergaitik sortzen dauen gutako gehienongan billurre argitasun ezak, erabateko iluntasunak.	prem177_hyp1	Ez dugu beldurrik izan behar iluntasunari, beldur irrazional bat da.	1
+prem177	Zergaitik sortzen dauen gutako gehienongan billurre argitasun ezak, erabateko iluntasunak.	prem177_hyp2	Gizartea oso ausarta da, ez du inolako beldurrik.	2
+prem177	Zergaitik sortzen dauen gutako gehienongan billurre argitasun ezak, erabateko iluntasunak.	prem177_hyp0	Iluntasunak eta argi ezak beldurra gizarte gehienari beldurra ematen dio.	0
+prem178	Ibilbide luzie ein dau Urtxintxa Eskolak jendartie balixoetan trebatzen hezkuntza ez-formalien.	prem178_hyp0	Urtxintxa Eskolak urte asko daramatza hezkuntza ez-formaleko ikastaroetan balioak irakasten.	0
+prem178	Ibilbide luzie ein dau Urtxintxa Eskolak jendartie balixoetan trebatzen hezkuntza ez-formalien.	prem178_hyp1	Urtxintxa Eskolak hezkuntza ez-formaleko ikastaro ez-presentzialak eskaintzen ditu.	1
+prem178	Ibilbide luzie ein dau Urtxintxa Eskolak jendartie balixoetan trebatzen hezkuntza ez-formalien.	prem178_hyp2	Urtxintxa Eskolak esperientzia eskasa dauka hezkuntza ez-formalean.	2
+prem179	Ostien hainbat lokal okupetako saiakerak izen zien, baina ez eben aurrera ein.	prem179_hyp2	Hainbat lokal okupatzeko egindako ahaleginak oso arrakastatsuak izan ziren.	2
+prem179	Ostien hainbat lokal okupetako saiakerak izen zien, baina ez eben aurrera ein.	prem179_hyp1	Lokalak okupatzeko saiakeretan batez ere gazteek hartu zuten parte.	1
+prem179	Ostien hainbat lokal okupetako saiakerak izen zien, baina ez eben aurrera ein.	prem179_hyp0	Lokalak okupatu gabe gelditu ziren, egindako ahaleginak gorabehera.	0
+prem180	Antzerkixaren tradizinue horizontala da.	prem180_hyp2	Antzerkiaren tradizioa bertikala edo hierarkikoa da.	2
+prem180	Antzerkixaren tradizinue horizontala da.	prem180_hyp1	Antzerkiak tradizio luzea du.	1
+prem180	Antzerkixaren tradizinue horizontala da.	prem180_hyp0	Antzerkietan partaide guztiek dute garrantzia bera.	0
+prem181	Kale horretan garabi bat ipinteko garabi mobikor bategaz eta kamioi bategaz ein biherreko lanetarako itxiko da zirkulazinue.	prem181_hyp1	Kale horretan zirkulazioa hobetzeko obrak egingo dira.	1
+prem181	Kale horretan garabi bat ipinteko garabi mobikor bategaz eta kamioi bategaz ein biherreko lanetarako itxiko da zirkulazinue.	prem181_hyp0	Kale horretako trafikoa eten egingo da garabi mugikorra jarri ahal izateko.	0
+prem181	Kale horretan garabi bat ipinteko garabi mobikor bategaz eta kamioi bategaz ein biherreko lanetarako itxiko da zirkulazinue.	prem181_hyp2	Garabia ipintzeko lanek iraun bitartean, kale horretan autoak etengabe pasatzen ibiliko dira.	2
+prem182	Ikasitako begiakaz ikusten dou mundue.	prem182_hyp0	Gure ikuspegia ez da jaiotzetikoa, ikasi egiten dugu.	0
+prem182	Ikasitako begiakaz ikusten dou mundue.	prem182_hyp1	Guztiok dugu errealitateari buruzko ikuspuntu bat.	1
+prem182	Ikasitako begiakaz ikusten dou mundue.	prem182_hyp2	Gure iritziak ezin dira baldintzatu.	2
+prem183	Urritik bagilera bitartien iraupen laburreko ikastaruetan parte hartzeko aukerie emoten dau Urtxintxa Eskolak.	prem183_hyp1	Urtxintxa eskolan iraupen desberdineko formakuntzak egin daitezke urte sasoiaren arabera.	1
+prem183	Urritik bagilera bitartien iraupen laburreko ikastaruetan parte hartzeko aukerie emoten dau Urtxintxa Eskolak.	prem183_hyp2	Urtxintxa eskolak ikastaro luzeak baino ez ditu eskaintzen urritik ekainera.	2
+prem183	Urritik bagilera bitartien iraupen laburreko ikastaruetan parte hartzeko aukerie emoten dau Urtxintxa Eskolak.	prem183_hyp0	Urritik ekainera, Urtxintxa Eskolak ikastaro motzak eskaintzen ditu.	0
+prem184	EGA prestetako lekuak be badauz sarien ziher.	prem184_hyp1	EGA azterketa prestatzeko gogor egin behar da lan.	1
+prem184	EGA prestetako lekuak be badauz sarien ziher.	prem184_hyp0	EGA modalitate ez-presentzialean prestatu daiteke.	0
+prem184	EGA prestetako lekuak be badauz sarien ziher.	prem184_hyp2	EGA azterketa soilik aurrez-aurreko klaseetan prestatu daiteke.	2
+prem185	Arriaga antzokixek Macbeth, Shakespeareren lan klasikuaren bertsinue, estreinauko dau zezeilaren 7xen.	prem185_hyp0	Arriaga antzokian otsailaren 7an, Shakespeareren lan baten bertsio bat antzeztuko da, Macbeth, hain zuzen ere.	0
+prem185	Arriaga antzokixek Macbeth, Shakespeareren lan klasikuaren bertsinue, estreinauko dau zezeilaren 7xen.	prem185_hyp1	Arriaga antzokian estreinatuko den antzezlana Macbeth-en moldaketa guztiz modernoa da.	1
+prem185	Arriaga antzokixek Macbeth, Shakespeareren lan klasikuaren bertsinue, estreinauko dau zezeilaren 7xen.	prem185_hyp2	Otsailaren 7an ikuslegoak ezingo du Macbeth ikusi Arriaga antzokian.	2
+prem186	Marijuli oso persona bizia zan, goxue, hurbile, arduratsue, maitakorra.	prem186_hyp0	Marijulik bizitasun handia zuen eta jendearekin oso atsegina eta gertukoa zen.	0
+prem186	Marijuli oso persona bizia zan, goxue, hurbile, arduratsue, maitakorra.	prem186_hyp1	Marijuli herriko emakume nagusi bat zen.	1
+prem186	Marijuli oso persona bizia zan, goxue, hurbile, arduratsue, maitakorra.	prem186_hyp2	Marijuli pertsona bizigabea, zatarra, arduragabea, hotza eta desatsegina zen.	2
+prem187	Berrizabal 2008ko martixen atxilotu eben 18/98 makrosumarixuaren harira eta 12 urteko kartzela zigorra jarri eutson Auzitegi Nazionalak.	prem187_hyp2	Berrizabal 19/98 makrosumarioagatik atxilotu zuten 2008ko martxoan, baina epaitzerakoan, Auzitegi Nazionalak akusatua errugabe deklaratu eta karguetatik libre utzi zuen.	2
+prem187	Berrizabal 2008ko martixen atxilotu eben 18/98 makrosumarixuaren harira eta 12 urteko kartzela zigorra jarri eutson Auzitegi Nazionalak.	prem187_hyp1	Berrizabal 2008an atxilotu zuten, eta 18/98 makrosumarioren epaiketa iritsi bitartean behin-behineko espetxeratzea ezarri zioten.	1
+prem187	Berrizabal 2008ko martixen atxilotu eben 18/98 makrosumarixuaren harira eta 12 urteko kartzela zigorra jarri eutson Auzitegi Nazionalak.	prem187_hyp0	2008an 19/98 makrosumarioagatik atxilotua izan eta gero, Auzitegi Nazionalak erabaki zuen Berrizabal erruduna zela eta 12 urtez espetxeratuta egon beharko zuela.	0
+prem188	Izotz jauregixen ikastaro bat ein barri dau Peruk.	prem188_hyp2	Peru ez da sekula egon izotz gaineko pista batean.	2
+prem188	Izotz jauregixen ikastaro bat ein barri dau Peruk.	prem188_hyp1	Peru izotz-gaineko patinaje klase batean egon da.	1
+prem188	Izotz jauregixen ikastaro bat ein barri dau Peruk.	prem188_hyp0	Peruk duela gutxi izotz gaineko pista batean egon da.	0
+prem189	Nagusiaren etxeko ohe txiki batien amaittu eben laurek.	prem189_hyp0	Laurak euren buruzagiaren etxera joan ziren.	0
+prem189	Nagusiaren etxeko ohe txiki batien amaittu eben laurek.	prem189_hyp2	Kalean amaitu zuten laurek.	2
+prem189	Nagusiaren etxeko ohe txiki batien amaittu eben laurek.	prem189_hyp1	Nagusiaren etxean ohe txiki bat baino ez dago libre.	1
+prem190	Peru Kutxak antolautako ingelesezko udalekura jueten da goizetan.	prem190_hyp0	Goizero, Peru udalekuetara doa ingelesera ikastera.	0
+prem190	Peru Kutxak antolautako ingelesezko udalekura jueten da goizetan.	prem190_hyp2	Udan, Peruk goizak etxean pasatzen ditu.	2
+prem190	Peru Kutxak antolautako ingelesezko udalekura jueten da goizetan.	prem190_hyp1	Udan udalekuak antolatzen dira haur eta gazteentzako.	1
+prem191	Herri guztixek dabe erabagiteko eskubidie.	prem191_hyp2	Herri banaka batzuei dagokie erabakitzeko eskubidea.	2
+prem191	Herri guztixek dabe erabagiteko eskubidie.	prem191_hyp1	Herrialde batzuen konstituzioan erabakitzeko eskubidea aitortzen da.	1
+prem191	Herri guztixek dabe erabagiteko eskubidie.	prem191_hyp0	Edozein herrialdek izan behar du erabakitzeko aukera.	0
+prem192	Juen dan zapatuen hasi zien Santutxuko jaixek AEK euskaltegiko eta Gaztedi Dantzari Taldeko kideen pregoiagaz.	prem192_hyp2	Joan den larunbatean, Santutxuko jaiak hasi ziren, AEK euskaltegiko eta Gaztedi Dantzari Taldeko kideek pregoilari izateari uko egin bazioten ere.	2
+prem192	Juen dan zapatuen hasi zien Santutxuko jaixek AEK euskaltegiko eta Gaztedi Dantzari Taldeko kideen pregoiagaz.	prem192_hyp1	Aurreko larunbatean, Santutxun giro atsegina zegoen jaien hasiera zela eta.	1
+prem192	Juen dan zapatuen hasi zien Santutxuko jaixek AEK euskaltegiko eta Gaztedi Dantzari Taldeko kideen pregoiagaz.	prem192_hyp0	Aurreko larunbatean, Santutxuko jaiak hasi ziren AEK euskaltegiko eta Gaztedi Dantzari Taldeko pregoilarien eskutik.	0
+prem193	Markina Elkartegixe industria-izaera nabarmena dauen Enpresa Zentrue da.	prem193_hyp0	Markina Elkartegian biltzen diren enpresa gehienak bigarren-sektorekoak dira.	0
+prem193	Markina Elkartegixe industria-izaera nabarmena dauen Enpresa Zentrue da.	prem193_hyp1	Markina Elkartegian industria erloko enpresa ertainak biltzen dira.	1
+prem193	Markina Elkartegixe industria-izaera nabarmena dauen Enpresa Zentrue da.	prem193_hyp2	Markina Elkartegian biltzen diren enpresak lehen sektorekoak dira, hau da, nekazaritza eta abeltzaintzan dihardute.	2
+prem194	Oin hiru aste ikusi neban azkenekoz.	prem194_hyp0	Badira hiru aste ez dudala ikusi.	0
+prem194	Oin hiru aste ikusi neban azkenekoz.	prem194_hyp2	Hiru aste barru ikusiko dut lehenengo aldiz.	2
+prem194	Oin hiru aste ikusi neban azkenekoz.	prem194_hyp1	Badira hiru aste kalera irten nintzela.	1
+prem195	Gernika Elkartegixe enpresa-zentro bat da, sortu barri diezen enpresa-proiektuek eta hedapen-prozesuan dauzen enpresak hartzeko sortue.	prem195_hyp1	Gernika Elkartegia oso handia da eta sortu berri diren enpresa ugari biltzen dira.	1
+prem195	Gernika Elkartegixe enpresa-zentro bat da, sortu barri diezen enpresa-proiektuek eta hedapen-prozesuan dauzen enpresak hartzeko sortue.	prem195_hyp2	Gernika Elkartegiak enpresa-proiektu berriak eta hedatzen ari diren enpresak suntsitzeko balio du.	2
+prem195	Gernika Elkartegixe enpresa-zentro bat da, sortu barri diezen enpresa-proiektuek eta hedapen-prozesuan dauzen enpresak hartzeko sortue.	prem195_hyp0	Gernika Elkartegiaren helburua da duela gutxi sortu diren edo hedapen-prozesuan dauden enpresak biltzea.	0
+prem196	Esan daigun ofizio harrigarri bat dauela berak: munduko ibiltari.	prem196_hyp1	Dirua irabazteko lan egin behar da.	1
+prem196	Esan daigun ofizio harrigarri bat dauela berak: munduko ibiltari.	prem196_hyp0	Mundutik bidaiatzea ofizio izatea ez-ohikoa da.	0
+prem196	Esan daigun ofizio harrigarri bat dauela berak: munduko ibiltari.	prem196_hyp2	Bere lana etxetik mugitu barik burutzen du.	2
+prem197	Chicagotik Los Angeleserakoko hegaldixek ordu biko atzerapena euki eben.	prem197_hyp0	Chicagotik Los Angelesera zihoan hegazkina berandu iritsi zen.	0
+prem197	Chicagotik Los Angeleserakoko hegaldixek ordu biko atzerapena euki eben.	prem197_hyp1	Chicagotik Los Angelesera hiru orduero hegaldi bat ateratzen da.	1
+prem197	Chicagotik Los Angeleserakoko hegaldixek ordu biko atzerapena euki eben.	prem197_hyp2	Chicagotik Los Angeleserako hegaldiak bere iritsiera bi orduz aurreratu zuen.	2
+prem198	Jack Londonen parajeetan piraguaz errekak eta Alaskako laku ikusgarrietan ibili ostien, lagun haundi bat etorri jaten erietxera bisitan, atzo.	prem198_hyp0	Atzo, Kaliforniatik eta Alaskatik bidaiatzen ibili zen lagun batek bisita egin zidan ospitalean.	0
+prem198	Jack Londonen parajeetan piraguaz errekak eta Alaskako laku ikusgarrietan ibili ostien, lagun haundi bat etorri jaten erietxera bisitan, atzo.	prem198_hyp1	Atzo erietxean bisitatu ninduen lagun mina txiki-txikitatik ezagutzen dut.	1
+prem198	Jack Londonen parajeetan piraguaz errekak eta Alaskako laku ikusgarrietan ibili ostien, lagun haundi bat etorri jaten erietxera bisitan, atzo.	prem198_hyp2	Atzo ni bakarrik egon nintzen erietxean.	2
+prem199	Lau urtarotako lau denporaldi luze izen douz Paradisu zineman.	prem199_hyp2	Paradisu zineman lau urtarotako lau denboraldi laburrez aritu gara.	2
+prem199	Lau urtarotako lau denporaldi luze izen douz Paradisu zineman.	prem199_hyp0	Paradisu zineman komentatu ditugun lau denboraldiak iraupen luzekoak dira.	0
+prem199	Lau urtarotako lau denporaldi luze izen douz Paradisu zineman.	prem199_hyp1	Paradisu zineman komentatutako denboraldiek luze-labur aldakorra dute.	1
+prem200	Holan, Euskal Herriko umeek eta gaztiek zinemaz gozetako aukerie dekie euren hizkuntzan, euskeraz, erderazko bertsinuek estreinetan diezen momentu berien.	prem200_hyp0	Euskarazko eta gaztelerazko bertsioak aldi berean kaleratuko direnez, Euskal Herriko haur eta gazteek hasieratik gozatu ahalko dute zinemaz euskaraz.	0
+prem200	Holan, Euskal Herriko umeek eta gaztiek zinemaz gozetako aukerie dekie euren hizkuntzan, euskeraz, erderazko bertsinuek estreinetan diezen momentu berien.	prem200_hyp2	Modu honetan, Euskal Herriko haur eta gazteek filmak gazteleraz ikusi ahalko dituzte estreinalditik, baina euskaraz ikusteko luzaroan itxaron beharko dute.	2
+prem200	Holan, Euskal Herriko umeek eta gaztiek zinemaz gozetako aukerie dekie euren hizkuntzan, euskeraz, erderazko bertsinuek estreinetan diezen momentu berien.	prem200_hyp1	Euskal Herrian batzuetan filmak ingelesez ere gozatu daitezke estreinalditik.	1
+prem201	"Santutxuko Gazte Asanbladak kapitalismo ""zapaltzailearen aurrien"", ekimen bi antolau dauz aste honetan."	prem201_hyp0	Santutxuko Gazte Asanbladak kapitalismoaren opresioaren kontrako ekintzak antolatzen ditu.	0
+prem201	"Santutxuko Gazte Asanbladak kapitalismo ""zapaltzailearen aurrien"", ekimen bi antolau dauz aste honetan."	prem201_hyp1	Santutxuko Gazte Asanbladan astero ekintzak antolatzen dira.	1
+prem201	"Santutxuko Gazte Asanbladak kapitalismo ""zapaltzailearen aurrien"", ekimen bi antolau dauz aste honetan."	prem201_hyp2	Aste honetan, Santutxuko Gazte Asanbladaren eskutik bi ekintza antolatu dira kapitalismoaren alderdi askatzailea defendatzeko.	2
+prem202	Urtebetetze oparia aurten berezixe izen biher zan: amaren bizitzako argazki-bildumie eta merixenda sorpresie.	prem202_hyp2	Amaren aurtengo urtebetetze oparia guztiz arrunta izan behar zuen, hori dela eta argazkien bilduma bat baino ez diogu oparitu.	2
+prem202	Urtebetetze oparia aurten berezixe izen biher zan: amaren bizitzako argazki-bildumie eta merixenda sorpresie.	prem202_hyp1	Amaren aurtengo urtebetetzea berezia izan zedin, familia osoa elkartu gara meriendatzeko.	1
+prem202	Urtebetetze oparia aurten berezixe izen biher zan: amaren bizitzako argazki-bildumie eta merixenda sorpresie.	prem202_hyp0	Urte honetako urtebetetze-oparia bestelakoa izan zedin, amari ezusteko merienda bat prestatu eta argazkien bilduma bat oparitu genion.	0
+prem203	Ganera bizipoza emoten dau aristokrazian bat bazala euskerie maite eta erabilia izen eian pausuek emon ebazana.	prem203_hyp2	Aristokrata guztiek euskara gorrotatzen zuten, horregatik euskararen erabilera murrizteko urratsak eman zituzten.	2
+prem203	Ganera bizipoza emoten dau aristokrazian bat bazala euskerie maite eta erabilia izen eian pausuek emon ebazana.	prem203_hyp0	Aristokrataren batek euskararen erabilera bultzatzeko esfortzuak egin zituen hizkuntza atsegin zuelako, eta hori alaigarria da.	0
+prem203	Ganera bizipoza emoten dau aristokrazian bat bazala euskerie maite eta erabilia izen eian pausuek emon ebazana.	prem203_hyp1	Aristokraziaren artean baten batek euskal hizkuntzalaritzan ziharduen, eta horrek poztasuna ematen du.	1
+prem204	Euskaldunok hartzaile pasiboei euskeraz eitten deutsiegun heinien, eta orduen bakarrik, irauliko dou erabilerie.	prem204_hyp0	Euskararen erabilera handitzeko euskaldunok hartzaile pasiboei euskaraz hitz egin behar diegu.	0
+prem204	Euskaldunok hartzaile pasiboei euskeraz eitten deutsiegun heinien, eta orduen bakarrik, irauliko dou erabilerie.	prem204_hyp2	Euskararen erabilera iraultzeko euskaldunok hartzaile pasiboei erdaraz hitz egiten behar diegu.	2
+prem204	Euskaldunok hartzaile pasiboei euskeraz eitten deutsiegun heinien, eta orduen bakarrik, irauliko dou erabilerie.	prem204_hyp1	Haurrak aurrean daudenean, euskaldunok hartzaile pasiboekin maizago hitz egiten dugu euskaraz.	1
+prem205	Mikel Antzak 2012xen argitaratu dauen eleberrixe da Atzerri; autofikzinue ei da eleberrixaren muine.	prem205_hyp1	Mikel Antzaren Atzerri eleberria 2012 argitaratu zen, eta geroztik arrakasta handia izan du euskal irakurleen artean.	1
+prem205	Mikel Antzak 2012xen argitaratu dauen eleberrixe da Atzerri; autofikzinue ei da eleberrixaren muine.	prem205_hyp0	Mikel Antzak Atzerri nobela idatzi zuen, eta diotenez nobelaren ardatza bere bizipenen eta fikzioaren arteko nahasketa da.	0
+prem205	Mikel Antzak 2012xen argitaratu dauen eleberrixe da Atzerri; autofikzinue ei da eleberrixaren muine.	prem205_hyp2	2012an, Mikel Antzak Atzerri argitaratu du, hots, bere bizipenak biltzen dituen liburu autobiografikoa.	2
+prem206	Bukatu danien txaluek jo dodaz, lehen aldiz nire bizitzan.	prem206_hyp0	Amaitzean, atsegin izan dudala adierazi dut.	0
+prem206	Bukatu danien txaluek jo dodaz, lehen aldiz nire bizitzan.	prem206_hyp1	Nire amaierako erreakzioak oso ohikoak dira.	1
+prem206	Bukatu danien txaluek jo dodaz, lehen aldiz nire bizitzan.	prem206_hyp2	Amaitu denean, betiko legez, geldi-geldi geratu naiz.	2
+prem207	Ekintzailetzarako eta coworking areto bat be badau, enpresa-proiektu bat martxan jarteko biher dan azpiegitura guztixagaz.	prem207_hyp2	Nahiz eta ekintzailetzarako eta coworkinetako areto bat dituen, dituen azpiegiturak eskasegiak dira enpresa-proiektu bat martxan jartzeko.	2
+prem207	Ekintzailetzarako eta coworking areto bat be badau, enpresa-proiektu bat martxan jarteko biher dan azpiegitura guztixagaz.	prem207_hyp0	Enpresen arteko elkarlana bultzatzeko eta enpresa berrien sorkuntza bultzatzeko behar diren azpiegiturak ditu.	0
+prem207	Ekintzailetzarako eta coworking areto bat be badau, enpresa-proiektu bat martxan jarteko biher dan azpiegitura guztixagaz.	prem207_hyp1	Enpresa-proiektu bat martxan jartzeko beharrezkoak diren oinarrizko azpiegiturak enpresaren beharren araberakoak dira.	1
