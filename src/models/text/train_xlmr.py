@@ -174,7 +174,7 @@ def main():
         warmup_steps=args.warmup_steps,
         weight_decay=args.weight_decay,
         gradient_accumulation_steps=args.gradient_accumulation,
-        evaluation_strategy="steps",
+        eval_strategy="steps",
         eval_steps=eval_steps,
         save_strategy="steps",
         save_steps=save_steps,
@@ -196,7 +196,6 @@ def main():
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=test_dataset,
-        tokenizer=tokenizer,
         compute_metrics=compute_metrics,
         callbacks=[
             EarlyStoppingCallback(early_stopping_patience=args.early_stopping_patience)
