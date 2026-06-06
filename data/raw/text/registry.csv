@@ -1,0 +1,11 @@
+source,dialect,count,format,license,downloaded_date,path,notes
+xnli_eu,batua,400212,jsonl,CC-BY-NC,2026-06-06,data/raw/text/xnli_eu/eu/,HiTZ/xnli-eu machine-translated XNLI. Batua baseline. 392702 train + 2490 val + 5010 test.
+xnli_eu_mt,batua,400212,jsonl,CC-BY-NC,2026-06-06,data/raw/text/xnli_eu/eu_mt/,HiTZ/xnli-eu MT variant. Batua baseline.
+xnli_eu_native,batua,621,jsonl,CC-BY-NC,2026-06-06,data/raw/text/xnli_eu/eu_native/,HiTZ/xnli-eu native speaker translations. Small test set only.
+basqueparl,batua,342666,jsonl,public,2026-06-06,data/raw/text/basqueparl/sample_50k/,HiTZ/basqueparl. 2012-2020 parliament transcriptions. eu+es. Speaker metadata present (party, birth year) but no location. Sampled 50k.
+wikipedia_eu,batua,416347,jsonl,CC-BY-SA,2026-06-06,data/raw/text/wikipedia_eu/sample_50k/,Wikipedia Basque 20231101 dump. Batua only. Sampled 50k.
+xnli_dialectal,western/central/nav-lab,pending,jsonl,CC-BY-NC,pending,,XNLI dialectal splits (HiTZ 2026). Not yet on Hugging Face. Request from HiTZ.
+basphycowest,western,pending,jsonl,CC-BY-NC,pending,,BasPhyCowest (HiTZ 2026). Western Basque only. Not yet on Hugging Face.
+klasikoak,all dialects (pre-Batua authors),pending,html/txt,CC-BY-SA,pending,,https://klasikoak.armiarma.eus/ - classical Basque literature from all dialects. Reachable, needs scraping.
+twitter_basque,mixed,pending,jsonl,research-only,pending,,Basque social media corpus. Academic Twitter API archive or existing HiTZ corpus.
+ikerherrero_model,western/central/navarrese/nav-lab/souletin,existing,model,CC-BY-NC-4.0,2026-06-06,,ikerHerrero/Basque_Dialects_Classification - RoBERTa fine-tuned for 5-dialect classification. F1=0.6846. No training dataset published. Model available.
