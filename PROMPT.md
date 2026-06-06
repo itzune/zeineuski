@@ -135,10 +135,10 @@ The following questions were originally open; research has provided partial or f
 ### 1. Data sourcing ✅ (partially resolved)
 **Known resources:**
 - **Ahotsak.eus** — Oral archive with 7,000+ interviews across all Basque dialect regions. Publicly accessible. The primary ground-truth source for dialectal speech and transcriptions.
-- **XNLI Dialectal Splits** (HiTZ, 2026) — XNLI test set manually adapted into Western, Central, and Navarrese-Lapurdian dialects. A gold-standard evaluation set.
+- **XNLI Dialectal Splits** (HiTZ, 2026) — XNLI test set manually adapted into Western, Central, and Navarrese-Lapurdian dialects. A gold-standard evaluation set. **✓ Obtained** via `hitz-zentroa/Catalog-of-Basque-Dialects` (5,010 sentences × 3 dialects for test, 621 × 3 for native). Stored at `data/raw/text/xnli_dialectal/`.
 - **BasPhyCowest** (HiTZ, 2026) — Physical commonsense reasoning dataset adapted into Western Basque via LLM + manual validation.
 - **Basque Social Media Corpus** — Twitter/X data used in prior research for informal dialectal variation.
-- **"A Catalog of Basque Dialectal Resources"** (Bengoetxea, Gonzalez-Dios, Agerri, 2026) — Comprehensive inventory of existing online collections and adapted datasets. **This is the primary entry point for resource discovery.**
+- **"A Catalog of Basque Dialectal Resources"** (Bengoetxea, Gonzalez-Dios, Agerri, 2026) — Comprehensive inventory of existing online collections and adapted datasets. **This is the primary entry point for resource discovery.** Published at [github.com/hitz-zentroa/Catalog-of-Basque-Dialects](https://github.com/hitz-zentroa/Catalog-of-Basque-Dialects). Includes XNLI dialectal test (5,010 sentences × 3 dialects) and native (621 sentences × 3 dialects) splits; the data is already downloaded and available at `data/raw/text/xnli_dialectal/`.
 - **Mozilla Common Voice (Basque)** — Hundreds of hours of validated speech; partially sourced from EITB sentences.
 - **Basque Parliament Speech Corpus** — 1,400+ hours (2013–2022), transcribed; predominantly Batua but useful for baseline.
 - **Gaitu-Data (HiTZ/Aholab)** — Repository for Basque speech models and datasets.
@@ -223,7 +223,7 @@ No existing automated solution. Expert annotation or inter-annotator agreement p
 6. **Memory-Efficient Fine-Tuning for DID** (2024) — LoRA/MEFT for speech dialect ID with reduced GPU requirements. [arXiv:2512.02074](https://arxiv.org/abs/2512.02074)
 
 ### Basque-Specific Resources
-7. **"A Catalog of Basque Dialectal Resources"** (2026) — Bengoetxea, Gonzalez-Dios, Agerri (HiTZ/Ixa). Comprehensive inventory of online dialectal collections (news, radio, social media) and standard-to-dialectal adaptations (XNLI, BasPhyCowest). **Primary reference for data sourcing.** [IXA/HiTZ](https://www.ixa.eus/)
+7. **"A Catalog of Basque Dialectal Resources"** (2026) — Bengoetxea, Gonzalez-Dios, Agerri (HiTZ/Ixa). Comprehensive inventory of online dialectal collections (news, radio, social media) and standard-to-dialectal adaptations (XNLI, BasPhyCowest). **Primary reference for data sourcing.** Repo: [github.com/hitz-zentroa/Catalog-of-Basque-Dialects](https://github.com/hitz-zentroa/Catalog-of-Basque-Dialects). XNLI dialectal data from this repo is already downloaded into `data/raw/text/xnli_dialectal/`.
 8. **Latxa LLM** (HiTZ) — Basque-specific LLM family (7B–70B) based on Llama 2/3.1, continually pre-trained on EusCrawl. Available on Hugging Face: `hitz-zentroa`. A strong candidate for fine-tuning as a dialect classifier backbone.
 9. **BASYQUE** (Ixa Group) — Tool for analyzing syntactic variation in Basque, targeting North-Eastern varieties.
 10. **Ahotsak.eus** — Oral heritage archive with 7,000+ interviews across all Basque dialect regions; primary ground-truth source for dialect-labeled speech.

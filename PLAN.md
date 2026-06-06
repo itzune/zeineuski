@@ -16,7 +16,7 @@ This document defines the complete execution plan for **Zeineuski**, a fine-grai
 
 | # | Assumption | Impact if False |
 |---|---|---|
-| A1 | XNLI dialectal splits are available and contain ≥500 labeled sentences per dialect group (at least for the 3-class grouping). | Must bootstrap annotations from scratch; significantly delays Phase 1. |
+| A1 | XNLI dialectal splits are available and contain ≥500 labeled sentences per dialect group (at least for the 3-class grouping). | Must bootstrap annotations from scratch; significantly delays Phase 1. **Resolved:** ✓ Obtained from `hitz-zentroa/Catalog-of-Basque-Dialects` (5,010 test sentences × 3 dialects + 621 native sentences × 3 dialects). Stored at `data/raw/text/xnli_dialectal/`. |
 | A2 | Ahotsak.eus and Mintzoak.eus audio is accessible (downloadable or via research agreement) within the first 8 weeks. | Phase 2 speech pipeline limited to Common Voice + Parliament; dialect diversity severely reduced. |
 | A3 | Latxa 7B can be fine-tuned with QLoRA on a single 24 GB GPU. | Fall back to XLM-R encoder-only; accuracy ceiling lowers. |
 | A4 | At least 1 native Basque speaker is available for annotation quality checks and evaluation data validation (hours/week, not full-time). | Evaluation quality suffers; rely solely on existing labeled datasets (XNLI splits). |
@@ -272,30 +272,26 @@ This document defines the complete execution plan for **Zeineuski**, a fine-grai
 
 **Objective:** Gather all known Basque dialect text resources into a single registry.
 
+**Status: IN PROGRESS.** Partially completed on 2026-06-06.
+
 **Concrete actions:**
-1. Create `data/raw/text/` directory.
-2. Identify and download resources (in priority order):
 
-   | Source | Dialect Coverage | Format | Access |
-   |---|---|---|---|
-   | XNLI dialectal splits (HiTZ) | Western, Central, Navarrese-Lapurdian | JSON/TSV | Request from HiTZ or check Hugging Face |
-   | BasPhyCowest (HiTZ) | Western | JSON/TSV | Request from HiTZ |
-   | Klasikoak.eus / classical Basque literature | All dialects (pre-Batua authors) | HTML/TXT | Public domain; scrape or request bulk export |
-   | Basque social media corpus (Twitter/X) | All (informal) | JSONL | Academic Twitter API archive or existing HiTZ corpus |
-   | EusCrawl subset (HiTZ) | Batua, some dialectal | JSONL | Available via HiTZ |
-   | Wikipedia (Basque) | Batua | XML dump | `wget https://dumps.wikimedia.org/euwiki/latest/` |
+1. **✓ Done — Create `data/raw/text/` directory.**
+2. **✓ Done — Identify and download resources (in priority order):**
 
-3. Create `data/raw/text/registry.csv`:
-   ```csv
-   source,dialect,count,format,license,downloaded_date,notes
-   xnli_dialectal,western,1200,jsonl,CC-BY-NC,2026-06-06,"
-   xnli_dialectal,central,1200,jsonl,CC-BY-NC,2026-06-06,"
-   xnli_dialectal,nav-lab,1200,jsonl,CC-BY-NC,2026-06-06,"
-   basphycowest,western,800,jsonl,CC-BY-NC,2026-06-06,"
-   twitter_basque,mixed,50000,jsonl,research-only,2026-06-06,inferred dialect from user location
-   wikipedia_eu,batua,200000,txt,CC-BY-SA,2026-06-06,"
-   ```
-4. If a source is not immediately available, file a data access request and mark it in the registry as `pending`.
+   | Source | Dialect Coverage | Format | Access | Status |
+   |---|---|---|---|---|
+   | XNLI dialectal splits (HiTZ) | Western, Central, Navarrese-Lapurdian | TSV | `hitz-zentroa/Catalog-of-Basque-Dialects` | ✓ Downloaded (5,010+621 per dialect) |
+   | HiTZ/xnli-eu (Batua baseline) | Batua | Arrow/JSONL | Hugging Face `HiTZ/xnli-eu` | ✓ Downloaded (400k total) |
+   | Basqueparl (Parliament) | Batua | Arrow | Hugging Face `HiTZ/basqueparl` | ✓ Sampled 50k from 342k |
+   | Wikipedia Basque | Batua | Arrow | Hugging Face `wikimedia/wikipedia` | ✓ Sampled 50k from 416k |
+   | ikerHerrero/Basque_Dialects_Classification | 5 dialects | Model | Hugging Face | ✓ Identified, model exists (F1=0.68), training data not published |
+   | BasPhyCowest (HiTZ) | Western | JSON/TSV | Request from HiTZ | ☐ Pending — not yet public |
+   | Klasikoak.eus / classical Basque literature | All dialects (pre-Batua authors) | HTML/TXT | Public domain | ☐ Reachable, needs scraping + author→dialect mapping |
+   | Basque social media corpus (Twitter/X) | All (informal) | JSONL | Academic Twitter API or HiTZ corpus | ☐ Pending |
+
+3. **✓ Done — Create `data/raw/text/registry.csv`** with all sources documented.
+4. If a source is not immediately available, file a data access request and mark it as `pending`.
 
 **Expected output:** `data/raw/text/registry.csv` with all known sources documented.
 

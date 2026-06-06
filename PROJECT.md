@@ -84,7 +84,7 @@ Build and release a system that, given a Basque text or speech sample, predicts 
 │  Text Corpora              Speech Corpora                        │
 │  ┌──────────────┐         ┌──────────────────────┐              │
 │  │ XNLI dialectal│         │ Ahotsak.eus (7k+)    │              │
-│  │ splits        │         │ Mintzoak.eus (1.2k+),│              │
+│  │ splits ✓      │         │ Mintzoak.eus (1.2k+),│              │
 │  │ BasPhyCowest  │         │ Common Voice (eu),   │              │
 │  │ Social media  │         │ Parliament (1.4k h)  │              │
 │  └──────────────┘         └──────────────────────┘              │
@@ -265,3 +265,5 @@ Build and release a system that, given a Basque text or speech sample, predicts 
 6. **Package management:** `uv` by Astral for dependency and environment management (modern, fast, lockfile-based). Replaces pip/poetry.
 7. **Model hosting:** All released models go to Hugging Face Hub under the `hitz-zentroa` organization (or equivalent, pending permission) or a new `zeineuski` organization.
 8. **Labeling strategy: quality over quantity.** The primary data labeling philosophy is to prefer few high-confidence dialect labels over many noisy ones. A layered geo-proxy approach is used: (a) municipality-to-dialect mapping table as the foundational artifact; (b) author-origin inference for classical Basque literature (Klasikoak.eus, Axular, Mogel, etc.); (c) recording/interview location for oral archive transcriptions (Ahotsak.eus, Mintzoak.eus); (d) social media user location; (e) lexical markers as a secondary signal. Only `high` and `medium` confidence labels are used for training; `low`-confidence samples are stored but excluded. Human annotation is reserved for a small, carefully curated evaluation set.
+9. **XNLI dialectal data obtained from hitz-zentroa/Catalog-of-Basque-Dialects:** The repo at [github.com/hitz-zentroa/Catalog-of-Basque-Dialects](https://github.com/hitz-zentroa/Catalog-of-Basque-Dialects) contains the full XNLIvar parallel dataset: 5,010 test sentences and 621 native sentences translated into 3 dialects (Western, Central, Navarrese-Lapurdian) by native speakers. This is a gold-standard parallel evaluation set. Downloaded and stored at `data/raw/text/xnli_dialectal/`.
+10. **ikerHerrero/Basque_Dialects_Classification as prior art:** A RoBERTa-based model (ixa-ehu/roberta-eus-cc100-base-cased) fine-tuned for 5-dialect classification exists on Hugging Face. F1=0.6846 on evaluation. The model is available but the training dataset is not published. This serves as a baseline comparison point and validates that the 5-dialect classification problem is tractable with existing Basque NLP models.
