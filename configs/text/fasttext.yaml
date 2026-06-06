@@ -1,8 +1,12 @@
 # fastText baseline config
 model: fasttext
+train_path: data/processed/text/train.txt
+test_path: data/processed/text/test.txt
+model_output: models/fasttext_dialect.bin
 char_ngram_range: [3, 6]
 word_ngrams: 2
 dim: 100
 lr: 0.1
 epoch: 25
 loss: softmax
+autotune_duration: 300  # 5 min autotune
