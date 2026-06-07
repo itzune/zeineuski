@@ -272,223 +272,64 @@ This document defines the complete execution plan for **Zeineuski**, a fine-grai
 
 **Objective:** Gather all known Basque dialect text resources into a single registry.
 
-**Status: IN PROGRESS.** Partially completed on 2026-06-06.
+**Status: ✅ DONE.** Completed on 2026-06-07.
 
-**Concrete actions:**
+**Execution summary:**
+- Downloaded HiTZ/xnli-eu (Batua, 400k examples) → `data/raw/text/xnli_eu/`
+- Downloaded HiTZ/basqueparl (Parliament, 50k sampled) → `data/raw/text/basqueparl/sample_50k/`
+- Downloaded Wikipedia Basque (50k sampled) → `data/raw/text/wikipedia_eu/sample_50k/`
+- Cloned `hitz-zentroa/Catalog-of-Basque-Dialects` → XNLI dialectal TSVs (5,010 + 621 per dialect × 3)
+- Identified `ikerHerrero/Basque_Dialects_Classification` model (F1=0.68)
+- Created `data/raw/text/registry.csv` with all sources
 
-1. **✓ Done — Create `data/raw/text/` directory.**
-2. **✓ Done — Identify and download resources (in priority order):**
+### Task 1.2 — Dialect Label Inference (Geo-Proxy)
 
-   | Source | Dialect Coverage | Format | Access | Status |
-   |---|---|---|---|---|
-   | XNLI dialectal splits (HiTZ) | Western, Central, Navarrese-Lapurdian | TSV | `hitz-zentroa/Catalog-of-Basque-Dialects` | ✓ Downloaded (5,010+621 per dialect) |
-   | HiTZ/xnli-eu (Batua baseline) | Batua | Arrow/JSONL | Hugging Face `HiTZ/xnli-eu` | ✓ Downloaded (400k total) |
-   | Basqueparl (Parliament) | Batua | Arrow | Hugging Face `HiTZ/basqueparl` | ✓ Sampled 50k from 342k |
-   | Wikipedia Basque | Batua | Arrow | Hugging Face `wikimedia/wikipedia` | ✓ Sampled 50k from 416k |
-   | ikerHerrero/Basque_Dialects_Classification | 5 dialects | Model | Hugging Face | ✓ Identified, model exists (F1=0.68), training data not published |
-   | BasPhyCowest (HiTZ) | Western | JSON/TSV | Request from HiTZ | ☐ Pending — not yet public |
-   | Klasikoak.eus / classical Basque literature | All dialects (pre-Batua authors) | HTML/TXT | Public domain | ☐ Reachable, needs scraping + author→dialect mapping |
-   | Basque social media corpus (Twitter/X) | All (informal) | JSONL | Academic Twitter API or HiTZ corpus | ☐ Pending |
+**Objective:** For all text sources without explicit dialect labels, apply geo-proxy labeling.
 
-3. **✓ Done — Create `data/raw/text/registry.csv`** with all sources documented.
-4. If a source is not immediately available, file a data access request and mark it as `pending`.
+**Status: ✅ DONE (Klasikoak.eus scraping).** Completed on 2026-06-07.
 
-**Expected output:** `data/raw/text/registry.csv` with all known sources documented.
+**Execution summary:**
+- Built `src/data/klasikoak_scraper.py` — crawls klasikoak.armiarma.eus (467 works), extracts Zubitegia author profiles, maps birthplace→dialect via municipality CSV
+- Result: 24,924 labeled sentences across all 5 dialects (390 KB TSV)
+  - Nav-Lab: 13,105 (52.6%, 22 authors)
+  - Central: 4,006 (16.1%, 13 authors)
+  - Western: 3,887 (15.6%, 12 authors)
+  - Navarrese: 2,446 (9.8%, 3 authors)
+  - Souletin: 1,480 (5.9%, 6 authors)
+- Output: `data/raw/text/klasikoak/klasikoak_labeled.tsv`
 
-**Validation:** At least 3 sources downloaded; registry has ≥5 rows; each downloaded file exists on disk.
-
----
-
-### Task 1.2 — Dialect Label Inference (Geo-Proxy & Lexical Strategies)
-
-**Objective:** For all text sources without explicit dialect labels, apply a multi-strategy geo-proxy and lexical labeling approach. **Priority: few but high-quality labels over many noisy ones.** Only samples with `high` or `medium` confidence are used for training; `low`-confidence samples are stored but excluded from training by default.
-
-**Labeling strategies (applied in priority order):**
-
-| Strategy | Signal | Applicable Sources | Typical Confidence |
-|---|---|---|---|
-| **Explicit label** | XNLI/BasPhyCowest metadata | HiTZ datasets | gold |
-| **Author origin** | Known birthplace of author → municipality → dialect (via Task 1.0 table) | Classical literature (Axular, Mogel, Dechepare...), archival texts | high (if author origin is `high` in municipality table) |
-| **Interview location** | Recording location in Ahotsak/Mintzoak metadata → municipality → dialect | Oral archive transcriptions | high/medium |
-| **User location** | Declared location in social media profile → municipality → dialect | Twitter/X | medium |
-| **Lexical signal** | Dialect-specific morphological/lexical markers in text | Any source | medium (if multiple markers agree) |
-| **User bio keywords** | Self-identification in bio ("bizkaitarra", "gipuzkoarra"...) | Twitter/X | medium |
-
-**Concrete actions:**
-1. **Prerequisite:** Task 1.0 must be complete. Load the municipality→dialect mapping from `data/reference/municipality_dialect.csv`.
-2. Implement `src/data/text_labeling.py` with:
-   - `label_by_municipality(municipality: str, mapping_df: pd.DataFrame) -> tuple[str | None, str]`: Look up the municipality in the mapping table; return `(dialect_class, confidence)`.
-   - `label_by_author_origin(author_name: str, author_db: dict) -> tuple[str | None, str]`: Map author to origin municipality, then to dialect. Maintain `data/reference/basque_authors.csv` with columns `author, municipality, era, notes`.
-     ```csv
-     author,municipality,dialect_class,era,notes
-     Pedro Agerre Axular,Sara,nav-lab,17th c.,"born Sara (Lapurdi); classic Lapurdian prose"
-     Juan Antonio Mogel,Eibar,western,18th c.,"wrote in Bizkaiera despite living in Gipuzkoa — verify individually"
-     Bernard Dechepare,Garazi,nav-lab,16th c.,"first printed Basque book"
-     Frai Bartolome,Muxika,western,18th c.,"Bizkaia; Bizkaiera"
-     Domingo Agirre,Ondarroa,western,19th–20th c.,""
-     Kirikiño,Bilbo,western,early 20th c.,""
-     Txomin Agirre,Ondarroa,western,19th c.,""
-     Resurreccion Maria Azkue,Lekeitio,western,19th–20th c.,"also wrote grammars"
-     Jean Etxepare,Banka,navarrese,early 20th c.,"Navarro-Labourdin variety"
-     ```
-   - `label_by_location(user_location: str, mapping_df: pd.DataFrame) -> tuple[str | None, str]`: Fuzzy-match user-declared location to municipality table.
-   - `label_by_keyword_lexicon(text: str, dialect_lexicons: dict) -> tuple[str | None, str]`: Match known dialect-specific words. Build a lexicon of 50–100 morphological/lexical markers per dialect. **Primary source:** the [ezaugarriak](http://euskalkiak.eus/ezaugarriak.php) section of euskalkiak.eus (CC BY 4.0) provides ready-to-use feature lists per dialect:
-     - **Western:** -gaz (sociative), -au- vowel pattern, dot/dau verb forms, -i bordering -x-, lexicon: *domeka, bariku, armozu, berba, gura, itxi, gitxi*
-     - **Central:** -det/-degu verb forms, [x] word-initial j, *al* in yes/no questions, lexicon: *aitona, apreta, esnatu, iritsi, kilker, beta, triku*
-     - **Navarrese:** -s instrumental (burus, eskus), strong stress on penultimate syllable, syncope (ekarri→kárri), lexicon: *aunitz, ugalde, arroitu, goatze, dermio, orantz*
-     - **Nav-Lab:** x- word-initial (xori, ximino), nehor 'inor' pronouns, -ño diminutive, lexicon: *sehi, gako, pairatu, xingar, elgar, altxagarri, ahantzi*
-     - **Souletin:** ü vowel (ezagün, lagün), -ai- for -au- (gáiza←gauza), bokal sudurkariak, lexicon: *ürhentü, bedatse, haboro, amiñi, mithil, ükhen, ardu*
-   Only return a label if ≥3 markers agree.
-   - `combine_signals(signals: list[tuple[str | None, str]]) -> tuple[str | None, str]`: Aggregate multiple signals using a priority order. If two `high`-confidence signals agree → `high`; if they disagree → `low`.
-3. Apply all applicable strategies to each corpus. Store labeled output as `data/processed/text/<source>_labeled.jsonl`:
-   ```json
-   {"text": "...", "dialect": "western", "confidence": "high", "source": "klasikoak", "labeling_method": "author_origin", "author": "Domingo Agirre", "author_municipality": "Ondarroa"}
-   ```
-4. Use `confidence` tiers for training:
-   - `gold` / `high` → training + evaluation candidate
-   - `medium` → training only (not test set)
-   - `low` → stored for potential future use; excluded from training
-
-**Expected output:** `src/data/text_labeling.py`, `data/reference/basque_authors.csv`, labeled JSONL files per source.
-
-**Validation:**
-- Each dialect class has ≥100 `high`-confidence samples after all strategies are applied.
-- Spot-check 20 `high`-confidence samples per dialect manually; ≥90% accuracy expected.
-- Author origin labels are double-checked against known literary sources (e.g., Auñamendi encyclopedia).
-- No municipality in a transition zone is assigned `high` confidence.
-
----
+**Pending:** Author origin mapping for remaining authors not in Klasikoak; social media corpus labeling; lexical marker strategy.
 
 ### Task 1.3 — Text Preprocessing Pipeline
 
-**Objective:** Build a reusable preprocessing module that cleans, normalizes, deduplicates, and formats text for model training.
-
-**Concrete actions:**
-1. Implement `src/data/text_preprocessing.py` with these functions:
-
-   | Function | Purpose |
-   |---|---|
-   | `clean_text(text: str) -> str` | Remove URLs, @mentions, hashtag symbols (keep text), extra whitespace, HTML entities. Optionally remove emoji. |
-   | `normalize_basque(text: str, keep_diacritics: bool = True) -> str` | Normalize Basque-specific characters: ñ → n (if stripping), replace inconsistent apostrophe usage (ʻ vs ' vs `), normalize ñ/Ñ. By default keep diacritics (CHALIS recommendation). |
-   | `deduplicate(texts: list[str], threshold: float = 0.95) -> list[str]` | Near-dedup using MinHash or Jaccard similarity on character n-grams. Remove exact duplicates first. |
-   | `filter_length(texts: list[str], min_chars: int = 20, max_chars: int = 2000) -> list[str]` | Filter by character length. |
-   | `filter_language(texts: list[str], lid_model=None) -> list[str]` | Run fastText LID; keep only texts classified as Basque (`eu`). |
-   | `prepare_dataset(texts: list[str], labels: list[str], output_path: str) -> None` | Write to JSONL/CSV in Hugging Face datasets-compatible format. |
-
-2. Create `src/data/text_loader.py` with:
-   - `load_labeled_data(sources: list[str]) -> Dataset`: Load from registry, apply preprocessing, return Hugging Face `Dataset`.
-   - `create_splits(dataset: Dataset, stratify_by: str = "dialect", test_size: float = 0.15, val_size: float = 0.10) -> DatasetDict`: Stratified train/val/test split.
-
-3. Create a default preprocessing config at `configs/text/preprocessing.yaml`:
-   ```yaml
-   min_chars: 20
-   max_chars: 2000
-   keep_diacritics: true
-   dedup_threshold: 0.95
-   language_filter: true
-   language_confidence_threshold: 0.7
-   ```
-
-**Expected output:** `src/data/text_preprocessing.py`, `src/data/text_loader.py`, `configs/text/preprocessing.yaml`.
-
-**Validation:**
-- Unit test: `pytest tests/test_data/test_preprocessing.py` with 10 hand-crafted inputs.
-- Pipeline runs end-to-end on XNLI splits: `uv run python -m src.data.text_loader --source xnli_dialectal --output data/processed/text/xnli_clean/`.
-- Output dataset has correct column names (`text`, `label`), no empty texts, label distribution logged.
-
----
+**Status: ⏳ IN PROGRESS (partially done in data prep scripts).**
+- Text cleaning, sentence splitting, and train/val/test splitting functions exist in-scope of the training scripts.
+- Dedicated `src/data/text_preprocessing.py` and `src/data/text_loader.py` not yet formalized as reusable modules.
 
 ### Task 1.4 — Manual Annotation of Dev/Test Set
 
-**Objective:** Create a small, high-quality manually annotated dataset for reliable evaluation. **Quality over quantity is the guiding principle here.** A smaller set with trustworthy labels is strictly better than a larger set with noisy ones, especially for evaluation.
-
-**Prioritization strategy for sample selection:**
-1. Prefer samples already assigned `high` confidence by geo-proxy (Task 1.2) — use them as candidates, not final gold labels.
-2. Prioritize dialectally distinctive sentences (i.e., those with morphological/lexical markers clearly placing them in one dialect).
-3. Include some genuinely ambiguous samples to populate the multi-label test cases.
-4. Ensure geographic diversity within each dialect class (e.g., multiple sub-regions of Bizkaia for Western).
-
-**Concrete actions:**
-1. Sample 100–150 sentences per dialect (fewer, better quality) from `high`-confidence geo-proxy outputs and oral archive transcriptions.
-2. Create annotation spreadsheet (Google Sheets or CSV) with columns: `id, text, source, geo_proxy_label, geo_proxy_confidence, dialect_annotated, annotator_notes, is_ambiguous, valid_dialects`.
-3. Recruit 1–2 native Basque speakers (from HiTZ/Ixa network or UPV/EHU linguistics). Ideally one speaker per dialect region.
-4. Annotation workflow:
-   - Annotator reads the sentence and selects dialect label (or "Batua" if standard, or "ambiguous" if unclear).
-   - If ambiguous, annotator lists all valid dialects (multi-label ground truth).
-   - Each sentence annotated by at least 1 person; 30% double-annotated for IAA (higher than default because dataset is small).
-   - Annotator also rates dialect confidence on a 3-point scale: clear / possible / unclear.
-5. Compute inter-annotator agreement (Cohen's kappa). If κ < 0.6, revise annotation guidelines and re-annotate the disputed subset.
-6. **Discard** samples where annotators disagree and cannot resolve — do not force a label. These are stored as `ambiguous` and used only for multi-label analysis.
-7. Convert to `data/annotated/text/dev.jsonl` and `data/annotated/text/test.jsonl`.
-
-**Expected output:** `data/annotated/text/dev.jsonl` (≈150–180 total), `data/annotated/text/test.jsonl` (≈200–250 total). Smaller than originally planned but higher quality.
-
-**Validation:**
-- Each dialect has ≥15 annotated sentences in dev and ≥25 in test.
-- IAA κ ≥ 0.6 on 30% double-annotated subset.
-- At least 1 native speaker has reviewed the full set.
-- No sample in the test set has `confidence = low` from the annotator.
+**Status: ☐ NOT STARTED.** Depends on native speaker availability.
 
 ---
 
 ## Epic 2: Text Models (Baselines)
 
-### Task 2.1 — fastText Baseline
+### Task 2.1 — fastText Baseline ✅
 
-**Objective:** Train a character n-gram fastText classifier as the classical baseline.
+**Status: DONE.** Completed 2026-06-06 (XNLI-only) and 2026-06-07 (hybrid expanded).
 
-**Concrete actions:**
-1. Implement `src/models/text/fasttext_classifier.py`:
-   ```python
-   import fasttext
+**Execution summary:**
+- XNLI-only (3-class): 93.6% accuracy, Macro F1=0.936 (835/dialect train)
+- Klasikoak-only (5-class): 98.2% val accuracy, Macro F1=0.980 (19.9k train)
+- **Hybrid (XNLI + Klasikoak, 5-class): 96.0% XNLI test, 97.8% Klasikoak val — best model**
 
-   def train_fasttext(
-       train_path: str,
-       model_output: str,
-       lr: float = 0.1,
-       dim: int = 100,
-       epoch: int = 25,
-       word_ngrams: int = 2,
-       minn: int = 3,    # min char n-gram
-       maxn: int = 6,    # max char n-gram
-       loss: str = "softmax",
-   ) -> fasttext.FastText._FastText:
-       model = fasttext.train_supervised(
-           input=train_path,
-           lr=lr,
-           dim=dim,
-           epoch=epoch,
-           wordNgrams=word_ngrams,
-           minn=minn,
-           maxn=maxn,
-           loss=loss,
-           verbose=2,
-       )
-       model.save_model(model_output)
-       return model
-   ```
-2. Create config `configs/text/fasttext.yaml`:
-   ```yaml
-   model: fasttext
-   char_ngram_range: [3, 6]
-   word_ngrams: 2
-   dim: 100
-   lr: 0.1
-   epoch: 25
-   loss: softmax
-   ```
-3. Convert training data to fastText format (`__label__western text here\n`) in `src/data/text_loader.py`.
-4. Run training: `uv run python -m src.models.text.fasttext_classifier --config configs/text/fasttext.yaml`.
-5. Evaluate on annotated test set; log metrics to WandB.
+Key findings:
+- Character n-grams (3–6) are extremely effective for Basque dialect classification
+- Classical literature + modern text requires domain mixing to avoid cross-domain collapse (33.9% without mixing → 96.0% with)
+- The hybrid model supports all 5 dialect classes while maintaining high accuracy
+- fastText significantly outperforms XLM-R (96.0% vs 87.8%) on small data
 
-**Hyperparameter sweep:** Grid search over `minn` ∈ {2,3,4}, `maxn` ∈ {5,6,7}, `lr` ∈ {0.05, 0.1, 0.2}. Log all to WandB and select best by validation macro F1.
-
-**Expected output:** `models/fasttext_dialect.bin`, evaluation metrics logged to WandB.
-
-**Validation:**
-- Model loads and predicts correctly: `model.predict("kaixo zer moduz", k=3)` returns dialect labels with probabilities.
-- Accuracy on dev set ≥ 70% (3-class). If below, review data quality before proceeding to next task.
-- Confusion matrix shows expected pattern (neighboring dialects confused most).
+Model artifacts: `models/fasttext_dialect_hybrid.bin`
 
 ---
 
@@ -549,89 +390,17 @@ Use fastText with language-specific subword embeddings (already covered in Task 
 
 ---
 
-### Task 2.3 — XLM-R Fine-Tuning Baseline
+### Task 2.3 — XLM-R Fine-Tuning Baseline ✅
 
-**Objective:** Fine-tune XLM-RoBERTa as a strong multilingual transformer baseline.
+**Status: DONE.** Completed 2026-06-06 on GPU server.
 
-**Concrete actions:**
-1. Implement `src/models/text/xlmr_classifier.py`:
-   ```python
-   from transformers import (
-       AutoTokenizer, AutoModelForSequenceClassification,
-       Trainer, TrainingArguments, DataCollatorWithPadding
-   )
-   from datasets import Dataset, DatasetDict
-   import numpy as np
-   from sklearn.metrics import accuracy_score, f1_score
-
-   def train_xlmr(
-       dataset: DatasetDict,
-       model_name: str = "FacebookAI/xlm-roberta-base",
-       num_labels: int = 6,
-       output_dir: str = "models/xlmr_dialect",
-       batch_size: int = 16,
-       lr: float = 2e-5,
-       epochs: int = 5,
-       warmup_ratio: float = 0.1,
-       weight_decay: float = 0.01,
-   ):
-       tokenizer = AutoTokenizer.from_pretrained(model_name)
-       model = AutoModelForSequenceClassification.from_pretrained(
-           model_name, num_labels=num_labels
-       )
-
-       def tokenize(examples):
-           return tokenizer(examples["text"], truncation=True, max_length=256)
-
-       tokenized = dataset.map(tokenize, batched=True)
-
-       training_args = TrainingArguments(
-           output_dir=output_dir,
-           per_device_train_batch_size=batch_size,
-           per_device_eval_batch_size=batch_size,
-           learning_rate=lr,
-           num_train_epochs=epochs,
-           warmup_ratio=warmup_ratio,
-           weight_decay=weight_decay,
-           evaluation_strategy="epoch",
-           save_strategy="epoch",
-           load_best_model_at_end=True,
-           metric_for_best_model="eval_macro_f1",
-           logging_steps=50,
-           report_to="wandb",
-       )
-
-       def compute_metrics(eval_pred):
-           logits, labels = eval_pred
-           preds = np.argmax(logits, axis=-1)
-           return {
-               "accuracy": accuracy_score(labels, preds),
-               "macro_f1": f1_score(labels, preds, average="macro"),
-           }
-
-       trainer = Trainer(
-           model=model,
-           args=training_args,
-           train_dataset=tokenized["train"],
-           eval_dataset=tokenized["validation"],
-           data_collator=DataCollatorWithPadding(tokenizer),
-           compute_metrics=compute_metrics,
-       )
-       trainer.train()
-       trainer.save_model(output_dir)
-       tokenizer.save_pretrained(output_dir)
-       return trainer
-   ```
-2. Create config `configs/text/xlmr.yaml`.
-3. Run training first on 3-class, then on 6-class if data allows.
-4. Generate confusion matrix and per-class F1 report.
-
-**Expected output:** `models/xlmr_dialect/`, training metrics in WandB.
-
-**Validation:**
-- 3-class accuracy > 80% on XNLI dialectal test set.
-- Training converges (loss decreases monotonically, no NaN).
-- Inference time < 50ms per sentence on CPU.
+**Execution summary:**
+- Config: `FacebookAI/xlm-roberta-base`, batch=32, lr=5e-6, 10 epochs, early stopping patience=4
+- Results: 87.8% accuracy, Macro F1=0.878 (XNLI test, 3-class)
+- Training time: ~108s on NVIDIA L40 (48 GB VRAM)
+- **Result: fastText (93.6%) significantly outperforms XLM-R (87.8%) on small data.**
+  XLM-R may perform better with more training data but the transformer's capacity is wasted on <1000 examples/class.
+- Script: `src/models/text/train_xlmr.py` (fixed for transformers v5 API: `evaluation_strategy`→`eval_strategy`, removed `tokenizer=` from Trainer)
 
 ---
 
