@@ -42,6 +42,30 @@ zeineuski/
 └── docs/                # Documentation, evaluation reports, paper
 ```
 
+## Results
+
+Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
+
+| Variant | Size | XNLI (3-class) | Test (6-class) | Batua F1 |
+|---------|------|:---:|:---:|:---:|
+| final | 1,588MB | — | 97.83% | 0.962 |
+| quantized | 438MB | 96.94% | — | — |
+| compact | 198MB | 96.85% | — | — |
+| tiny | 118MB | 96.68% | — | — |
+| **web** | **34MB** | **96.84%** | — | — |
+
+Per-class F1: Western 0.976, Central 0.958, Nav-Lab 0.968, Navarrese 0.972, Souletin 0.997.
+
+Models hosted at [huggingface.co/itzune/zeineuski](https://huggingface.co/itzune/zeineuski).
+
+## Web Demo
+
+Try it in your browser — no server, no install:
+
+**[itzune.eus/euskalkid](https://itzune.eus/euskalkid)** ([source](https://github.com/itzune/euskalkid))
+
+34MB of fastText models running via WebAssembly. Works offline after first load.
+
 ## Documentation
 
 - [PROMPT.md](PROMPT.md) — Project prompt and requirements
