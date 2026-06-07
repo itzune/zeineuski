@@ -326,7 +326,8 @@ This document defines the complete execution plan for **Zeineuski**, a fine-grai
 - XNLI-only (3-class): 93.6% accuracy, Macro F1=0.936 (835/dialect train)
 - Klasikoak-only (5-class): 98.2% val accuracy, Macro F1=0.980 (19.9k train)
 - Hybrid 5-class (XNLI + Klasikoak): 96.85% XNLI test (after autoresearch optimization)
-- **Hybrid 6-class + EITB Batua: 94.53% 6c test, Batua F1=0.960, XNLI 3c=91.46%**
+- Hybrid 6-class + EITB Batua (flat): 94.53% 6c test, Batua F1=0.960, XNLI 3c=91.46%
+- **Hierarchical 6-class (binary + dialect): 97.83% 6c test, Batua F1=0.962, XNLI 3c=96.73%**
 
 Key findings:
 - Character n-grams (3–6) are extremely effective for Basque dialect classification
@@ -335,8 +336,11 @@ Key findings:
 - EITB Parcc (Helsinki-NLP/eitb_parcc) provides 472K real journalistic Batua sentences — far better than XNLI-eu MT text
 - 6-class with EITB: aggressive lr=3.0 optimal; Batua detection excellent (0.960 F1); Central hardest (0.923)
 - fastText significantly outperforms XLM-R on small data (96.0% vs 87.8%)
+- **Klasikoak `__label__` metadata pollution bug:** 63% of training lines had spurious labels from chapter/author markers — silently training fastText on thousands of phantom classes. Fixed by filtering to valid dialect labels only.
+- **XNLI gap is structural in flat 6-class:** Batua-vs-dialect confusion dominates XNLI errors. No amount of hyperparameter tuning closes the gap. Hierarchical 2-step (binary batua/dialect → 5-class dialect) recovers 96.73% XNLI — only 0.12pp below the 5-class ceiling.
+- **minn=3 is the Basque morphology floor:** Bigrams (minn=2) collapsed XNLI by 1.44pp. Dialect differences manifest at trigram scale and above.
 
-Model artifacts: `models/fasttext_dialect_hybrid.bin` (5-class), `models/fasttext_dialect_best.bin` (optimized 5-class)
+Model artifacts: `models/fasttext_dialect_hybrid.bin` (5-class), `models/fasttext_dialect_best.bin` (optimized 5-class), `models/hier_binary_best.bin` + `models/hier_dialect_best.bin` (6-class hierarchical)
 
 ---
 

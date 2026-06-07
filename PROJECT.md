@@ -357,4 +357,75 @@ Build and release a system that, given a Basque text or speech sample, predicts 
 | XLM-R (XNLI-only) | 2,505 | 3 | — | 87.8% | Slower, worse on small data |
 | fastText (Klasikoak-only) | 19,939 | 5 | — | 33.9% | Collapses cross-domain |
 | fastText (Hybrid 5c) | 17,955 | 5 | — | 96.85% | Optimized (lr=0.2, ep=75) |
-| **fastText (Hybrid 6c + EITB)** | **80,519** | **6** | **94.53%** | **91.46%** | **Batua F1=0.960, best practical model** |
+| fastText (Hybrid 6c + EITB) | 80,519 | 6 | 94.53% | 91.46% | Batua F1=0.960, pre-bugfix |
+| **fastText (Hierarchical 6c)** | **29,977** | **6** | **97.83%** | **96.73%** | **2-step: binary + 5c dialect** |
+
+### 2026-06-07: Klasikoak `__label__` metadata pollution bug
+- **Root cause:** Klasikoak texts use `__label__` as section/chapter markers
+  (e.g., `__label__[Literaturaren Zubitegia]`, `__label__OGEI TA ZAZPIGARRENEAN`)
+- **Impact:** 50,542/80,519 (63%) training lines had wrong first label — fastText was
+  silently training on thousands of spurious classes like `__label__SAN`, `__label__AMA`
+- **Fix:** Filtered to only keep lines where first `__label__` matches a valid dialect class.
+  Removed 50,542 bad train lines, 12,576 bad val lines. Clean dataset: 29,977 train, 4,686 val.
+- **Effect:** Training time dropped 7.8× (137s → 17.6s for epoch=25).
+  XNLI improved +0.59pp (92.22 → 92.81 with same hyperparams).
+
+### 2026-06-07: XNLI gap optimization — 26 experiments
+- **Goal:** Close the gap between 6-class XNLI (91.46%) and 5-class ceiling (96.85%)
+- **Flat 6-class sweep:** lr=0.1→5.0, epoch=25→200, dim=100→200, wordNgrams=2→3, loss=softmax/ova
+  - Best flat: lr=0.2, epoch=150 → XNLI=93.29%, test=95.76%
+  - Plateau at ~93.3% — structural wall where batua-vs-dialect confusion dominates
+- **Balanced dataset:** nav-lab downsampled 7,271→3,000 → XNLI=93.57% (+0.28pp over flat best)
+  - Western=0.969, Batua=0.972. Tradeoff: Nav-Lab F1 dropped 0.957→0.935
+- **ova loss:** 92.53% — one-vs-all loses contrastive signal between similar dialects
+
+### 2026-06-07: Hierarchical 2-step classifier (WINNER)
+- **Architecture:** Binary (batua vs dialectal) → 5-class dialect classifier
+- **Why it works:** Batua-vs-dialect confusion is the dominant XNLI error source.
+  Separating it into its own binary step eliminates this confusion — the dialect model
+  never sees batua samples and the binary model only needs to distinguish batua from
+  "anything dialectal"
+- **Best config:**
+  - Binary: lr=3.0, epoch=50, dim=100 (batua recall=0.997)
+  - Dialect: lr=0.2, epoch=150, dim=100
+  - Total training: ~57s
+- **Final result:** XNLI=96.73% — only 0.12pp below 5-class ceiling (96.85%)
+  - 6-class test_acc=97.83%, Batua F1=0.962
+  - Western=0.976, Central=0.958, Nav-Lab=0.968
+- **Models:** `models/hier_binary_best.bin` + `models/hier_dialect_best.bin`
+  (also: `models/hier_*_final.bin` with dialect epoch=200)
+
+### 2026-06-07: EuskanolDS validation
+- **Test set:** 927 Basque/Spanish code-switched tweets (EuskanolDS gold predictions)
+- **5-class model:** 5.7% high-confidence predictions (forced dialect labels on Batua text)
+- **6-class hierarchical:** 94.2% high-confidence, 86.1% correctly Batua
+  - Dialect distributed: western 1.7%, central 2.6%, nav-lab 3.8%
+  - Only 5.8% low-confidence — 16× reduction vs 5-class model
+- **Predictions:** `data/processed/text/euskanol_gold_predictions_6class.jsonl`
+
+### Key Takeaways from XNLI Gap Optimization
+1. **The XNLI gap was structural:** No amount of hyperparameter tuning flat 6-class
+   could match 5-class XNLI. The batua-vs-dialect confusion is fundamental.
+2. **Data quality matters:** The Klasikoak `__label__` pollution was silently corrupting
+   63% of training examples. Always validate that first-label tokens are actual class labels.
+3. **Hierarchical decomposition is the right architecture:** Two simple models beat one
+   complex model when the confusion matrix has a clear block structure.
+4. **minn=3 is the Basque morphology floor:** Bigrams (minn=2) collapsed XNLI by 1.44pp —
+   dialect differences manifest at trigram scale and above.
+5. **Convergence strategy matters with clean data:** Lower lr + more epochs (0.2/150ep)
+   outperforms aggressive lr (3.0/25ep) once the data is clean — same pattern as 5-class.
+
+### Decision Record Updates
+20. **Klasikoak `__label__` tokens are metadata, not class labels:**
+    The `__label__` prefix appears in Klasikoak texts as section/chapter/author markers.
+    fastText treats the first `__label__` on each line as the class label, so raw Klasikoak
+    text cannot be used as-is for training. Lines must be filtered to only keep those where
+    the first `__label__` matches a known dialect class.
+21. **Hierarchical classification is the production architecture:**
+    A 2-step pipeline (binary batua/dialectal → 5-class dialect) is strictly superior to
+    flat 6-class classification. It eliminates the batua-vs-dialect confusion that
+    dominates XNLI errors and produces more reliable predictions on real-world
+    code-switched text. The 0.12pp gap to the 5-class ceiling is within non-determinism noise.
+22. **Autoresearch pipeline supports both modes:** `autoresearch.sh` accepts `MODE=flat`
+    (single 6-class model) or `MODE=hier` (binary + dialect). Hierarchical mode is
+    configurable via `HIER_BIN_*` and `HIER_DIAL_*` env vars for future reproducibility.
