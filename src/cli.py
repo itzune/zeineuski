@@ -64,9 +64,9 @@ def cli():
 @click.option(
     "-v",
     "--variant",
-    type=click.Choice(["final", "quantized", "compact", "tiny"]),
-    default="compact",
-    help="Model variant: final (1.6GB, best), quantized (438MB), compact (198MB, default), tiny (118MB).",
+    type=click.Choice(["final", "quantized", "compact", "tiny", "web"]),
+    default="web",
+    help="Model variant: final (1.5GB), quantized (417MB), compact (189MB), tiny (112MB), web (32MB, default).",
 )
 @click.option(
     "-n",
@@ -116,8 +116,8 @@ def predict_cmd(
 @click.option(
     "-v",
     "--variant",
-    type=click.Choice(["final", "quantized", "compact", "tiny"]),
-    default="compact",
+    type=click.Choice(["final", "quantized", "compact", "tiny", "web"]),
+    default="web",
     help="Model variant to download.",
 )
 def download(model_dir: str, variant: str):
