@@ -46,15 +46,16 @@ zeineuski/
 
 Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
 
-| Variant | Size | XNLI (3-class) | Val (6-class) | Batua F1 |
+| Variant | Size | XNLI (3-class) | Test (4-class) | Batua F1 |
 |---------|------|:---:|:---:|:---:|
-| final | 1.5GB | 92.42% | 98.83% | 0.996 |
-| quantized | 417MB | 92.38% | 98.74% | 0.993 |
-| compact | 189MB | 91.78% | 98.72% | 0.992 |
-| tiny | 112MB | 91.90% | 98.61% | 0.989 |
-| **web** | **32MB** | **91.06%** | **98.72%** | **0.993** |
+| final | 1.5GB | 92.42% | 95.18% | 0.962 |
+| quantized | 417MB | 92.38% | 95.16% | 0.961 |
+| compact | 189MB | 91.78% | 94.71% | 0.957 |
+| tiny | 112MB | 91.90% | 94.88% | 0.961 |
+| **web** | **32MB** | **91.06%** | **94.33%** | **0.952** |
 
-Per-class F1 (final): Western 0.978, Central 0.977, Nav-Lab 0.990, Navarrese 1.000, Souletin 0.976.
+Per-class F1 (final): Western 0.953, Central 0.933, Nav-Lab 0.949, Batua 0.962.
+(Navarrese/Souletin: no clean test data — all samples leaked into val from train.)
 
 Models hosted at [huggingface.co/itzune/zeineuski](https://huggingface.co/itzune/zeineuski).
 
