@@ -21,3 +21,6 @@ models/*.bin
 models/hier_*_quantized.bin
 models/hier_*_compact.bin
 models/hier_*_tiny.bin
+models/hier_*_web.bin
+models/hier_*_webslim.bin
+models/hier_*_webultra.bin
