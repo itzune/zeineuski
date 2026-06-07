@@ -57,6 +57,23 @@ Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
 Per-class F1 (final): Western 0.953, Central 0.933, Nav-Lab 0.949, Batua 0.962.
 (Navarrese/Souletin: no clean test data — all samples leaked into val from train.)
 
+## Evaluation
+
+All metrics are computed on **disjoint** train/test splits verified via exact text deduplication.
+
+```bash
+# Run eval on all model variants (requires uv sync + models in models/)
+uv run python eval_all.py
+```
+
+**Test sets:**
+- `test_expanded_3class.txt` — 2,505 samples, 3-class XNLI (western, central, nav-lab), 0% train overlap
+- `test_6class.txt` — 4,005 samples, 4-class (batua, western, central, nav-lab), 0% train overlap
+
+`val_6class.txt` was found to have 68.4% overlap with `train_6class.txt` and is **not used**
+for evaluation. Navarrese and Souletin lack clean test splits — all their samples were
+leaked into the validation set during dataset construction.
+
 Models hosted at [huggingface.co/itzune/zeineuski](https://huggingface.co/itzune/zeineuski).
 
 ## Web Demo
