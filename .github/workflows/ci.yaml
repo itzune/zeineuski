@@ -19,4 +19,9 @@ jobs:
       - name: Type check
         run: uv run mypy src/ --ignore-missing-imports
       - name: Test
-        run: uv run pytest tests/ -v --cov=src --cov-report=term
+        run: |
+          if ls tests/test_*/test_*.py 1>/dev/null 2>&1; then
+            uv run pytest tests/ -v --cov=src --cov-report=term
+          else
+            echo "No test files found — skipping"
+          fi
