@@ -18,3 +18,6 @@ dist/
 .pytest_cache/
 .DS_Store
 models/*.bin
+models/hier_*_quantized.bin
+models/hier_*_compact.bin
+models/hier_*_tiny.bin

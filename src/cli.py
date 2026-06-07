@@ -62,6 +62,13 @@ def cli():
     help="Directory to cache downloaded models.",
 )
 @click.option(
+    "-v",
+    "--variant",
+    type=click.Choice(["final", "quantized", "compact", "tiny"]),
+    default="compact",
+    help="Model variant: final (1.6GB, best), quantized (438MB), compact (198MB, default), tiny (118MB).",
+)
+@click.option(
     "-n",
     "--top-n",
     type=int,
@@ -74,6 +81,7 @@ def predict_cmd(
     output: Optional[str],
     threshold: float,
     model_dir: str,
+    variant: str,
     top_n: int,
 ):
     """Predict Basque dialect from TEXT or batch file.
@@ -83,13 +91,13 @@ def predict_cmd(
     model_dir = Path(model_dir)
 
     if input_file:
-        _batch_predict(input_file, output, threshold, model_dir, top_n)
+        _batch_predict(input_file, output, threshold, model_dir, variant, top_n)
     elif text:
-        _single_predict(text, threshold, model_dir)
+        _single_predict(text, threshold, model_dir, variant)
     elif not sys.stdin.isatty():
         text = sys.stdin.read().strip()
         if text:
-            _single_predict(text, threshold, model_dir)
+            _single_predict(text, threshold, model_dir, variant)
         else:
             click.echo("Error: no input provided.", err=True)
             sys.exit(1)
@@ -105,20 +113,28 @@ def predict_cmd(
     default=str(DEFAULT_MODEL_DIR),
     help="Directory to cache downloaded models.",
 )
-def download(model_dir: str):
+@click.option(
+    "-v",
+    "--variant",
+    type=click.Choice(["final", "quantized", "compact", "tiny"]),
+    default="compact",
+    help="Model variant to download.",
+)
+def download(model_dir: str, variant: str):
     """Pre-download models from Hugging Face Hub."""
     model_dir = Path(model_dir)
-    logger.info(f"Downloading models from {HF_REPO}…")
-    binary_model, dialect_model = load_models(model_dir)
+    logger.info(f"Downloading models (variant={variant}) from {HF_REPO}…")
+    binary_model, dialect_model = load_models(model_dir, variant)
     logger.info("✓ Models downloaded and cached.")
     logger.info("  Binary: batua vs dialectal")
     logger.info("  Dialect: 5-class euskalkiak")
+    logger.info(f"  Variant: {variant}")
     logger.info(f"  Cache: {model_dir}")
 
 
-def _single_predict(text: str, threshold: float, model_dir: Path):
+def _single_predict(text: str, threshold: float, model_dir: Path, variant: str):
     """Run single prediction and print result."""
-    binary_model, dialect_model = load_models(model_dir)
+    binary_model, dialect_model = load_models(model_dir, variant)
     result = predict(text, binary_model, dialect_model, threshold)
 
     click.echo(json.dumps(result, ensure_ascii=False, indent=2))
@@ -129,10 +145,11 @@ def _batch_predict(
     output: Optional[str],
     threshold: float,
     model_dir: Path,
+    variant: str,
     top_n: int,
 ):
     """Run batch prediction on a file."""
-    binary_model, dialect_model = load_models(model_dir)
+    binary_model, dialect_model = load_models(model_dir, variant)
 
     with open(input_file) as f:
         lines = [line.strip() for line in f if line.strip()]
