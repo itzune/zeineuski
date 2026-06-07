@@ -24,6 +24,7 @@ dependencies = [
     "datasets>=5.0.0",
     "evaluate>=0.4.6",
     "fasttext>=0.9.3",
+    "feedparser>=6.0.12",
     "httpx>=0.28.1",
     "librosa>=0.11.0",
     "lxml>=6.1.1",

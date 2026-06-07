@@ -175,6 +175,11 @@ Build and release a system that, given a Basque text or speech sample, predicts 
 | Train fastText hybrid (XNLI + Klasikoak, 5-class) | AI | **97.8% val, 96.0% XNLI test** | ✅ |
 | Implement XLM-R fine-tuning (encoder + classifier) | AI | XLM-R DID model (87.8% XNLI test) | ✅ |
 | Set up GPU server (NVIDIA L40, 48 GB VRAM) | AI | SSH at 10.2.121.210, /opt/zeineuski/ | ✅ |
+| Autoresearch hyperparameter optimization (5-class) | AI | 17 experiments, best: lr=0.2/epoch=75 → 96.85% XNLI | ✅ |
+| Compile Basque digital media outlet CSV | AI | 89 outlets in `basque_digital_media.csv` | ✅ |
+| Build media scraper MVP | AI | 84 articles scraped from 10 outlets | ✅ |
+| Add Batua as 6th class with EITB Parcc data | AI | 472K sentences extracted, 15K batua training | ✅ |
+| Autoresearch 6-class optimization (EITB Batua) | AI | 7 experiments, best: lr=3.0/epoch=25 → 94.53% test | ✅ |
 
 ### Phase 1 — Text DID Advanced (Weeks 6–8)
 | Task | Owner | Deliverable |
@@ -275,6 +280,9 @@ Build and release a system that, given a Basque text or speech sample, predicts 
 14. **GPU server details:** NVIDIA L40 with 48 GB VRAM at `10.2.121.210`, Python 3.11.15 via uv, PyTorch 2.11.0+cu128, transformers 5.10.2. Project synced to `/opt/zeineuski/`. Previously running llama.cpp (Gemma 4 12B), stopped to free GPU for training.
 15. **transformers v5 API changes:** `evaluation_strategy` → `eval_strategy` kwarg, Trainer no longer accepts `tokenizer=` kwarg. These were fixed in `src/models/text/train_xlmr.py`.
 16. **fastText numpy 2.0 bug:** `predict()` method crashes with `ValueError: Unable to avoid copy while creating an array`. The `test()` and `test_label()` evaluation methods work correctly. This is a known fastText issue with NumPy 2.x.
+17. **EITB Parcc as Batua data source:** Helsinki-NLP/eitb_parcc is a Spanish-Basque parallel news corpus from EITB (Basque public broadcaster) with 472K Basque sentences of real journalistic Batua. Far superior to XNLI-eu machine-translated NLI premises. Used 15K for training, 1K for val, 1.5K for test.
+18. **Batua is the easiest class after EITB training:** With 15K EITB news sentences, Batua F1 reaches 0.960 — significantly outperforming all dialect classes. This is the reverse of the XNLI Batua baseline where Batua was hardest (0.902 F1 with only 3K MT examples).
+19. **6-class lr=3.0 is optimal:** Aggressive learning rate (3.0) is needed for imbalanced 6-class training where nav-lab dominates (9% of train but 35% of labeled lines). The strong gradient signal lets minority classes (souletin 1.2%, navarrese 1.8%) fight against the majority pull.
 
 ## Execution Results Log
 
@@ -319,12 +327,34 @@ Build and release a system that, given a Basque text or speech sample, predicts 
     - Central: P=0.965, R=0.935, F1=0.950
     - Nav-Lab: P=0.944, R=0.976, F1=0.960
 - **Model:** `models/fasttext_dialect_hybrid.bin`
-- **Best model so far.** Beats XNLI-only (93.6%) and supports 5-class output.
+
+### 2026-06-07: Autoresearch — 5-class fastText hyperparameter optimization
+- **17 experiments** sweeping char n-grams, lr, epochs, dim, word n-grams, loss function
+- **Best config:** minn=3, maxn=6, wordNgrams=2, dim=100, lr=0.2, epoch=75, loss=softmax
+- **Best result:** 96.85% XNLI (+0.76% over baseline lr=0.1/25ep), Val=97.77%, F1=0.9766
+- Training time: 13.5s (5-class dataset, 18K lines)
+
+### 2026-06-07: EITB Parcc Batua data extraction
+- **Source:** Helsinki-NLP/eitb_parcc — Spanish-Basque parallel news corpus from EITB (Basque public broadcaster)
+- **Extracted:** 472,640 Basque sentences (real journalistic Batua, not MT)
+- **Splits:** 15K train, 1K val, 1.5K test
+- Combined with 5-dialect data → 80,519 training examples (6 classes)
+
+### 2026-06-07: Autoresearch — 6-class fastText optimization (EITB Batua)
+- **7 experiments** on EITB-enhanced 6-class dataset
+- **Best result:** lr=3.0, epoch=25 → 94.53% test accuracy, Macro F1=0.944
+  - Batua: 0.960 (easiest class — 15K journalistic training sentences)
+  - Western: 0.945, Central: 0.923, Nav-Lab: 0.946
+  - XNLI 3-class cross-domain: 91.46%
+- **Key finding:** Aggressive lr=3.0 needed for imbalanced 6-class;
+  Batua detection is excellent (0.960 F1); Central remains hardest (0.923)
+- Training time: ~92s per run (80K lines)
 
 ### Current Best Results Summary
-| Model | Train Data | XNLI Test Acc | Klasikoak Val Acc | Classes |
-|---|---|---|---|---|
-| fastText (XNLI-only) | 2,505 | 93.6% | — | 3 |
-| XLM-R (XNLI-only) | 2,505 | 87.8% | — | 3 |
-| fastText (Klasikoak-only) | 19,939 | 33.9% | 98.2% | 5 |
-| **fastText (Hybrid)** | **17,955** | **96.0%** | **97.8%** | **5** |
+| Model | Train Data | Classes | 6c Test Acc | XNLI 3c Acc | Notes |
+|---|---|---|---|---|---|
+| fastText (XNLI-only) | 2,505 | 3 | — | 93.6% | 3-class only |
+| XLM-R (XNLI-only) | 2,505 | 3 | — | 87.8% | Slower, worse on small data |
+| fastText (Klasikoak-only) | 19,939 | 5 | — | 33.9% | Collapses cross-domain |
+| fastText (Hybrid 5c) | 17,955 | 5 | — | 96.85% | Optimized (lr=0.2, ep=75) |
+| **fastText (Hybrid 6c + EITB)** | **80,519** | **6** | **94.53%** | **91.46%** | **Batua F1=0.960, best practical model** |

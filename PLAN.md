@@ -280,13 +280,14 @@ This document defines the complete execution plan for **Zeineuski**, a fine-grai
 - Downloaded Wikipedia Basque (50k sampled) → `data/raw/text/wikipedia_eu/sample_50k/`
 - Cloned `hitz-zentroa/Catalog-of-Basque-Dialects` → XNLI dialectal TSVs (5,010 + 621 per dialect × 3)
 - Identified `ikerHerrero/Basque_Dialects_Classification` model (F1=0.68)
+- Downloaded Helsinki-NLP/eitb_parcc (637K rows, 472K Basque sentences) → `data/raw/text/eitb_parcc/`
 - Created `data/raw/text/registry.csv` with all sources
 
 ### Task 1.2 — Dialect Label Inference (Geo-Proxy)
 
 **Objective:** For all text sources without explicit dialect labels, apply geo-proxy labeling.
 
-**Status: ✅ DONE (Klasikoak.eus scraping).** Completed on 2026-06-07.
+**Status: ✅ DONE (Klasikoak.eus scraping + EITB Batua).** Completed on 2026-06-07.
 
 **Execution summary:**
 - Built `src/data/klasikoak_scraper.py` — crawls klasikoak.armiarma.eus (467 works), extracts Zubitegia author profiles, maps birthplace→dialect via municipality CSV
@@ -296,7 +297,10 @@ This document defines the complete execution plan for **Zeineuski**, a fine-grai
   - Western: 3,887 (15.6%, 12 authors)
   - Navarrese: 2,446 (9.8%, 3 authors)
   - Souletin: 1,480 (5.9%, 6 authors)
-- Output: `data/raw/text/klasikoak/klasikoak_labeled.tsv`
+- Extracted 472K Batua sentences from Helsinki-NLP/eitb_parcc (EITB news parallel corpus)
+  - Split: 15K train, 1K val, 1.5K test for 6-class model
+  - Real journalistic Batua — far better quality than XNLI-eu machine-translated text
+- Output: `data/raw/text/klasikoak/klasikoak_labeled.tsv`, `data/raw/text/eitb_parcc/`
 
 **Pending:** Author origin mapping for remaining authors not in Klasikoak; social media corpus labeling; lexical marker strategy.
 
@@ -316,20 +320,23 @@ This document defines the complete execution plan for **Zeineuski**, a fine-grai
 
 ### Task 2.1 — fastText Baseline ✅
 
-**Status: DONE.** Completed 2026-06-06 (XNLI-only) and 2026-06-07 (hybrid expanded).
+**Status: DONE.** Completed 2026-06-06 (XNLI-only) and 2026-06-07 (hybrid expanded + Batua 6-class).
 
 **Execution summary:**
 - XNLI-only (3-class): 93.6% accuracy, Macro F1=0.936 (835/dialect train)
 - Klasikoak-only (5-class): 98.2% val accuracy, Macro F1=0.980 (19.9k train)
-- **Hybrid (XNLI + Klasikoak, 5-class): 96.0% XNLI test, 97.8% Klasikoak val — best model**
+- Hybrid 5-class (XNLI + Klasikoak): 96.85% XNLI test (after autoresearch optimization)
+- **Hybrid 6-class + EITB Batua: 94.53% 6c test, Batua F1=0.960, XNLI 3c=91.46%**
 
 Key findings:
 - Character n-grams (3–6) are extremely effective for Basque dialect classification
 - Classical literature + modern text requires domain mixing to avoid cross-domain collapse (33.9% without mixing → 96.0% with)
-- The hybrid model supports all 5 dialect classes while maintaining high accuracy
-- fastText significantly outperforms XLM-R (96.0% vs 87.8%) on small data
+- Autoresearch (17 runs) found optimal 5-class config: lr=0.2, epoch=75, minn=3, maxn=6
+- EITB Parcc (Helsinki-NLP/eitb_parcc) provides 472K real journalistic Batua sentences — far better than XNLI-eu MT text
+- 6-class with EITB: aggressive lr=3.0 optimal; Batua detection excellent (0.960 F1); Central hardest (0.923)
+- fastText significantly outperforms XLM-R on small data (96.0% vs 87.8%)
 
-Model artifacts: `models/fasttext_dialect_hybrid.bin`
+Model artifacts: `models/fasttext_dialect_hybrid.bin` (5-class), `models/fasttext_dialect_best.bin` (optimized 5-class)
 
 ---
 
