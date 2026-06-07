@@ -89,9 +89,9 @@ def scrape_work(work_url: str, session: requests.Session) -> list[str]:
     base_dir = "/".join(work_url.split("/")[:-1])
     base_name = Path(work_url).stem
 
-    chapter_urls = []
+    chapter_urls: list[str] = []
     for a in soup.find_all("a"):
-        href = a.get("href", "")
+        href = str(a.get("href", ""))
         if base_name in href and href.endswith(".htm"):
             full = base_dir + "/" + href
             if full != work_url and full not in chapter_urls:

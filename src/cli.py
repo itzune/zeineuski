@@ -88,16 +88,16 @@ def predict_cmd(
 
     TEXT: Basque sentence to classify (if not using -f).
     """
-    model_dir = Path(model_dir)
+    mdir = Path(model_dir)
 
     if input_file:
-        _batch_predict(input_file, output, threshold, model_dir, variant, top_n)
+        _batch_predict(input_file, output, threshold, mdir, variant, top_n)
     elif text:
-        _single_predict(text, threshold, model_dir, variant)
+        _single_predict(text, threshold, mdir, variant)
     elif not sys.stdin.isatty():
-        text = sys.stdin.read().strip()
-        if text:
-            _single_predict(text, threshold, model_dir, variant)
+        stdin_text = sys.stdin.read().strip()
+        if stdin_text:
+            _single_predict(stdin_text, threshold, mdir, variant)
         else:
             click.echo("Error: no input provided.", err=True)
             sys.exit(1)
@@ -122,14 +122,14 @@ def predict_cmd(
 )
 def download(model_dir: str, variant: str):
     """Pre-download models from Hugging Face Hub."""
-    model_dir = Path(model_dir)
+    mdir = Path(model_dir)
     logger.info(f"Downloading models (variant={variant}) from {HF_REPO}…")
-    binary_model, dialect_model = load_models(model_dir, variant)
+    binary_model, dialect_model = load_models(mdir, variant)
     logger.info("✓ Models downloaded and cached.")
     logger.info("  Binary: batua vs dialectal")
     logger.info("  Dialect: 5-class euskalkiak")
     logger.info(f"  Variant: {variant}")
-    logger.info(f"  Cache: {model_dir}")
+    logger.info(f"  Cache: {mdir}")
 
 
 def _single_predict(text: str, threshold: float, model_dir: Path, variant: str):

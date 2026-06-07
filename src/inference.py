@@ -65,8 +65,7 @@ def _download_model(filename: str, model_dir: Path) -> Path:
     path = hf_hub_download(
         repo_id=HF_REPO,
         filename=filename,
-        local_dir=model_dir,
-        local_dir_use_symlinks=False,
+        cache_dir=model_dir,
     )
     logger.info(f"Downloaded to {path}")
     return Path(path)

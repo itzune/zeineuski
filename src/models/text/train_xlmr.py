@@ -27,9 +27,9 @@ ID2LABEL = {v: k for k, v in LABEL2ID.items()}
 
 def load_data(data_dir: str = "data/processed/text"):
     """Load train/test from JSONL files."""
-    data_dir = Path(data_dir)
-    train_path = data_dir / "train.jsonl"
-    test_path = data_dir / "test.jsonl"
+    ddir = Path(data_dir)
+    train_path = ddir / "train.jsonl"
+    test_path = ddir / "test.jsonl"
 
     train_data = []
     with open(train_path) as f:
