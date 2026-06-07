@@ -57,6 +57,49 @@ Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
 Per-class F1 (final): Western 0.953, Central 0.933, Nav-Lab 0.949, Batua 0.962.
 (Navarrese/Souletin: no clean test data — all samples leaked into val from train.)
 
+## Training
+
+The best classifier uses a **hierarchical 2-step** architecture discovered through
+automated hyperparameter search (33 experiments via Pi Autoresearch):
+
+**Step 1 — Binary filter** (batua vs dialectal):
+```bash
+fasttext supervised \
+  -input data/processed/text/train_binary.txt \
+  -output models/hier_binary_final \
+  -lr 3.0 -epoch 50 -dim 100 -minn 3 -maxn 6 -wordNgrams 2
+```
+
+**Step 2 — 5-class dialect classifier** (trained without batua samples):
+```bash
+fasttext supervised \
+  -input data/processed/text/train_dialectal_5class.txt \
+  -output models/hier_dialect_final \
+  -lr 0.2 -epoch 150 -dim 100 -minn 3 -maxn 6 -wordNgrams 2
+```
+
+Key insight: training the dialect model **without** batua samples prevents the model
+from learning to distinguish batua from dialects, which the binary step already handles.
+
+### Model compression
+
+Smaller variants are produced by quantizing weights and reducing hash bucket counts.
+Size reduction comes from the model's internal vocabulary hash table, not from
+pruning or distillation:
+
+| Variant | bucket | Size | vs final |
+|---------|--------|------|----------|
+| final | 200K | 1.5GB | baseline |
+| quantized | 200K | 417MB | quantized weights |
+| compact | 50K | 189MB | 8× smaller |
+| tiny | 20K | 112MB | 13× smaller |
+| web | binary 20K / dial 50K | 32MB | 46× smaller |
+
+Despite aggressive compression, XNLI drops only from 92.42% to 91.06% —
+hash bucket collisions act as implicit regularization at small sizes.
+
+All models available at [huggingface.co/itzune/zeineuski](https://huggingface.co/itzune/zeineuski).
+
 ## Evaluation
 
 All metrics are computed on **disjoint** train/test splits verified via exact text deduplication.
