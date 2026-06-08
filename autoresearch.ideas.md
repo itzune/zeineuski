@@ -1,35 +1,54 @@
 # Azpieuskalki Improvement Ideas
 
-## Verified
-- [x] ✓ Fix Nafarroa town CSV gap (53 towns added, 0 unmapped)
-- [x] ✓ Fix hyphen normalization in town matching
-- [x] ✓ Scrape hego-goi-nafarrera towns (180 passages, 28 towns)
-- [x] ✓ Label verification audit: chain is clean, 2-way split simplifies Wikipedia's 4-5 nafar classes
-- [x] ✗ Class balancing via oversampling (made things worse, 25.73%)
+## Completed
+- [x] ✓ Ahotsak-aligned classification: 68 town mismatches fixed, 10 classes, 68.32%
+- [x] ✓ Slow training (lr=0.2, epoch=50): 72.43% — massive improvement over autotune
+- [x] ✓ NS vs HS comparison: NS wins (72.43% vs 68.40%) — HS trades 10pp large-class for small-class gain
+- [x] ✓ NS+HS ensemble: 70.91% — doesn't beat solo NS
+- [x] ✓ OVA loss: 71.58% — slightly worse than NS
+- [x] ✓ dim=300: 67.68-71.93% — always worse than dim=200
+- [x] ✓ wordNgrams=3: 64.09% — overfits, collapses small classes
+- [x] ✓ wordNgrams=1: 72.14% — slightly worse than bigrams
+- [x] ✓ minCount=2: 66.79% — filters out too much signal
+- [x] ✓ char n-grams (minn=2,maxn=5): 67.50% — no help
+- [x] ✓ lrUpdateRate variation: no effect
+- [x] ✗ Oversampling: collapsed to 25.73%
 
-## Label Quality Improvements
-- Split ipar-goi-nafarrera into 2: mendebalekoa (Bortziriak/Baztan/Malerreka/Leitzaldea) + iparraldekoa (Ultzamaldea). Currently mixed with Gipuzkoan border towns.
-- Split hego-goi-nafarrera: true hegoaldekoa (Sakana) separate from ekialdekoa (Zaraitzu/Erronkari/Aezkoa)
-- But: data scarcity makes finer splits risky. Sakana only has 71 passages, Zaraitzu 22, Erronkari 8.
-- Consider removing Gipuzkoan border towns (errenteria, hondarribia, oiartzun) from ipar-goi-nafarrera — they're transitional and confuse the model
+## Optimal Config (72.43%)
+- Model: fastText supervised
+- dim=200, lr=0.2, epoch=50, wordNgrams=2, loss=ns, minCount=1
+- NO autotune (autotune lr decay is too aggressive for imbalanced data)
+- 11 classes, 35K train sentences
 
-## Hyperparameter Tuning
-- Larger dim (300-400) with more epochs (50-100) — current 200/25 may underfit
-- Higher wordNgrams (3-4) to capture longer lexical patterns
-- Try fastText autotune with longer duration (300s)
-- Lower lr (0.1-0.2) with more epochs for better convergence
+## Current Per-Class Performance (best model)
+| Class | Train | Test | Accuracy |
+|---|---|---|---|
+| mendebal-sortaldea | 13,059 | 2,304 | 86-87% |
+| erdialde-sartaldea | 9,804 | 1,729 | 77% |
+| erdialde-sortaldea | 4,966 | 876 | 64% |
+| nafar-sortaldea | 1,516 | 267 | 56-59% |
+| naflap-sortaldea | 1,395 | 246 | 61-63% |
+| nafar-hego-sartaldea | 1,101 | 194 | 32% |
+| naflap-sartaldea | 726 | 127 | 41-49% |
+| ekialde-nafarra | 710 | 125 | 33-38% |
+| nafar-erdigunea | 497 | 87 | 18-22% |
+| mendebal-sartaldea | 439 | 77 | 34-36% |
+| zuberera | 375 | 66 | 45-49% |
 
-## Model Architecture
-- Per-dialect submodels (was tried, got 95% macro avg but complex deployment)
-- Ensemble of flat + hierarchical predictions
-- Character n-gram focus: minn=2, maxn=5 for morphological patterns
+## Data Expansion Opportunities
+- [ ] **Scrape nafar-ipar-sartaldea towns** (arantza 43, bera 31, etxalar 30, igantzi 27, lesaka 34 transcriptions). These are Bortziriak/Malerreka towns — currently 0 passages for this class. ~165 passages → ~2,600 sentences.
+- [ ] Scrape Zuberoa towns: barkoxe, eskiula, maule, atharratze, etc. Currently only 27 passages. Could boost zuberera from 375→1,000+ train.
+- [ ] Scrape remaining Nafarroa towns: 53 unscraped. Many are in unscraped regions.
+- [ ] **BLOCKED**: Scraper has bug — `save_passages` function undefined. Need to fix before scraping.
 
-## Data Augmentation
-- Scrape remaining Nafarroa towns (especially ipar-goi-nafarrera from Nafarroa proper, not Gipuzkoa)
-- The big ipar-goi-nafarrera boost (5,842 sentences) is from just 3 Gipuzkoan towns — these are transitional, not pure nafarrera
+## Architecture Ideas
+- Per-dialect submodels (previously tried, complex deployment)
+- Two-tier: dialect classifier → per-dialect azpieuskalki classifier (reduces class count per model)
+- Weighted loss: upweight small classes via `autotuneModelSize` with validation file
+- Pre-trained Basque embeddings (cc.eu.300.bin) as initialization — might inject general Basque knowledge
 
 ## Analysis
-- Dialect continuum explains most errors: sartaldekoa↔debagoiena (160), sartaldeko-naf-lap↔beterri (165)
-- These are geographically adjacent varieties; lexical overlap is high
-- Text-only fastText may have hit a ceiling around 55% for 11-way classification
-- Speech features (prosody, phonetics) would distinguish better than text alone
+- Dialect continuum: nafar-erdigunea most confused with nafar-sortaldea (22 times) — geographically adjacent
+- Text-only fastText ceiling: ~72-73% for 11-way azpieuskalki classification
+- Core Bizkaian/Gipuzkoan classes are very strong (86-87%)
+- Nafarroan/Labourdin/Zuberera classes bottlenecked by data quantity, not model capacity
