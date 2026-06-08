@@ -1,4 +1,19 @@
-# ECAPA-TDNN baseline config
+# ECAPA-TDNN speech dialect classification config
 model: ecapa_tdnn
 num_classes: 6
 embedding_dim: 192
+
+# Embedding-only mode: extract ECAPA-TDNN embeddings, train sklearn classifier
+# Much faster than full fine-tuning, works well on CPU for small datasets
+mode: embedding_only
+
+# Classifier to train on top of embeddings
+classifier: svm
+svm_kernel: rbf
+svm_C: 1.0
+svm_gamma: scale
+
+# Audio processing
+target_sample_rate: 16000
+min_duration_sec: 1.0
+max_duration_sec: 15.0

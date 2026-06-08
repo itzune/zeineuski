@@ -24,3 +24,7 @@ models/hier_*_tiny.bin
 models/hier_*_web.bin
 models/hier_*_webslim.bin
 models/hier_*_webultra.bin
+
+# Don't ignore src/data Python files
+!src/data/*.py
+!src/models/speech/*.py
