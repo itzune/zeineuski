@@ -1,6 +1,9 @@
 # Zeineuski — Basque Dialect Identification
 
-Fine-grained dialect identification (DID) system for Basque (Euskara). Given a text or speech sample, classifies it into one of six dialect categories: Western (Bizkaiera), Central (Gipuzkera), Navarrese, Navarrese-Labourdin, Souletin (Zuberera), or Standard Basque (Batua).
+Fine-grained dialect identification (DID) system for Basque (Euskara), supporting three classification tiers:
+
+- **Euskalkiak (dialects):** Western (Bizkaiera), Central (Gipuzkera), Navarrese, Navarrese-Labourdin, Souletin (Zuberera), and Batua (Standard Basque)
+- **Azpieuskalkiak (sub-dialects):** 9 Zuazo sub-dialect classes trained on Ahotsak.eus oral history transcriptions
 
 ## Setup
 
