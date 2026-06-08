@@ -510,3 +510,55 @@ Tier 1: batua/dialectal  →  Tier 2: 5-class dialect  →  Tier 3: 11-class azp
 - Epic 5 (speech baselines): ECAPA-TDNN, Whisper, XLSR
 - Hego-goi-nafarrera data: Ahotsak has only 1 transcription — genuine coverage gap, not fixable via scraping.
   Alternative sources needed (Klasikoak? Other archives?)
+
+### 2026-06-08: Classification Scheme Review & Data Gap Discovery
+
+**Euskalki classification: consensus is 6 dialects, not 5.**
+
+The current linguistic consensus (Zuazo 1998+, Wikipedia, Ahotsak.eus) recognizes 6 dialects:
+
+| # | Dialect (Euskalki) | Our Tier 2 label | Notes |
+|---|---|---|---|
+| 1 | Bizkaiera / Mendebalekoa | `western` | ✓ Correct |
+| 2 | Gipuzkera / Erdialdekoa | `central` | ✓ Correct |
+| 3 | Goi-nafarrera | `navarrese` | ✓ Correct (but see below) |
+| 4 | **Ekialdeko nafarrera / Erronkariera** | *(merged into navarrese)* | ❌ Misclassified |
+| 5 | Zuberera | `souletin` | ✓ Correct |
+| 6 | Nafar-lapurtera | `nav-lab` | ✓ Correct |
+
+**Ekialdeko nafarrera is a distinct dialect** (extinct ~1990s, Zaraitzu + Erronkari valleys).
+It is linguistically closer to Zuberera than to Goi-nafarrera, making navarrese the wrong
+parent class. Ahotsak.eus lists it as a separate top-level euskalki.
+
+**Impact on our pipeline:** Minimal for now. Ekialdeko nafarrera has very few Ahotsak passages
+(~65 across 7 towns: uztarroze 39, erronkari 20, burgi 36, espartza-zaraitzu 9,
+otzagabia 6, bidankoze 3, izaba 3, orontze 3, ezkaroze 1, itzaltzu 1). None of these towns
+are in `municipality_dialect.csv`, so they haven't been labeled or used in training.
+Adding ekialdeko-nafarrera as a 6th dialect class (and updating Tier 1+2 models) would be
+correct but low priority given the tiny amount of data.
+
+**Discovered data gap: 57 Nafarroa towns unmapped.**
+The `municipality_dialect.csv` has 0 Nafarroa entries with `eskualdea` field (all rows have
+`eskualdea` empty for Nafarroa). This means:
+- 57 Nafarroa towns are not mapped to any dialect → 3,145+ passages unlabeled
+- **etxarri-aranatz (1,551 passages)** is unmapped due to hyphen-vs-space mismatch
+  (CSV has "Etxarri Aranatz" with space; slug is "etxarri-aranatz")
+- This is the biggest single fix to the azpieuskalki pipeline — adding Nafarroa region
+  mappings to the CSV would unlock all 3,145 passages for Tier 3 training
+
+**Wikipedia azpieuskalki list vs our current map:**
+
+| Wikipedia (Zuazo) | Our map | Difference |
+|---|---|---|
+| Bizkaiera: sartaldekoa, sortaldekoa, tartekoa | sartaldekoa, sortaldekoa, debabarrena, debagoiena | We split transitional zones as azpieuskalkiak |
+| Gipuzkera: erdigunekoa, sartaldekoa, sortaldekoa | beterri, goierri | Different naming; our debagoiena/debabarrena are Wikipedia's transitional zones |
+| Nafarrera: iparraldekoa, hegoaldekoa, erdialdekoa, ekialdekoa, mendebalekoa | ipar-goi-nafarrera, hego-goi-nafarrera | We merged 5 Wikipedia subclasses into 2 |
+| Nafar-lapurtera: lapurtera, behe-nafarrera | sartaldeko-naf-lap, sortaldeko-naf-lap | Different naming, same split |
+| Zuberera: (no azpieuskalkiak) | zuberera | Same |
+
+**Recommendation:** Our 11-class azpieuskalki scheme is a reasonable simplification of the
+~14 Wikipedia classes. The main improvements available:
+1. Fix CSV matching to unlock 3,145+ Nafarroa passages (especially etxarri-aranatz 1,551)
+2. Add Nafarroa eskualdea mappings to CSV (Bortziriak, Malerreka, Baztan, etc.)
+3. Consider splitting ipar-goi-nafarrera into finer subclasses if data permits
+4. Ekialdeko nafarrera should be its own Tier 2 class (low priority, tiny data)
