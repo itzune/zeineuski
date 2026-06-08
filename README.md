@@ -2,7 +2,8 @@
 
 Fine-grained dialect identification (DID) system for Basque (Euskara), supporting three classification tiers:
 
-- **Euskalkiak (dialects):** Western (Bizkaiera), Central (Gipuzkera), Navarrese, Navarrese-Labourdin, Souletin (Zuberera), and Batua (Standard Basque)
+- **Batua vs dialectal** (binary): distinguishes Standard Basque from dialectal speech
+- **Euskalkiak (dialects):** Western (Bizkaiera), Central (Gipuzkera), Navarrese, Navarrese-Labourdin, Souletin (Zuberera)
 - **Azpieuskalkiak (sub-dialects):** 9 Zuazo sub-dialect classes trained on Ahotsak.eus oral history transcriptions
 
 ## Setup
