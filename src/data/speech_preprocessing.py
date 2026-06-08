@@ -382,29 +382,30 @@ def process_audio_files(
 
     random.seed(42)
 
-    speaker_samples = defaultdict(list)
+    # Group by town (speaker names from Ahotsak have URL slug "hizlariak" for everyone)
+    # Use town as proxy for speaker disjunction — different towns = different speakers
+    town_samples = defaultdict(list)
     for sample in processed:
-        speaker_samples[sample["speaker"]].append(sample)
+        town_samples[sample["town"]].append(sample)
 
-    speakers = list(speaker_samples.keys())
-    random.shuffle(speakers)
+    towns = list(town_samples.keys())
+    random.shuffle(towns)
 
-    n = len(speakers)
+    n = len(towns)
     n_train = int(n * 0.70)
     n_val = int(n * 0.15)
 
-    train_speakers = set(speakers[:n_train])
-    val_speakers = set(speakers[n_train:n_train + n_val])
-    test_speakers = set(speakers[n_train + n_val:])
+    train_towns = set(towns[:n_train])
+    val_towns = set(towns[n_train:n_train + n_val])
 
     splits = {"train": [], "val": [], "test": []}
-    for speaker in speakers:
-        if speaker in train_speakers:
-            splits["train"].extend(speaker_samples[speaker])
-        elif speaker in val_speakers:
-            splits["val"].extend(speaker_samples[speaker])
+    for town in towns:
+        if town in train_towns:
+            splits["train"].extend(town_samples[town])
+        elif town in val_towns:
+            splits["val"].extend(town_samples[town])
         else:
-            splits["test"].extend(speaker_samples[speaker])
+            splits["test"].extend(town_samples[town])
 
     # Save CSV manifests
     for split_name, samples in splits.items():
@@ -417,7 +418,7 @@ def process_audio_files(
                     f"{s['speaker']},{s['town']},{s['passage_id']},"
                     f"{s['duration_sec']}\n"
                 )
-        logger.info(f"  {split_name}: {len(samples)} segments, {len(set(s['speaker'] for s in samples))} speakers")
+        logger.info(f"  {split_name}: {len(samples)} segments, {len(set(s['town'] for s in samples))} towns")
 
     # Summary stats
     total_duration = sum(s["duration_sec"] for s in processed) / 3600
@@ -427,7 +428,7 @@ def process_audio_files(
         "train_segments": len(splits["train"]),
         "val_segments": len(splits["val"]),
         "test_segments": len(splits["test"]),
-        "num_speakers": n,
+        "num_towns": n,
         "errors": errors,
     }
 
@@ -482,7 +483,7 @@ def main():
     print(f"METRIC preprocess_train={stats['train_segments']}")
     print(f"METRIC preprocess_val={stats['val_segments']}")
     print(f"METRIC preprocess_test={stats['test_segments']}")
-    print(f"METRIC preprocess_speakers={stats['num_speakers']}")
+    print(f"METRIC preprocess_towns={stats['num_towns']}")
     print(f"METRIC preprocess_errors={stats['errors']}")
 
     return 0

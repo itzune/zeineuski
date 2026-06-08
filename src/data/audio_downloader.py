@@ -35,18 +35,24 @@ DEFAULT_TIMEOUT = 60  # seconds for download
 DEFAULT_MAX_AUDIO = 0  # 0 = no limit
 
 
-def extract_audio_url(passage: dict) -> Optional[str]:
-    """Extract MP3 URL from passage dict. Prefers audio_url, falls back to video_url."""
-    url = passage.get("audio_url", "").strip()
-    if url and url.endswith(".mp3"):
-        return url
-    # Some passages only have video (MP4); we could extract audio later
-    # For now, skip video-only
+def extract_audio_url(passage: dict) -> Optional[tuple]:
+    """Extract media URL from passage dict.
+    
+    Returns (url, type) where type is 'mp3' or 'mp4'.
+    Prefers MP3 audio, falls back to MP4 video (extract audio later).
+    """
+    audio_url = passage.get("audio_url", "").strip()
+    if audio_url and audio_url.endswith(".mp3"):
+        return (audio_url, "mp3")
+    
+    video_url = passage.get("video_url", "").strip()
+    if video_url and video_url.endswith(".mp4"):
+        return (video_url, "mp4")
+    
     return None
 
 
 def download_file(url: str, dest: Path, session: requests.Session) -> bool:
-    """Download a single file. Returns True on success."""
     if dest.exists():
         logger.debug(f"  Already exists: {dest.name}")
         return True  # Already downloaded
@@ -69,6 +75,24 @@ def download_file(url: str, dest: Path, session: requests.Session) -> bool:
         tmp = dest.with_suffix(dest.suffix + ".tmp")
         if tmp.exists():
             tmp.unlink()
+        return False
+
+
+def _convert_mp4_to_mp3(mp4_path: Path, mp3_path: Path) -> bool:
+    """Extract audio from MP4 to MP3 using ffmpeg."""
+    import subprocess
+    try:
+        subprocess.run(
+            ["ffmpeg", "-y", "-i", str(mp4_path),
+             "-vn", "-acodec", "libmp3lame", "-q:a", "2",
+             str(mp3_path)],
+            capture_output=True,
+            timeout=120,
+            check=True,
+        )
+        return mp3_path.exists() and mp3_path.stat().st_size > 0
+    except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired) as e:
+        logger.warning(f"  Failed to convert {mp4_path.name}: {e}")
         return False
 
 
@@ -100,9 +124,10 @@ def download_ahotsak_audio(
     # Filter: passages with audio URLs
     eligible = []
     for p in passages:
-        url = extract_audio_url(p)
-        if url:
-            eligible.append((p, url))
+        result = extract_audio_url(p)
+        if result:
+            url, media_type = result
+            eligible.append((p, url, media_type))
 
     logger.info(f"  {len(eligible)} passages have audio URLs")
     if max_audio and max_audio < len(eligible):
@@ -122,12 +147,15 @@ def download_ahotsak_audio(
     # Track which files we download for reporting
     manifests = []
 
-    for i, (passage, url) in enumerate(eligible):
+    for i, (passage, url, media_type) in enumerate(eligible):
         # Build filename from passage metadata
         town = passage.get("town_slug", "unknown")
         passage_id = passage.get("passage_id", f"unk{i:05d}")
-        filename = f"{town}_{passage_id}.mp3"
+        media_ext = ".mp4" if media_type == "mp4" else ".mp3"
+        filename = f"{town}_{passage_id}{media_ext}"
+        final_filename = f"{town}_{passage_id}.mp3"
         dest = output_dir / filename
+        final_dest = output_dir / final_filename
 
         if i > 0:
             time.sleep(rate_limit)
@@ -140,27 +168,52 @@ def download_ahotsak_audio(
                 f"skipped={stats['skipped']}"
             )
 
+        # Skip if final MP3 already exists
+        if final_dest.exists():
+            size = final_dest.stat().st_size
+            stats["downloaded"] += 1
+            stats["total_bytes"] += size
+            manifests.append({
+                "filename": final_filename,
+                "town": passage.get("town_name", town),
+                "town_slug": town,
+                "speaker": passage.get("speaker_name", "unknown"),
+                "speaker_slug": passage.get("speaker_slug", "unknown"),
+                "dialect": passage.get("dialect_class", ""),
+                "confidence": passage.get("dialect_confidence", ""),
+                "passage_id": passage_id,
+                "duration": passage.get("duration", ""),
+                "size_bytes": size,
+            })
+            continue
+
         success = download_file(url, dest, session)
 
         if success:
+            # If MP4, extract audio to MP3
+            if media_type == "mp4":
+                success = _convert_mp4_to_mp3(dest, final_dest)
+                if success:
+                    # Remove MP4 to save space
+                    dest.unlink()
+                dest = final_dest
+            
             size = dest.stat().st_size if dest.exists() else 0
             stats["total_bytes"] += size
             stats["downloaded"] += 1
 
-            manifests.append(
-                {
-                    "filename": filename,
-                    "town": passage.get("town_name", town),
-                    "town_slug": town,
-                    "speaker": passage.get("speaker_name", "unknown"),
-                    "speaker_slug": passage.get("speaker_slug", "unknown"),
-                    "dialect": passage.get("dialect_class", ""),
-                    "confidence": passage.get("dialect_confidence", ""),
-                    "passage_id": passage_id,
-                    "duration": passage.get("duration", ""),
-                    "size_bytes": size,
-                }
-            )
+            manifests.append({
+                "filename": final_filename,
+                "town": passage.get("town_name", town),
+                "town_slug": town,
+                "speaker": passage.get("speaker_name", "unknown"),
+                "speaker_slug": passage.get("speaker_slug", "unknown"),
+                "dialect": passage.get("dialect_class", ""),
+                "confidence": passage.get("dialect_confidence", ""),
+                "passage_id": passage_id,
+                "duration": passage.get("duration", ""),
+                "size_bytes": size,
+            })
         else:
             stats["failed"] += 1
 

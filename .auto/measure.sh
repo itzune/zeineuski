@@ -15,7 +15,7 @@ PHASE1_START=$(date +%s)
 uv run python -m src.data.audio_downloader \
   --passages data/raw/speech/ahotsak/ahotsak_passages_20260608_213742.jsonl \
   --output data/raw/speech/ahotsak/audio \
-  --max-audio 2000 \
+  --max-audio 0 \
   --rate-limit 0.5
 
 PHASE1_END=$(date +%s)
