@@ -63,9 +63,51 @@ zeineuski/
 └── docs/                # Documentation, evaluation reports, paper
 ```
 
+## Architecture
+
+Zeineuski uses a **three-tier hierarchical classification** architecture:
+
+```
+Tier 1: batua / dialectal (binary)
+  └─ Tier 2: 5-class euskalkia (dialect classification)
+       └─ Tier 3: 9 to 12-class azpieuskalkia (sub-dialect classification)
+```
+
+### Classification taxonomy
+
+The project follows **Koldo Zuazo's dialect classification**, which is the current
+linguistic consensus and the basis for Ahotsak.eus's municipality→dialect mapping.
+
+Zuazo recognizes **6 euskalkiak** (dialects):
+
+| # | Euskalkia | Our label | Notes |
+|---|-----------|-----------|-------|
+| 1 | Bizkaiera / Mendebalekoa | `western` | |
+| 2 | Gipuzkera / Erdialdekoa | `central` | |
+| 3 | Goi-nafarrera | `navarrese` | Upper Navarrese |
+| 4 | Ekialdeko nafarrera / Erronkariera | *(merged into navarrese)* | Extinct ~1990s; tiny data |
+| 5 | Zuberera | `souletin` | |
+| 6 | Nafar-lapurtera | `nav-lab` | |
+| + | Euskara batua | `batua` | Standard unified Basque |
+
+**Why 5 euskalkis + batua instead of 6 + batua?**
+
+Ekialdeko nafarrera (Salazarese/Roncalese) is linguistically a distinct dialect, but
+it has been functionally extinct since the 1990s (last native speaker died in 1991).
+Ahotsak.eus has only ~65 passages across 7 towns in the Zaraitzu and Erronkari valleys.
+The Klasikoak.armiarma.eus classical literature corpus — which provides most of our
+Tier-2 training data — maps these texts to `navarrese` since the dialect distinction
+is not present in pre-20th-century literary sources.
+
+For **Tier 3 (azpieuskalkia)**, we follow the **Zuazo azpieuskalki taxonomy** as
+implemented on [Ahotsak.eus](https://ahotsak.eus). The official Ahotsak municipality→
+azpieuskalki mapping provides the ground truth labels for sub-dialect classification.
+We use the same label names as Ahotsak (e.g., `mendebal-sortaldea`, `ekialde-nafarra`,
+etc.) rather than translating or renaming them.
+
 ## Results
 
-### Euskalki (Dialect) Classification — 6-class
+### Euskalki (Dialect) Classification — 5 euskalkis + batua (6-class)
 
 Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
 
@@ -78,7 +120,9 @@ Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
 | **web** | **32MB** | **91.06%** | **94.33%** | **0.952** |
 
 Per-class F1 (final): Western 0.953, Central 0.933, Nav-Lab 0.949, Batua 0.962.
-(Navarrese/Souletin: no clean test data — all samples leaked into val from train.)
+Ekialdeko nafarrera (Zaraitzu/Erronkari) is merged into navarrese at Tier 2 due to
+tiny data (~65 Ahotsak passages) and its treatment as a sub-class in our literary
+corpus. It is a distinct class at Tier 3 (azpieuskalki).
 
 ### Azpieuskalki (Sub-Dialect) Classification — 9 to 12-class
 
@@ -132,7 +176,7 @@ fasttext supervised \
   -lr 3.0 -epoch 50 -dim 100 -minn 3 -maxn 6 -wordNgrams 2
 ```
 
-**Step 2 — 5-class dialect classifier** (trained without batua samples):
+**Step 2 — 5-class dialect classifier** (trained without batua samples, ekialdeko nafarrera merged into navarrese):
 ```bash
 fasttext supervised \
   -input data/processed/text/train_dialectal_5class.txt \
@@ -142,6 +186,23 @@ fasttext supervised \
 
 Key insight: training the dialect model **without** batua samples prevents the model
 from learning to distinguish batua from dialects, which the binary step already handles.
+
+### Azpieuskalki classifier
+
+The Tier 3 sub-dialect classifier is a single flat 9-class fastText model trained
+on Ahotsak.eus oral history transcriptions:
+
+```bash
+fasttext supervised \
+  -input data/processed/text/train_azpieuskalki.txt \
+  -output models/azpieuskalki \
+  -dim 200 -lr 0.2 -epoch 75 -wordNgrams 2 -minn 2 -maxn 6 -loss ns
+```
+
+Key insight: **NO autotune** — aggressive LR decay overfits to dominant classes.
+**Character n-grams** (minn=2,maxn=6) capture Basque morphological patterns
+(case endings, verb suffixes) that are dialect-specific. This single change
+jumped accuracy from 72% to 82%.
 
 ### Model compression
 
