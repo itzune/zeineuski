@@ -184,6 +184,17 @@ entirely through automated optimization without any manual hyperparameter tuning
 
 ## Training
 
+All training was performed on a consumer laptop CPU — no GPU acceleration needed.
+fastText is highly efficient: even the largest model (1.5GB, ~100K samples) trains
+in under 2 minutes.
+
+| Hardware | |
+|---|---|
+| CPU | Intel Core i7-8550U (4 cores, 1.80 GHz) |
+| RAM | 16 GB |
+| OS | Ubuntu 24.04 |
+| Framework | fastText (C++), no GPU |
+
 The best classifier uses a **hierarchical 2-step** architecture discovered through
 automated hyperparameter search (33 experiments via Pi Autoresearch):
 
