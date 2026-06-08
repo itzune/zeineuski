@@ -163,6 +163,31 @@ that are dialect-specific — this single change jumped accuracy from 72% to 82%
 
 Models: `models/azpieuskalki.bin` (233MB), `models/azpieuskalki_q.bin` (31MB)
 
+## Development approach: pi-autoresearch
+
+This project served as a testbed for [**pi-autoresearch**](https://github.com/davebcn87/pi-autoresearch),
+an autonomous experiment loop extension for [pi](https://github.com/earendil-works/pi-coding-agent).
+The azpieuskalki classifier was tuned through **37 automated experiments** over
+3 sessions, where pi-autoresearch iteratively proposed, ran, and evaluated
+hyperparameter changes against a hold-out test set.
+
+Instead of manual trial-and-error, the loop autonomously discovered:
+
+| Discovery | Experiment | Impact |
+|---|---|---|
+| Ahotsak municipality misalignment | #6–7 (68 towns fixed) | +17.3pp (51% → 68%) |
+| NO autotune — it overfits imbalanced data | #8–14 (8 variants killed) | +4.1pp (68% → 72%) |
+| Character n-grams (minn=2, maxn=6) | #27 | +9.4pp (72% → 81%) |
+| Dim 200 > 250/300 for small datasets | #28–30 | +1pp |
+| epoch=75 sweet spot | #30 | 82.08% peak |
+
+Each experiment logged its config, accuracy, F1 breakdown, confusion matrix, and
+an auto-generated analysis back to `PROJECT.md`, making the exploration fully
+traceable.
+
+**Total improvement:** from 51.02% baseline to 83.55% final — **+63.8% relative**,
+entirely through automated optimization without any manual hyperparameter tuning.
+
 ## Training
 
 The best classifier uses a **hierarchical 2-step** architecture discovered through
