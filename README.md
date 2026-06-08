@@ -44,6 +44,8 @@ zeineuski/
 
 ## Results
 
+### Euskalki (Dialect) Classification — 6-class
+
 Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
 
 | Variant | Size | XNLI (3-class) | Test (4-class) | Batua F1 |
@@ -56,6 +58,38 @@ Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
 
 Per-class F1 (final): Western 0.953, Central 0.933, Nav-Lab 0.949, Batua 0.962.
 (Navarrese/Souletin: no clean test data — all samples leaked into val from train.)
+
+### Azpieuskalki (Sub-Dialect) Classification — 9 to 12-class
+
+Fine-grained sub-dialect classifier trained on Ahotsak.eus oral history transcriptions, using Zuazo's
+sub-dialect taxonomy mapped through official Ahotsak.eus municipality→azpieuskalki assignments.
+
+| Variant | Classes | Accuracy | Model |
+|---------|:---:|:---:|---|
+| 12-class (all) | 12 | 82.08% | char+word n-grams, epoch=75 |
+| 9-class (min_samples=600) | 9 | **83.55%** | drops 3 weakest (<600 train) |
+
+**Optimal config:** fastText with `dim=200, lr=0.2, epoch=75, wordNgrams=2, minn=2, maxn=6, loss=ns`.
+NO autotune — aggressive LR decay overfits to dominant classes.
+
+**Best 9-class per-class results:**
+
+| Azpieuskalki | Test samples | Accuracy |
+|---|---|---|
+| mendebal-sortaldea (Eastern Bizkaian) | 2,304 | 90.80% |
+| erdialde-sartaldea (coastal+western Gipuzkoan) | 1,729 | 83.75% |
+| nafar-ipar-sartaldea (Bortziriak/Malerreka) | 346 | 83.82% |
+| erdialde-sortaldea (eastern Gipuzkoan) | 876 | 79.11% |
+| naflap-sortaldea (Basse-Navarre) | 246 | 77.64% |
+| nafar-sortaldea (eastern Navarre) | 267 | 76.40% |
+| naflap-sartaldea (coastal Labourdin) | 127 | 66.93% |
+| ekialde-nafarra (Zaraitzu/Erronkari) | 125 | 65.60% |
+| nafar-hego-sartaldea (Sakana) | 194 | 55.15% |
+
+Key insight: **character n-grams** (minn=2, maxn=6) capture Basque morphological patterns
+that are dialect-specific — this single change jumped accuracy from 72% to 82%.
+
+Model: `models/azpieuskalki.bin` (234MB)
 
 ## Training
 

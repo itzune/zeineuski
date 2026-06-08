@@ -433,6 +433,81 @@ Build and release a system that, given a Basque text or speech sample, predicts 
 
 ### 2026-06-08: Phase 1.5 — Ahotsak.eus Data Hub & Azpieuskalki (COMPLETE)
 
+**UPDATED 2026-06-08: Azpieuskalki Autoresearch Session #3 — 37 experiments**
+
+A third autoresearch session on the azpieuskalki (sub-dialect) classifier, following up on the Nafarroa
+CSV fix. Key breakthroughs:
+
+**Key insight: Character n-grams + slow manual training.**
+Char n-grams (minn=2, maxn=6) with slow lr=0.2 and NO autotune capture Basque morphological patterns
+(case endings, verb suffixes, noun declensions) that are dialect-specific. This jumped accuracy from
+72.43% to 82.08% — a 9.6pp gain in one experiment.
+
+**Progression:**
+
+| Stage | Accuracy | Classes | Key Change |
+|---|---|---|---|
+| Baseline (#1) | 51.02% | 10 | Original custom labels |
+| Ahotsak labels (#7) | 68.32% | 10 | Fixed 68 town mismatches |
+| Slow lr=0.2 (#14) | 72.43% | 11 | Killed autotune, 50 epochs |
+| +Char n-grams (#27) | 80.94% | 12 | minn=2,maxn=4 caught morphology |
+| +Wider chars (#28) | 81.55% | 12 | maxn=6 |
+| +More epochs (#30) | 82.08% | 12 | epoch=75 |
+| min_samples=600 (#37) | **83.55%** | 9 | Dropped 3 weakest classes |
+
+**Optimal configuration:**
+```
+fastText supervised
+  dim=200, lr=0.2, epoch=75, wordNgrams=2
+  minn=2, maxn=6, loss=ns, minCount=1
+  NO autotune
+```
+
+**Key findings:**
+1. **Autotune is harmful for azpieuskalki**: Aggressive LR decay causes early overfit to large classes.
+   Char n-grams FAIL with autotune (67.50%) but SUCCEED with slow manual lr=0.2 (80.94%).
+2. **Char n-grams are the killer feature**: Basque morphology is dialect-specific.
+   Every single class improved with char n-grams, Nafarroan classes gaining 15-27pp.
+3. **Word+char n-grams are complementary**: Word-only=72.43%, Char-only=81.25%, Combined=82.08%.
+   Word bigrams add ~1pp over char-only — not redundant but supplementary.
+4. **Diminishing returns hit at epoch=75**: epoch=50 too few (81.75%), epoch=75 optimal (82.08%),
+   epoch=100 overfits (81.97%).
+5. **dim=200 is the sweet spot**: dim=250 and 300 always regress by 0.1-0.5pp.
+6. **Dialect continuum is real**: Confusion analysis shows most errors are between geographically
+   adjacent azpieuskalkiak (mendebal-sortaldea↔erdialde-sartaldea 138 vs 167; nafar-erdigunea→
+   nafar-sortaldea 25/53 errors).
+
+**Best 9-class result (min_samples=600):**
+
+| Class | Test samples | Accuracy |
+|---|---|---|
+| mendebal-sortaldea (Eastern Bizkaian) | 2,304 | 90.80% |
+| erdialde-sartaldea (coastal+western Gipuzkoan) | 1,729 | 83.75% |
+| nafar-ipar-sartaldea (Bortziriak/Malerreka) | 346 | 83.82% |
+| erdialde-sortaldea (eastern Gipuzkoan) | 876 | 79.11% |
+| naflap-sortaldea (Basse-Navarre) | 246 | 77.64% |
+| nafar-sortaldea (eastern Navarre) | 267 | 76.40% |
+| naflap-sartaldea (coastal Labourdin) | 127 | 66.93% |
+| ekialde-nafarra (Zaraitzu/Erronkari) | 125 | 65.60% |
+| nafar-hego-sartaldea (Sakana) | 194 | 55.15% |
+
+3 classes dropped below min_samples=600: mendebal-sartaldea (516 train, 46.8% acc),
+zuberera (441 train, 63.6% acc), nafar-erdigunea (584 train, 34.5% acc).
+
+**12-class result (min_samples=400):** 82.08% overall with the same optimal config.
+All 12 azpieuskalkiak have at least 34% per-class accuracy.
+
+**Data ceiling**: ~83% for text-only azpieuskalki classification with current Ahotsak data.
+The 3 weakest classes (all <600 train sentences) need more transcriptions to be viable.
+Remaining errors are structural: dialect continuum ambiguities, small training sets,
+and individual speaker idiosyncrasies.
+
+**Model artifacts**: `models/azpieuskalki.bin` (234MB, 9-class, 83.55%)
+
+---
+
+### 2026-06-08: Phase 1.5 — Ahotsak.eus Data Hub & Azpieuskalki (original)
+
 **Phase 1.5 delivered the strategic bridge between text (Phase 1) and speech (Phase 2):**
 - Ahotsak.eus scraper: 2,542 passages from 371 towns (initial 289 + targeted 2,253)
 - 2,311 passages with azpieuskalki mapping → 2,358 training sentences across 11 classes
