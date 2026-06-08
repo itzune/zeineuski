@@ -6,7 +6,7 @@ Fine-grained dialect identification (DID) system for Basque (Euskara), supportin
 - **Euskalkiak (dialects):** Western (Bizkaiera), Central (Gipuzkera), Navarrese, Navarrese-Labourdin, Souletin (Zuberera)
 - **Azpieuskalkiak (sub-dialects):** 9 Zuazo sub-dialect classes trained on Ahotsak.eus oral history transcriptions
 
-## 🧪 Web Demos
+## Web Demos
 
 Both demos run entirely in the browser via WebAssembly — no server, no install.
 
