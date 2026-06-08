@@ -358,7 +358,8 @@ Build and release a system that, given a Basque text or speech sample, predicts 
 | fastText (Klasikoak-only) | 19,939 | 5 | — | 33.9% | Collapses cross-domain |
 | fastText (Hybrid 5c) | 17,955 | 5 | — | 96.85% | Optimized (lr=0.2, ep=75) |
 | fastText (Hybrid 6c + EITB) | 80,519 | 6 | 94.53% | 91.46% | Batua F1=0.960, pre-bugfix |
-| **fastText (Hierarchical 6c)** | **29,977** | **6** | **97.83%** | **96.73%** | **2-step: binary + 5c dialect** |
+| **fastText (Hierarchical 6c)** | **29,977** | **6** | **97.83%** | **96.73%** | **Tier 1+2: batua/dialect + 5c** |
+| **fastText (Azpieuskalki 11c)** | **2,358** | **11** | **—** | **90.96%** | **Tier 3: sub-dialect, Ahotsak only** |
 
 ### 2026-06-07: Klasikoak `__label__` metadata pollution bug
 - **Root cause:** Klasikoak texts use `__label__` as section/chapter markers
@@ -429,3 +430,79 @@ Build and release a system that, given a Basque text or speech sample, predicts 
 22. **Autoresearch pipeline supports both modes:** `autoresearch.sh` accepts `MODE=flat`
     (single 6-class model) or `MODE=hier` (binary + dialect). Hierarchical mode is
     configurable via `HIER_BIN_*` and `HIER_DIAL_*` env vars for future reproducibility.
+
+### 2026-06-08: Phase 1.5 — Ahotsak.eus Data Hub & Azpieuskalki (COMPLETE)
+
+**Phase 1.5 delivered the strategic bridge between text (Phase 1) and speech (Phase 2):**
+- Ahotsak.eus scraper: 2,542 passages from 371 towns (initial 289 + targeted 2,253)
+- 2,311 passages with azpieuskalki mapping → 2,358 training sentences across 11 classes
+- Manual transcriptions with dialect-preserving features and municipality metadata
+
+**Azpieuskalki model `models/azpieuskalki.bin`:**
+- 11-class flat fastText: 90.11% baseline, improved to 90.96% with class balancing
+- 9× random baseline (10%) — azpieuskalki is lexically detectable from text alone
+- Per-dialect submodels tested at 95.0% macro avg, but flat model chosen for simpler deployment
+- Production 3-tier architecture: batua/dialect → 5-class dialect → 11-class azpieuskalki
+
+**3-tier production accuracy:**
+```
+Tier 1: batua/dialectal  →  Tier 2: 5-class dialect  →  Tier 3: 11-class azpieuskalki
+     96.73% XNLI                 96.73% XNLI                 90.96%
+```
+
+**Azpieuskalki optimization — 2 autoresearch sessions, 17 experiments:**
+- Hyperparameter sweep (lr, epochs, dim, wordNgrams, minn/maxn): no improvement over baseline
+- Sentence splitting degraded accuracy (82.9% best) — shorter units lose dialect context
+- **Only improvement: class balancing (+0.56% → 90.96%)** — oversampling minority classes
+- Structural plateau at ~91%: remaining errors are dialect continuum ambiguities (Bidasoa border:
+  sartaldeko-naf-lap ↔ beterri), not model capacity issues
+- Weak classes: sartaldeko-naf-lap (58.8%), hego-goi-nafarrera (0 test samples — 1 passage total)
+
+**Mintzoak.eus analysis (Iparralde oral archive):**
+- 138 towns in French Basque Country vs Ahotsak's 27 Iparralde towns
+- Has direct dialect labels ("Nafar-lapurtarra") — useful as metadata cross-reference
+- ❌ No public transcriptions — Vimeo embeds only; text training not possible
+- ❌ Audio only in-person at EKE headquarters (Uztaritze) or departmental archives
+- Cannot supplement hego-goi-nafarrera (Hegoalde: Sakana) or zuberera data shortage
+
+**Label validation (Tier 2 model vs municipality mapping):**
+- 289 passages validated: 166/289 agreement (57.4%), 100 flag_mismatch (34.6%)
+- navarrese and souletin have 0% agreement — model confuses navarrese→central (32),
+  navarrese→nav-lab (12), souletin→nav-lab (11). Dialect continuum effects.
+- 46 of 100 mismatches have high municipality confidence — genuine model errors or
+  transitional zone issues
+- 94 high-confidence passages for speech: `ahotsak_train_ready_*.jsonl`
+
+**Text training with Ahotsak (negative result):**
+- Mixing spoken dialectal Ahotsak text with formal XNLI degraded accuracy by 11.46%
+  (96.53% → 85.07%). Spoken register ≠ formal translated text.
+- Ahotsak data needs domain adaptation or a separate spoken-language evaluation benchmark
+
+**Decision records added (#23-30):**
+- #23: Ahotsak is critical path for speech pipeline (Whisper normalizes to Batua)
+- #24: Ahotsak API abandoned — website scraping is reliable path
+- #25: dialect_confidence "low" included for broader town coverage (90 vs 52)
+- #26: Ahotsak ≠ XNLI domain — mixing degrades formal text benchmarks
+- #27-28: 3-tier hierarchical architecture, targeted scraping strategy
+- #29: Single flat azpieuskalki model over per-dialect submodels
+- #30: Azpieuskalki is lexically detectable from text (9× random baseline)
+
+### What's Next
+
+**✅ Delivered:**
+- Tier 1: batua/dialectal binary classifier (96.73% XNLI) — `models/hier_binary_final.bin`
+- Tier 2: 5-class dialect classifier (96.73% XNLI) — `models/hier_dialect_final.bin`
+- Tier 3: 11-class azpieuskalki classifier (90.96%) — `models/azpieuskalki.bin`
+- Ahotsak dataset: 2,542 passages, 2,358 sentences, 11 classes
+- Label validation: 94 high-confidence passages for speech training
+
+**⏳ Ready:**
+- Task 3.5.4: Labeled audio dataset manifest (S3 download URLs, speaker-disjoint splits)
+- Tier 3 inference pipeline (3 sequential inference calls across tiers)
+
+**☐ Pending:**
+- Epic 3 (text advanced): UniLID, Latxa fine-tuning
+- Epic 4 (speech data): Audio preprocessing pipeline
+- Epic 5 (speech baselines): ECAPA-TDNN, Whisper, XLSR
+- Hego-goi-nafarrera data shortage (1 passage) — Sakana region has 120+ available but not scraped
+- Zuberera data shortage (39 passages) — Mintzoak has richer Iparralde metadata but no text
