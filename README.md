@@ -89,7 +89,14 @@ NO autotune — aggressive LR decay overfits to dominant classes.
 Key insight: **character n-grams** (minn=2, maxn=6) capture Basque morphological patterns
 that are dialect-specific — this single change jumped accuracy from 72% to 82%.
 
-Model: `models/azpieuskalki.bin` (234MB)
+| Variant | Accuracy | Size | vs original |
+|---|---:|---:|---:|
+| original | 83.59% | 233MB | baseline |
+| **quantized** | **83.28%** | **31MB** | -0.31pp, 7.5× smaller |
+| bucket=50K | 83.22% | 119MB | -0.37pp, 2× smaller |
+| bucket=50K quantized | 82.80% | 17MB | -0.79pp, 13.7× smaller |
+
+Models: `models/azpieuskalki.bin` (233MB), `models/azpieuskalki_q.bin` (31MB)
 
 ## Training
 
