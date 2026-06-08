@@ -1,24 +1,3 @@
----
-language: eu
-tags:
-- basque
-- euskara
-- dialect-identification
-- euskalkiak
-- azpieuskalkiak
-- fasttext
-- ahotsak
-license: mit
-datasets:
-- xnli-dialectal
-- klasikoak
-- eitb-parcc
-- ahotsak
-metrics:
-- accuracy
-- f1
----
-
 # Zeineuski — Basque Dialect Identification
 
 Fine-grained dialect identification (DID) system for Basque (Euskara). Given a text or speech sample, classifies it into one of six dialect categories: Western (Bizkaiera), Central (Gipuzkera), Navarrese, Navarrese-Labourdin, Souletin (Zuberera), or Standard Basque (Batua).
