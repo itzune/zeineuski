@@ -456,7 +456,11 @@ Tier 1: batua/dialectal  →  Tier 2: 5-class dialect  →  Tier 3: 11-class azp
 - **Only improvement: class balancing (+0.56% → 90.96%)** — oversampling minority classes
 - Structural plateau at ~91%: remaining errors are dialect continuum ambiguities (Bidasoa border:
   sartaldeko-naf-lap ↔ beterri), not model capacity issues
-- Weak classes: sartaldeko-naf-lap (58.8%), hego-goi-nafarrera (0 test samples — 1 passage total)
+- Weak classes: sartaldeko-naf-lap (58.8%), hego-goi-nafarrera (0 training examples, 0 test samples)
+- **hego-goi-nafarrera data desert:** Only 3 towns (bakaiku, luzaide, urdiain) in Sakana/Erroibar/
+  Esteribar/Aezkoa with 20 passages total, only **1 transcription** (bakaiku). The 1,363 passages
+  from Bortziriak/Baztan/Malerreka/Ultzamaldea towns map to ipar-goi-nafarrera, not HGN.
+  This is a genuine Ahotsak coverage gap — not a scraping bug.
 
 **Mintzoak.eus analysis (Iparralde oral archive):**
 - 138 towns in French Basque Country vs Ahotsak's 27 Iparralde towns
@@ -504,5 +508,5 @@ Tier 1: batua/dialectal  →  Tier 2: 5-class dialect  →  Tier 3: 11-class azp
 - Epic 3 (text advanced): UniLID, Latxa fine-tuning
 - Epic 4 (speech data): Audio preprocessing pipeline
 - Epic 5 (speech baselines): ECAPA-TDNN, Whisper, XLSR
-- Hego-goi-nafarrera data shortage (1 passage) — Sakana region has 120+ available but not scraped
-- Zuberera data shortage (39 passages) — Mintzoak has richer Iparralde metadata but no text
+- Hego-goi-nafarrera data: Ahotsak has only 1 transcription — genuine coverage gap, not fixable via scraping.
+  Alternative sources needed (Klasikoak? Other archives?)
