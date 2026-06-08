@@ -6,6 +6,17 @@ Fine-grained dialect identification (DID) system for Basque (Euskara), supportin
 - **Euskalkiak (dialects):** Western (Bizkaiera), Central (Gipuzkera), Navarrese, Navarrese-Labourdin, Souletin (Zuberera)
 - **Azpieuskalkiak (sub-dialects):** 9 Zuazo sub-dialect classes trained on Ahotsak.eus oral history transcriptions
 
+## 🧪 Web Demos
+
+Both demos run entirely in the browser via WebAssembly — no server, no install.
+
+| Demo | URL | Models |
+|------|-----|--------|
+| **Euskalkiak** (dialect detection) | [itzune.eus/euskalkid](https://itzune.eus/euskalkid) | 2 models, 34MB — batua/dialectal → 5 euskalkis |
+| **Azpieuskalkiak** (sub-dialect) | [itzune.eus/euskalkid/azpieuskalki](https://itzune.eus/euskalkid/azpieuskalki) | 1 model, 31MB — 9 azpieuskalkis + 430 towns |
+
+[Source code](https://github.com/itzune/euskalkid) for the web demos.
+
 ## Setup
 
 ```bash
@@ -249,14 +260,6 @@ for evaluation. Navarrese and Souletin lack clean test splits — all their samp
 leaked into the validation set during dataset construction.
 
 Models hosted at [huggingface.co/itzune/zeineuski](https://huggingface.co/itzune/zeineuski).
-
-## Web Demo
-
-Try it in your browser — no server, no install:
-
-**[itzune.eus/euskalkid](https://itzune.eus/euskalkid)** ([source](https://github.com/itzune/euskalkid))
-
-34MB of fastText models running via WebAssembly. Works offline after first load.
 
 ## Documentation
 
