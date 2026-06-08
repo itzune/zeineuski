@@ -1,168 +1,168 @@
 herria,probintzia,eskualdea,dialect_class,dialect_confidence,notes
-Getxo,Bizkaia,Getxo,western,high,Sartaldea
-Mungia,Bizkaia,Mungialdea,western,high,Sartaldea
-Derio,Bizkaia,Txorierri,western,high,Sartaldea
-Bilbo,Bizkaia,Bilbo Handia,western,high,Sartaldea
-Basauri,Bizkaia,Bilbo Handia,western,high,Sartaldea
-Galdakao,Bizkaia,Bilbo Handia,western,high,Sartaldea
-Igorre,Bizkaia,Arratia-Nerbioi,western,high,Sartaldea
-Zeberio,Bizkaia,Arratia-Nerbioi,western,high,Sartaldea
-Orozko,Bizkaia,Arratia-Nerbioi,western,high,Sartaldea
-Bermeo,Bizkaia,Busturialdea,western,low,Tarteko hizkera (Busturialdea)
+Getxo,Bizkaia,Getxo,western,high,ahotsak:sartaldekoa-m
+Mungia,Bizkaia,Mungialdea,western,high,ahotsak:sartaldekoa-m
+Derio,Bizkaia,Txorierri,western,high,ahotsak:sartaldekoa-m
+Bilbo,Bizkaia,Bilbo Handia,western,high,ahotsak:sartaldekoa-m
+Basauri,Bizkaia,Bilbo Handia,western,high,ahotsak:sartaldekoa-m
+Galdakao,Bizkaia,Bilbo Handia,western,high,ahotsak:sartaldekoa-m
+Igorre,Bizkaia,Arratia-Nerbioi,western,high,ahotsak:sartaldekoa-m
+Zeberio,Bizkaia,Arratia-Nerbioi,western,high,ahotsak:sartaldekoa-m
+Orozko,Bizkaia,Arratia-Nerbioi,western,high,ahotsak:sartaldekoa-m
+Bermeo,Bizkaia,Busturialdea,western,low,ahotsak:tartekoa-m
 Gernika,Bizkaia,Busturialdea,western,low,Tarteko hizkera (Busturialdea)
 Zornotza,Bizkaia,Durangaldea,western,low,Tarteko hizkera (Busturialdea)
-Durango,Bizkaia,Durangaldea,western,high,Sortaldea
-Lekeitio,Bizkaia,Lea-Artibai,western,high,Sortaldea
-Ondarroa,Bizkaia,Lea-Artibai,western,high,Sortaldea
+Durango,Bizkaia,Durangaldea,western,high,ahotsak:sortaldekoa-m
+Lekeitio,Bizkaia,Lea-Artibai,western,high,ahotsak:sortaldekoa-m
+Ondarroa,Bizkaia,Lea-Artibai,western,high,ahotsak:sortaldekoa-m
 Markina,Bizkaia,Lea-Artibai,western,high,Sortaldea
-Otxandio,Bizkaia,Durangaldea,western,low,Tarteko hizkera
-Ubide,Bizkaia,Arratia-Nerbioi,western,medium,On sub-dialect boundary
-Legutio,Araba,Gorbeialdea,western,low,Tarteko hizkera
-Aramaio,Araba,Gorbeialdea,western,high,Sortaldea
-Mutriku,Gipuzkoa,Debabarrena,western,low,Tarteko hizkera (Mendebalde/Erdialde transition)
-Mendaro,Gipuzkoa,Debabarrena,western,low,Tarteko hizkera
-Elgoibar,Gipuzkoa,Debabarrena,western,low,Tarteko hizkera
-Eibar,Gipuzkoa,Debabarrena,western,high,Sortaldea
-Bergara,Gipuzkoa,Debagoiena,western,high,Sortaldea
-Arrasate,Gipuzkoa,Debagoiena,western,high,Sortaldea
-Oñati,Gipuzkoa,Debagoiena,western,high,Sortaldea
-Deba,Gipuzkoa,Debabarrena,central,high,Sartaldea
-Zumaia,Gipuzkoa,Urola Kosta,central,low,Tarteko hizkera
-Getaria,Gipuzkoa,Urola Kosta,central,high,Sortaldea
-Zarautz,Gipuzkoa,Urola Kosta,central,low,Tarteko hizkera
-Orio,Gipuzkoa,Urola Kosta,central,high,Sortaldea
-Donostia,Gipuzkoa,Donostialdea,central,high,Sortaldea
-Hernani,Gipuzkoa,Donostialdea,central,high,Sortaldea
-Tolosa,Gipuzkoa,Tolosaldea,central,low,Tarteko hizkera
-Azkoitia,Gipuzkoa,Urola Erdia,central,high,Sartaldea
-Azpeitia,Gipuzkoa,Urola Erdia,central,high,Sartaldea
-Beizama,Gipuzkoa,Urola Erdia,central,low,Tarteko hizkera
-Errezil,Gipuzkoa,Urola Erdia,central,low,Tarteko hizkera
-Zestoa,Gipuzkoa,Urola Kosta,central,low,Tarteko hizkera
-Aizarnazabal,Gipuzkoa,Urola Kosta,central,low,Tarteko hizkera
-Urretxu,Gipuzkoa,Urola Garaia,central,low,Tarteko hizkera
-Zumarraga,Gipuzkoa,Urola Garaia,central,low,Tarteko hizkera
-Ordizia,Gipuzkoa,Goierri,central,high,Sartaldea
-Irun,Gipuzkoa,Bidasoa Behea,navarrese,low,Tarteko hizkera (Bidasoakoa)
-Hondarribia,Gipuzkoa,Bidasoa Behea,navarrese,low,Tarteko hizkera (Bidasoakoa)
-Oiartzun,Gipuzkoa,Oiartzualdea,navarrese,low,Tarteko hizkera
-Errenteria,Gipuzkoa,Oiartzualdea,navarrese,low,Tarteko hizkera
-Lezo,Gipuzkoa,Oiartzualdea,navarrese,low,Tarteko hizkera
-Arano,Nafarroa,Leitzaldea,navarrese,low,Tarteko hizkera
-Leitza,Nafarroa,Leitzaldea,navarrese,low,Tarteko hizkera
-Araitz,Nafarroa,Leitzaldea,navarrese,low,Tarteko hizkera
-Betelu,Nafarroa,Leitzaldea,navarrese,low,Tarteko hizkera
-Larraun,Nafarroa,Leitzaldea,navarrese,low,Tarteko hizkera
-Lekunberri,Nafarroa,Leitzaldea,navarrese,low,Tarteko hizkera
-Imotz,Nafarroa,Ultzamaldea,navarrese,low,Tarteko hizkera
-Basaburua,Nafarroa,Ultzamaldea,navarrese,low,Tarteko hizkera
-Bera,Nafarroa,Bortziriak,navarrese,high,Ipar-Sartaldea
-Goizueta,Nafarroa,Leitzaldea,navarrese,high,Ipar-Sartaldea
-Doneztebe,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
+Otxandio,Bizkaia,Durangaldea,western,low,ahotsak:tartekoa-m
+Ubide,Bizkaia,Arratia-Nerbioi,western,medium,ahotsak:tartekoa-m
+Legutio,Araba,Gorbeialdea,western,low,ahotsak:tartekoa-m
+Aramaio,Araba,Gorbeialdea,western,high,ahotsak:sortaldekoa-m
+Mutriku,Gipuzkoa,Debabarrena,western,low,ahotsak:sortaldekoa-m
+Mendaro,Gipuzkoa,Debabarrena,western,low,ahotsak:sortaldekoa-m
+Elgoibar,Gipuzkoa,Debabarrena,western,low,ahotsak:sortaldekoa-m
+Eibar,Gipuzkoa,Debabarrena,western,high,ahotsak:sortaldekoa-m
+Bergara,Gipuzkoa,Debagoiena,western,high,ahotsak:sortaldekoa-m
+Arrasate,Gipuzkoa,Debagoiena,western,high,ahotsak:sortaldekoa-m
+Oñati,Gipuzkoa,Debagoiena,western,high,ahotsak:sortaldekoa-m
+Deba,Gipuzkoa,Debabarrena,central,high,ahotsak:sortaldekoa-m
+Zumaia,Gipuzkoa,Urola Kosta,central,low,ahotsak:sartaldekoa-g
+Getaria,Gipuzkoa,Urola Kosta,central,high,ahotsak:sartaldekoa-g
+Zarautz,Gipuzkoa,Urola Kosta,central,low,ahotsak:sartaldekoa-g
+Orio,Gipuzkoa,Urola Kosta,central,high,ahotsak:sartaldekoa-g
+Donostia,Gipuzkoa,Donostialdea,central,high,ahotsak:erdigunekoa-g
+Hernani,Gipuzkoa,Donostialdea,central,high,ahotsak:erdigunekoa-g
+Tolosa,Gipuzkoa,Tolosaldea,central,low,ahotsak:erdigunekoa-g
+Azkoitia,Gipuzkoa,Urola Erdia,central,high,ahotsak:sartaldekoa-g
+Azpeitia,Gipuzkoa,Urola Erdia,central,high,ahotsak:sartaldekoa-g
+Beizama,Gipuzkoa,Urola Erdia,central,low,ahotsak:sartaldekoa-g
+Errezil,Gipuzkoa,Urola Erdia,central,low,ahotsak:sartaldekoa-g
+Zestoa,Gipuzkoa,Urola Kosta,central,low,ahotsak:sartaldekoa-g
+Aizarnazabal,Gipuzkoa,Urola Kosta,central,low,ahotsak:sartaldekoa-g
+Urretxu,Gipuzkoa,Urola Garaia,central,low,ahotsak:sartaldekoa-g
+Zumarraga,Gipuzkoa,Urola Garaia,central,low,ahotsak:sartaldekoa-g
+Ordizia,Gipuzkoa,Goierri,central,high,ahotsak:sartaldekoa-g
+Irun,Gipuzkoa,Bidasoa Behea,navarrese,low,ahotsak:sortaldekoa-g
+Hondarribia,Gipuzkoa,Bidasoa Behea,navarrese,low,ahotsak:sortaldekoa-g
+Oiartzun,Gipuzkoa,Oiartzualdea,navarrese,low,ahotsak:sortaldekoa-g
+Errenteria,Gipuzkoa,Oiartzualdea,navarrese,low,ahotsak:sortaldekoa-g
+Lezo,Gipuzkoa,Oiartzualdea,navarrese,low,ahotsak:sortaldekoa-g
+Arano,Nafarroa,Leitzaldea,navarrese,low,ahotsak:sortaldekoa-g
+Leitza,Nafarroa,Leitzaldea,navarrese,low,ahotsak:sortaldekoa-g
+Araitz,Nafarroa,Leitzaldea,navarrese,low,ahotsak:sortaldekoa-g
+Betelu,Nafarroa,Leitzaldea,navarrese,low,ahotsak:sortaldekoa-g
+Larraun,Nafarroa,Leitzaldea,navarrese,low,ahotsak:sortaldekoa-g
+Lekunberri,Nafarroa,Leitzaldea,navarrese,low,ahotsak:sortaldekoa-g
+Imotz,Nafarroa,Ultzamaldea,navarrese,low,ahotsak:sortaldekoa-g
+Basaburua,Nafarroa,Ultzamaldea,navarrese,low,ahotsak:sortaldekoa-g
+Bera,Nafarroa,Bortziriak,navarrese,high,ahotsak:ipar-sartaldekoa
+Goizueta,Nafarroa,Leitzaldea,navarrese,high,ahotsak:sortaldekoa-g
+Doneztebe,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
 Beintza Labaien,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Saldias,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Urdazubi,Nafarroa,Baztan,navarrese,high,Ipar-Sartaldea
-Zugarramurdi,Nafarroa,Baztan,navarrese,low,Tarteko hizkera
+Saldias,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Urdazubi,Nafarroa,Baztan,navarrese,high,ahotsak:sartaldekoa-nl
+Zugarramurdi,Nafarroa,Baztan,navarrese,low,ahotsak:sartaldekoa-nl
 Elizondo,Nafarroa,Baztan,navarrese,low,Tarteko hizkera (Baztan)
-Luzaide,Nafarroa,Erroibar,navarrese,medium,Sortaldea (On boundary)
-Orbaizeta,Nafarroa,Aezkoa,navarrese,low,Tarteko hizkera
+Luzaide,Nafarroa,Erroibar,navarrese,medium,ahotsak:erdigunekoa-nl
+Orbaizeta,Nafarroa,Aezkoa,navarrese,low,ahotsak:sortaldekoa-n
 Mezkaritz,Nafarroa,Erroibar,navarrese,high,Sortaldea
 Eugi,Nafarroa,Esteribar,navarrese,high,Sortaldea
-Lantz,Nafarroa,Ultzamaldea,navarrese,high,Erdigunea
-Anue,Nafarroa,Ultzamaldea,navarrese,high,Erdigunea
-Ultzama,Nafarroa,Ultzamaldea,navarrese,high,Erdigunea
-Atetz,Nafarroa,Ultzamaldea,navarrese,high,Erdigunea
-Odieta,Nafarroa,Ultzamaldea,navarrese,high,Erdigunea
-Bakaiku,Nafarroa,Sakana,navarrese,low,Tarteko hizkera (Sakana)
-Urdiain,Nafarroa,Sakana,navarrese,low,Tarteko hizkera (Sakana)
-Etxarri Aranatz,Nafarroa,Sakana,navarrese,high,Hego-Sartaldea
-Baiona,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,Sartaldea
-Bidarte,Lapurdi,Biarritz-eko Kantonamendua,nav-lab,high,Sartaldea
-Getaria,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,Sartaldea (Lapurdi)
-Donibane Lohizune,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,Sartaldea
-Hendaia,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,Sartaldea
-Azkaine,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,Sartaldea
-Senpere,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,Sartaldea
-Sara,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,Sartaldea
-Ainhoa,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,Sartaldea
-Milafranga,Lapurdi,Hiriburuko Kantonamendua,nav-lab,low,Tarteko hizkera
-Arbona,Lapurdi,Hiriburuko Kantonamendua,nav-lab,low,Tarteko hizkera
-Uztaritze,Lapurdi,Uztaritzeko Kantonamendua,nav-lab,low,Tarteko hizkera
-Ezpeleta,Lapurdi,Uztaritzeko Kantonamendua,nav-lab,low,Tarteko hizkera
-Kanbo,Lapurdi,Uztaritzeko Kantonamendua,nav-lab,low,Tarteko hizkera
-Hazparne,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,Sortaldea
-Beskoitze,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,Sortaldea
-Bardoze,Lapurdi,Hazparneko Kantonamendua,nav-lab,low,Tarteko hizkera
-Izturitze,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,Sortaldea
-Makea,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,Sortaldea
-Luhuso,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,Sortaldea
-Heleta,Nafarroa Beherea,Baigorriko Kantonamendua,nav-lab,high,Sortaldea
-Irisarri,Nafarroa Beherea,Baigorriko Kantonamendua,nav-lab,high,Sortaldea
-Baigorri,Nafarroa Beherea,Baigorriko Kantonamendua,nav-lab,high,Sortaldea
-Donibane Garazi,Nafarroa Beherea,Donibane Garaziko Kantonamendua,nav-lab,high,Sortaldea
-Donapaleu,Nafarroa Beherea,Donapaleuko Kantonamendua,nav-lab,low,Tarteko hizkera
-Maule,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,Zuberotarra
-Barkoxe,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,Zuberotarra
-Eskiula,Zuberoa,Bearnoko herria (kanpokoa),souletin,high,Zuberotarra
-Atharratze,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,Zuberotarra
-Altzürükü,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,Zuberotarra
-Larraine,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,Zuberotarra
-Santa Grazi,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,Zuberotarra
-Domintxaine-Berroeta,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,low,Tarteko hizkera (Nafar-Lapurtarra transition)
-Etxarri,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,low,Tarteko hizkera
+Lantz,Nafarroa,Ultzamaldea,navarrese,high,ahotsak:erdigunekoa-n
+Anue,Nafarroa,Ultzamaldea,navarrese,high,ahotsak:erdigunekoa-n
+Ultzama,Nafarroa,Ultzamaldea,navarrese,high,ahotsak:erdigunekoa-n
+Atetz,Nafarroa,Ultzamaldea,navarrese,high,ahotsak:erdigunekoa-n
+Odieta,Nafarroa,Ultzamaldea,navarrese,high,ahotsak:erdigunekoa-n
+Bakaiku,Nafarroa,Sakana,navarrese,low,ahotsak:hego-sartaldekoa
+Urdiain,Nafarroa,Sakana,navarrese,low,ahotsak:hego-sartaldekoa
+Etxarri Aranatz,Nafarroa,Sakana,navarrese,high,ahotsak:hego-sartaldekoa
+Baiona,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-nl
+Bidarte,Lapurdi,Biarritz-eko Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-nl
+Getaria,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-g
+Donibane Lohizune,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-nl
+Hendaia,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-nl
+Azkaine,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-nl
+Senpere,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,ahotsak:erdigunekoa-nl
+Sara,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-nl
+Ainhoa,Lapurdi,Donibane Lohizune-Hendaiako Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-nl
+Milafranga,Lapurdi,Hiriburuko Kantonamendua,nav-lab,low,ahotsak:erdigunekoa-nl
+Arbona,Lapurdi,Hiriburuko Kantonamendua,nav-lab,low,ahotsak:erdigunekoa-nl
+Uztaritze,Lapurdi,Uztaritzeko Kantonamendua,nav-lab,low,ahotsak:erdigunekoa-nl
+Ezpeleta,Lapurdi,Uztaritzeko Kantonamendua,nav-lab,low,ahotsak:sartaldekoa-nl
+Kanbo,Lapurdi,Uztaritzeko Kantonamendua,nav-lab,low,ahotsak:sartaldekoa-nl
+Hazparne,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,ahotsak:sortaldekoa-nl
+Beskoitze,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,ahotsak:sortaldekoa-nl
+Bardoze,Lapurdi,Hazparneko Kantonamendua,nav-lab,low,ahotsak:sortaldekoa-nl
+Izturitze,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,ahotsak:sortaldekoa-nl
+Makea,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,ahotsak:sortaldekoa-nl
+Luhuso,Lapurdi,Hazparneko Kantonamendua,nav-lab,high,ahotsak:sartaldekoa-nl
+Heleta,Nafarroa Beherea,Baigorriko Kantonamendua,nav-lab,high,ahotsak:sortaldekoa-nl
+Irisarri,Nafarroa Beherea,Baigorriko Kantonamendua,nav-lab,high,ahotsak:sortaldekoa-nl
+Baigorri,Nafarroa Beherea,Baigorriko Kantonamendua,nav-lab,high,ahotsak:erdigunekoa-nl
+Donibane Garazi,Nafarroa Beherea,Donibane Garaziko Kantonamendua,nav-lab,high,ahotsak:sortaldekoa-nl
+Donapaleu,Nafarroa Beherea,Donapaleuko Kantonamendua,nav-lab,low,ahotsak:sortaldekoa-nl
+Maule,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,ahotsak:pettarrakoa
+Barkoxe,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,ahotsak:basaburua
+Eskiula,Zuberoa,Bearnoko herria (kanpokoa),souletin,high,ahotsak:basaburua
+Atharratze,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,ahotsak:basaburua
+Altzürükü,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,ahotsak:basaburua
+Larraine,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,ahotsak:basaburua
+Santa Grazi,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,high,ahotsak:basaburua
+Domintxaine-Berroeta,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,low,ahotsak:pettarrakoa
+Etxarri,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,low,ahotsak:sortaldekoa-nl
 Arüe-Ithorrotze-Olhaibi,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,low,Tarteko hizkera
 Lohitzüne-Oihergi,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,low,Tarteko hizkera
-Pagola,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,low,Tarteko hizkera
-Arantza,Nafarroa,Bortziriak,navarrese,high,Ipar-Sartaldea
-Etxalar,Nafarroa,Bortziriak,navarrese,high,Ipar-Sartaldea
-Igantzi,Nafarroa,Bortziriak,navarrese,high,Ipar-Sartaldea
-Lesaka,Nafarroa,Bortziriak,navarrese,high,Ipar-Sartaldea
-Bertizarana,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Donamaria,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Eratsun,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Ezkurra,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Ituren,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Labaien,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Oitz,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Sunbilla,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Urroz,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Zubieta,Nafarroa,Malerreka,navarrese,high,Ipar-Sartaldea
-Baztan,Nafarroa,Baztan,navarrese,high,Ipar-Sartaldea
-Olaibar,Nafarroa,Ultzamaldea,navarrese,high,Erdigunea
-Txulapain,Nafarroa,Ultzamaldea,navarrese,high,Erdigunea
-Ezkabarte,Nafarroa,Ultzamaldea,navarrese,medium,Erdigunea
-Altsasu,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Arbizu,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Arruazu,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Ergoiena,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
+Pagola,Zuberoa,Maule Atharratzeko Kantonamendua,souletin,low,ahotsak:basaburua
+Arantza,Nafarroa,Bortziriak,navarrese,high,ahotsak:ipar-sartaldekoa
+Etxalar,Nafarroa,Bortziriak,navarrese,high,ahotsak:ipar-sartaldekoa
+Igantzi,Nafarroa,Bortziriak,navarrese,high,ahotsak:ipar-sartaldekoa
+Lesaka,Nafarroa,Bortziriak,navarrese,high,ahotsak:ipar-sartaldekoa
+Bertizarana,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Donamaria,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Eratsun,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Ezkurra,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Ituren,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Labaien,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Oitz,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Sunbilla,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Urroz,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Zubieta,Nafarroa,Malerreka,navarrese,high,ahotsak:ipar-sartaldekoa
+Baztan,Nafarroa,Baztan,navarrese,high,ahotsak:baztangoa
+Olaibar,Nafarroa,Ultzamaldea,navarrese,high,ahotsak:hegoaldeko-nafarra
+Txulapain,Nafarroa,Ultzamaldea,navarrese,high,ahotsak:hegoaldeko-nafarra
+Ezkabarte,Nafarroa,Ultzamaldea,navarrese,medium,ahotsak:hegoaldeko-nafarra
+Altsasu,Nafarroa,Sakana,navarrese,medium,ahotsak:hego-sartaldekoa
+Arbizu,Nafarroa,Sakana,navarrese,medium,ahotsak:hego-sartaldekoa
+Arruazu,Nafarroa,Sakana,navarrese,medium,ahotsak:hego-sartaldekoa
+Ergoiena,Nafarroa,Sakana,navarrese,medium,ahotsak:hego-sartaldekoa
 Iraneta,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Iturmendi,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Olatzagutia,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
+Iturmendi,Nafarroa,Sakana,navarrese,medium,ahotsak:hego-sartaldekoa
+Olatzagutia,Nafarroa,Sakana,navarrese,medium,ahotsak:hego-sartaldekoa
 Uharte Arakil,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Arakil,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Ziordia,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
+Arakil,Nafarroa,Sakana,navarrese,medium,ahotsak:erdigunekoa-n
+Ziordia,Nafarroa,Sakana,navarrese,medium,ahotsak:hego-sartaldekoa
 Zirauki,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Itza,Nafarroa,Sakana,navarrese,medium,Hego-Sartaldea
-Erroibar,Nafarroa,Erroibar,navarrese,low,Sortaldea
+Itza,Nafarroa,Sakana,navarrese,medium,ahotsak:hegoaldeko-nafarra
+Erroibar,Nafarroa,Erroibar,navarrese,low,ahotsak:sortaldekoa-n
 Artazu,Nafarroa,Erroibar,navarrese,low,Sortaldea
-Hiriberri,Nafarroa,Erroibar,navarrese,low,Sortaldea
-Burgi,Nafarroa,Erroibar,navarrese,low,Sortaldea
-Esteribar,Nafarroa,Esteribar,navarrese,low,Sortaldea
-Abaurregaina,Nafarroa,Aezkoa,navarrese,low,Sortaldea
-Aria,Nafarroa,Aezkoa,navarrese,low,Sortaldea
-Garralda,Nafarroa,Aezkoa,navarrese,low,Sortaldea
-Garaioa,Nafarroa,Aezkoa,navarrese,low,Sortaldea
-Orbara,Nafarroa,Aezkoa,navarrese,low,Sortaldea
-Artzibar,Nafarroa,Artzibar,navarrese,low,Sortaldea
-Auritz,Nafarroa,Artzibar,navarrese,low,Sortaldea
-Orreaga,Nafarroa,Artzibar,navarrese,low,Sortaldea
-Uztarroze,Nafarroa,Erronkari,navarrese,low,Sortaldea (Erronkari)
-Erronkari,Nafarroa,Erronkari,navarrese,low,Sortaldea (Erronkari)
-Bidankoze,Nafarroa,Erronkari,navarrese,low,Sortaldea (Erronkari)
-Izaba,Nafarroa,Erronkari,navarrese,low,Sortaldea (Erronkari)
+Hiriberri,Nafarroa,Erroibar,navarrese,low,ahotsak:sortaldekoa-n
+Burgi,Nafarroa,Erroibar,navarrese,low,ahotsak:erronkarikoa
+Esteribar,Nafarroa,Esteribar,navarrese,low,ahotsak:sortaldekoa-n
+Abaurregaina,Nafarroa,Aezkoa,navarrese,low,ahotsak:sortaldekoa-n
+Aria,Nafarroa,Aezkoa,navarrese,low,ahotsak:sortaldekoa-n
+Garralda,Nafarroa,Aezkoa,navarrese,low,ahotsak:sortaldekoa-n
+Garaioa,Nafarroa,Aezkoa,navarrese,low,ahotsak:sortaldekoa-n
+Orbara,Nafarroa,Aezkoa,navarrese,low,ahotsak:sortaldekoa-n
+Artzibar,Nafarroa,Artzibar,navarrese,low,ahotsak:hegoaldeko-nafarra
+Auritz,Nafarroa,Artzibar,navarrese,low,ahotsak:sortaldekoa-n
+Orreaga,Nafarroa,Artzibar,navarrese,low,ahotsak:sortaldekoa-n
+Uztarroze,Nafarroa,Erronkari,navarrese,low,ahotsak:erronkarikoa
+Erronkari,Nafarroa,Erronkari,navarrese,low,ahotsak:erronkarikoa
+Bidankoze,Nafarroa,Erronkari,navarrese,low,ahotsak:erronkarikoa
+Izaba,Nafarroa,Erronkari,navarrese,low,ahotsak:erronkarikoa
 Espartza Zaraitzu,Nafarroa,Zaraitzu,navarrese,low,Sortaldea (Zaraitzu)
-Jaurrieta,Nafarroa,Zaraitzu,navarrese,low,Sortaldea (Zaraitzu)
-Otsagabia,Nafarroa,Zaraitzu,navarrese,low,Sortaldea (Zaraitzu)
-Orontze,Nafarroa,Zaraitzu,navarrese,low,Sortaldea (Zaraitzu)
-Ezkaroze,Nafarroa,Zaraitzu,navarrese,low,Sortaldea (Zaraitzu)
-Itzaltzu,Nafarroa,Zaraitzu,navarrese,low,Sortaldea (Zaraitzu)
+Jaurrieta,Nafarroa,Zaraitzu,navarrese,low,ahotsak:zaraitzukoa
+Otsagabia,Nafarroa,Zaraitzu,navarrese,low,ahotsak:zaraitzukoa
+Orontze,Nafarroa,Zaraitzu,navarrese,low,ahotsak:zaraitzukoa
+Ezkaroze,Nafarroa,Zaraitzu,navarrese,low,ahotsak:zaraitzukoa
+Itzaltzu,Nafarroa,Zaraitzu,navarrese,low,ahotsak:zaraitzukoa
