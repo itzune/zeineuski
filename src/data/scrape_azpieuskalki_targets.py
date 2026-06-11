@@ -13,7 +13,6 @@ This will run the ahotsak_scraper for each target town with appropriate limits.
 import csv
 import json
 import subprocess
-import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -85,15 +84,23 @@ def main():
 
     results = []
     for i, (azpi, name, limit) in enumerate(targets):
-        print(f"\n[{i+1}/{len(targets)}] Scraping {name} ({azpi}) — limit: {limit}")
+        print(f"\n[{i + 1}/{len(targets)}] Scraping {name} ({azpi}) — limit: {limit}")
 
         cmd = [
-            "uv", "run", "python", "-m", "src.data.ahotsak_scraper",
+            "uv",
+            "run",
+            "python",
+            "-m",
+            "src.data.ahotsak_scraper",
             "scrape",
-            "--town", name,
-            "--limit", str(limit),
+            "--town",
+            name,
+            "--limit",
+            str(limit),
         ]
-        result = subprocess.run(cmd, capture_output=True, text=True, cwd=str(PROJECT_ROOT))
+        result = subprocess.run(
+            cmd, capture_output=True, text=True, cwd=str(PROJECT_ROOT)
+        )
 
         if result.returncode == 0:
             print(f"  ✓ {name}: done")
@@ -106,7 +113,7 @@ def main():
     # Summary
     success = sum(1 for _, ok in results if ok)
     failed = len(results) - success
-    print(f"\n{'='*50}")
+    print(f"\n{'=' * 50}")
     print(f"Done: {success} success, {failed} failed")
 
     if failed:

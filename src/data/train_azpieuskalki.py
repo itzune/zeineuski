@@ -26,10 +26,8 @@ import logging
 import random
 import re
 from collections import Counter, defaultdict
-from datetime import datetime
 from pathlib import Path
 
-import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -43,10 +41,16 @@ MUNI_CSV = PROJECT_ROOT / "data" / "reference" / "municipality_dialect.csv"
 VALIDATION_DIR = PROJECT_ROOT / "data" / "processed" / "speech"
 
 # External Zuberotarra corpus — see docs/data_sources/suazia_zuberotarra.md
-SUAZIA_CORPUS_PATH = PROJECT_ROOT / "data" / "raw" / "text" / "suazia" / "suazia_train_clean.txt"
+SUAZIA_CORPUS_PATH = (
+    PROJECT_ROOT / "data" / "raw" / "text" / "suazia" / "suazia_train_clean.txt"
+)
 SUAZIA_DOCS_PATH = PROJECT_ROOT / "docs" / "data_sources" / "suazia_zuberotarra.md"
 
-from src.data.azpieuskalki_map import AZPIEUSKALKI_MAP, AZPIEUSKALKI_NAMES, AHOTSAK_TO_OUR_LABEL
+from src.data.azpieuskalki_map import (
+    AZPIEUSKALKI_MAP,
+    AZPIEUSKALKI_NAMES,
+    AHOTSAK_TO_OUR_LABEL,
+)
 
 
 # ── External corpus injection ────────────────────────────────────────────────
@@ -78,7 +82,7 @@ def inject_suazia_zuberera(azpi_sentences: dict[str, list[str]]) -> int:
         if not line or not line.startswith("__label__zuberera "):
             continue
         # Extract text after the label prefix
-        text = line[len("__label__zuberera "):].strip()
+        text = line[len("__label__zuberera ") :].strip()
         if len(text) < 15:
             continue
         azpi_sentences["zuberera"].append(text)
@@ -105,7 +109,7 @@ def normalize_town_name(name: str) -> str:
 
 def load_town_mappings() -> dict[str, dict]:
     """Load town → dialect + region → azpieuskalki mappings.
-    
+
     Uses Ahotsak authoritative labels from the CSV 'notes' field when available
     ('ahotsak:<azpieuskalki>'), falling back to region-based AZPIEUSKALKI_MAP.
     """
@@ -121,7 +125,7 @@ def load_town_mappings() -> dict[str, dict]:
             if note.startswith("ahotsak:"):
                 ahotsak_label = note.split(":", 1)[1]
                 azpi = AHOTSAK_TO_OUR_LABEL.get(ahotsak_label)
-            
+
             # Fallback: region-based mapping
             if azpi is None:
                 azpi = AZPIEUSKALKI_MAP.get(region)
@@ -242,7 +246,9 @@ def prepare_azpieuskalki_data(
         filtered = [p for p in passages if p["passage_id"] in validation_agreed]
     else:
         filtered = passages
-    logger.info(f"  Using {len(filtered)}/{len(passages)} passages (validation filter: {validate})")
+    logger.info(
+        f"  Using {len(filtered)}/{len(passages)} passages (validation filter: {validate})"
+    )
 
     # Build azpieuskalki-labeled sentences
     azpi_sentences: dict[str, list[str]] = defaultdict(list)
@@ -277,10 +283,12 @@ def prepare_azpieuskalki_data(
         if len(sents) >= min_samples:
             active_azpies[azpi] = sents
         else:
-            logger.info(f"  Dropping {azpi}: only {len(sents)} sentences (min {min_samples})")
+            logger.info(
+                f"  Dropping {azpi}: only {len(sents)} sentences (min {min_samples})"
+            )
 
     # Log distribution
-    logger.info(f"\nAzpieuskalki distribution:")
+    logger.info("\nAzpieuskalki distribution:")
     total = 0
     for azpi in sorted(active_azpies, key=lambda a: -len(active_azpies[a])):
         name = AZPIEUSKALKI_NAMES.get(azpi, azpi)
@@ -288,7 +296,9 @@ def prepare_azpieuskalki_data(
         logger.info(f"  {azpi:25s} {name:55s} {count:5d} sentences")
         total += count
     logger.info(f"  {'─' * 85}")
-    logger.info(f"  Total: {total} sentences across {len(active_azpies)} azpieuskalkiak")
+    logger.info(
+        f"  Total: {total} sentences across {len(active_azpies)} azpieuskalkiak"
+    )
 
     # Train/test split (stratified by azpieuskalki)
     train_lines = []
@@ -319,7 +329,9 @@ def prepare_azpieuskalki_data(
         max_count = max(train_counts.values())
         target_count = max(max_count // oversample_factor, 100)
 
-        logger.info(f"\nClass balancing (target: {target_count}, factor: {oversample_factor}x):")
+        logger.info(
+            f"\nClass balancing (target: {target_count}, factor: {oversample_factor}x):"
+        )
 
         balanced_train = []
         for azpi in active_azpies:
@@ -330,9 +342,11 @@ def prepare_azpieuskalki_data(
                 repeat = (target_count // count) + 1
                 oversampled = (class_lines * repeat)[:target_count]
                 balanced_train.extend(oversampled)
-                logger.info(f"  {azpi:25s}: {count:5d} → {target_count} (oversampled {repeat}x)")
+                logger.info(
+                    f"  {azpi:25s}: {count:5d} → {target_count} (oversampled {repeat}x)"
+                )
             else:
-                # Keep original (or downsample) 
+                # Keep original (or downsample)
                 balanced_train.extend(class_lines[:target_count])
                 logger.info(f"  {azpi:25s}: {count:5d} → {target_count}")
 
@@ -378,13 +392,14 @@ def train_model(
     maxn: int = 0,
 ) -> Path:
     """Train a fastText azpieuskalki classifier.
-    
+
     Args:
         loss: Loss function. 'ns' = negative sampling (default, good for large output spaces),
               'hs' = hierarchical softmax (better for imbalanced classes),
               'ova' = one-vs-all (binary cross-entropy per class, can help with imbalance).
     """
     import fasttext.FastText as ft_mod
+
     source = open(ft_mod.__file__).read()
     source = source.replace("np.array(probs, copy=False)", "np.asarray(probs)")
     exec(source, ft_mod.__dict__)
@@ -483,7 +498,11 @@ def evaluate_model(model_path: Path, test_path: Path) -> dict:
     for cls in classes:
         correct = sum(1 for t, p in zip(y_true, y_pred) if t == cls and p == cls)
         total = sum(1 for t in y_true if t == cls)
-        per_class[cls] = {"correct": correct, "total": total, "accuracy": correct / total if total else 0}
+        per_class[cls] = {
+            "correct": correct,
+            "total": total,
+            "accuracy": correct / total if total else 0,
+        }
 
     return {
         "accuracy": precision,
@@ -496,17 +515,23 @@ def evaluate_model(model_path: Path, test_path: Path) -> dict:
 
 def print_evaluation(result: dict):
     """Pretty-print evaluation results."""
-    print(f"\n{'='*60}")
-    print(f"Azpieuskalki Classifier Evaluation")
-    print(f"{'='*60}")
-    print(f"Overall accuracy: {result['accuracy']:.4f} ({result['accuracy']*100:.2f}%)")
+    print(f"\n{'=' * 60}")
+    print("Azpieuskalki Classifier Evaluation")
+    print(f"{'=' * 60}")
+    print(
+        f"Overall accuracy: {result['accuracy']:.4f} ({result['accuracy'] * 100:.2f}%)"
+    )
     print(f"Test samples:     {result['samples']}")
 
-    print(f"\nPer-class accuracy:")
-    print(f"  {'Azpieuskalki':25s} {'Name':50s} {'Correct':>7s} {'Total':>6s} {'Acc':>7s}")
-    print(f"  {'─'*25} {'─'*50} {'─'*7} {'─'*6} {'─'*7}")
+    print("\nPer-class accuracy:")
+    print(
+        f"  {'Azpieuskalki':25s} {'Name':50s} {'Correct':>7s} {'Total':>6s} {'Acc':>7s}"
+    )
+    print(f"  {'─' * 25} {'─' * 50} {'─' * 7} {'─' * 6} {'─' * 7}")
 
-    for cls in sorted(result["per_class"], key=lambda c: -result["per_class"][c]["total"]):
+    for cls in sorted(
+        result["per_class"], key=lambda c: -result["per_class"][c]["total"]
+    ):
         info = result["per_class"][cls]
         name = AZPIEUSKALKI_NAMES.get(cls, cls)
         name = name[:48] + ".." if len(name) > 50 else name
@@ -518,7 +543,7 @@ def print_evaluation(result: dict):
     n_classes = len(result["classes"])
     random_baseline = 1.0 / n_classes
     print(f"\nRandom baseline: {random_baseline:.2%} ({n_classes} classes)")
-    print(f"Improvement:     {result['accuracy']/random_baseline:.1f}x random")
+    print(f"Improvement:     {result['accuracy'] / random_baseline:.1f}x random")
 
 
 # ── Hierarchical inference demo ───────────────────────────────────────────────
@@ -551,7 +576,7 @@ def demo_hierarchical(texts: list[str]):
 
         print(f"\nText: {clean[:100]}...")
         print(f"  Tier 2 (dialect):   {dialect} ({d_conf:.2f})")
-        print(f"  Tier 3 (azpi top-3):")
+        print("  Tier 3 (azpi top-3):")
         for l, p in zip(a_labels, a_probs):
             label = l.replace("__label__", "")
             name = AZPIEUSKALKI_NAMES.get(label, label)
@@ -632,7 +657,9 @@ if __name__ == "__main__":
     import sys
 
     if len(sys.argv) < 2 or sys.argv[1] not in ("prepare", "train", "evaluate", "all"):
-        print("Usage: python -m src.data.train_azpieuskalki [prepare|train|evaluate|all] [--no-validate]")
+        print(
+            "Usage: python -m src.data.train_azpieuskalki [prepare|train|evaluate|all] [--no-validate]"
+        )
         sys.exit(1)
 
     validate = "--no-validate" not in sys.argv

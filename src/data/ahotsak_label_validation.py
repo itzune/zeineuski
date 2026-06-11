@@ -21,7 +21,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +64,9 @@ def load_model():
     exec(source, ft_mod.__dict__)
 
     model = fasttext.load_model(str(MODEL_PATH))
-    logger.info(f"Loaded model: {len(model.labels)} labels → {[l.replace('__label__','') for l in model.labels]}")
+    logger.info(
+        f"Loaded model: {len(model.labels)} labels → {[l.replace('__label__', '') for l in model.labels]}"
+    )
     return model
 
 
@@ -209,7 +210,13 @@ def generate_report(results: list[ValidationResult]) -> str:
     lines.append("")
     lines.append("| Outcome | Count | % |")
     lines.append("|---------|-------|---|")
-    for outcome in ["agreement", "agreement_medium", "agreement_low", "flag_mismatch", "ambiguous"]:
+    for outcome in [
+        "agreement",
+        "agreement_medium",
+        "agreement_low",
+        "flag_mismatch",
+        "ambiguous",
+    ]:
         count = outcome_counts.get(outcome, 0)
         pct = count / len(results) * 100 if results else 0
         lines.append(f"| {outcome} | {count} | {pct:.1f}% |")
@@ -217,10 +224,15 @@ def generate_report(results: list[ValidationResult]) -> str:
 
     # ── Agreement rate summary ──
     agreement_total = sum(
-        outcome_counts.get(o, 0) for o in ["agreement", "agreement_medium", "agreement_low"]
+        outcome_counts.get(o, 0)
+        for o in ["agreement", "agreement_medium", "agreement_low"]
     )
-    lines.append(f"**Total agreement (any confidence):** {agreement_total}/{len(results)} ({agreement_total/len(results)*100:.1f}%)")
-    lines.append(f"**High-confidence agreement:** {outcome_counts.get('agreement', 0)}/{len(results)} ({outcome_counts.get('agreement', 0)/len(results)*100:.1f}%)")
+    lines.append(
+        f"**Total agreement (any confidence):** {agreement_total}/{len(results)} ({agreement_total / len(results) * 100:.1f}%)"
+    )
+    lines.append(
+        f"**High-confidence agreement:** {outcome_counts.get('agreement', 0)}/{len(results)} ({outcome_counts.get('agreement', 0) / len(results) * 100:.1f}%)"
+    )
     lines.append("")
 
     # ── Per-dialect agreement ──
@@ -270,15 +282,19 @@ def generate_report(results: list[ValidationResult]) -> str:
     if mismatches:
         lines.append(f"## Top Disagreements ({len(mismatches)} total)")
         lines.append("")
-        lines.append("| # | Town | Municipality | Model Pred | Model Conf | Transcription (first 120 chars) |")
-        lines.append("|---|------|-------------|------------|------------|----------------------------------|")
+        lines.append(
+            "| # | Town | Municipality | Model Pred | Model Conf | Transcription (first 120 chars) |"
+        )
+        lines.append(
+            "|---|------|-------------|------------|------------|----------------------------------|"
+        )
 
         # Sort by model confidence (most confident disagreements first)
         mismatches.sort(key=lambda r: r.text_model_confidence, reverse=True)
         for i, r in enumerate(mismatches[:20]):
             text_preview = r.transcription[:120].replace("\n", " ").replace("|", "\\|")
             lines.append(
-                f"| {i+1} | {r.town} | {r.municipality_label} ({r.municipality_confidence}) | "
+                f"| {i + 1} | {r.town} | {r.municipality_label} ({r.municipality_confidence}) | "
                 f"{r.text_model_prediction} | {r.text_model_confidence:.2f} | {text_preview} |"
             )
         lines.append("")
@@ -290,18 +306,28 @@ def generate_report(results: list[ValidationResult]) -> str:
     agree_med = outcome_counts.get("agreement_medium", 0)
     agree_low = outcome_counts.get("agreement_low", 0)
 
-    lines.append(f"1. **Training-ready:** {agree_high} passages (agreement + high confidence) → use directly for speech training")
+    lines.append(
+        f"1. **Training-ready:** {agree_high} passages (agreement + high confidence) → use directly for speech training"
+    )
     if agree_med:
-        lines.append(f"2. **Include with caution:** {agree_med} passages (agreement + medium confidence) → include but note lower reliability")
+        lines.append(
+            f"2. **Include with caution:** {agree_med} passages (agreement + medium confidence) → include but note lower reliability"
+        )
     if agree_low:
-        lines.append(f"3. **Low confidence agreement:** {agree_low} passages → consider excluding from training, use for weakly-supervised evaluation")
+        lines.append(
+            f"3. **Low confidence agreement:** {agree_low} passages → consider excluding from training, use for weakly-supervised evaluation"
+        )
 
     flag_count = outcome_counts.get("flag_mismatch", 0)
     amb_count = outcome_counts.get("ambiguous", 0)
     if flag_count:
-        lines.append(f"4. **Needs review:** {flag_count} passages where municipality label ≠ model prediction → manual review recommended before use")
+        lines.append(
+            f"4. **Needs review:** {flag_count} passages where municipality label ≠ model prediction → manual review recommended before use"
+        )
     if amb_count:
-        lines.append(f"5. **Ambiguous:** {amb_count} passages where model has low confidence → may reflect transitional/contact dialects")
+        lines.append(
+            f"5. **Ambiguous:** {amb_count} passages where model has low confidence → may reflect transitional/contact dialects"
+        )
 
     report = "\n".join(lines)
     return report
@@ -358,11 +384,7 @@ def save_results(results: list[ValidationResult], report: str):
     logger.info(f"Report saved → {report_path}")
 
     # Also save a training-ready subset (agreement + high confidence only)
-    train_ready = [
-        r
-        for r in results
-        if r.outcome in ("agreement", "agreement_medium")
-    ]
+    train_ready = [r for r in results if r.outcome in ("agreement", "agreement_medium")]
     if train_ready:
         train_path = OUTPUT_DIR / f"ahotsak_train_ready_{timestamp}.jsonl"
         with open(train_path, "w", encoding="utf-8") as f:
@@ -384,7 +406,9 @@ def save_results(results: list[ValidationResult], report: str):
                     )
                     + "\n"
                 )
-        logger.info(f"Training-ready subset ({len(train_ready)} passages) → {train_path}")
+        logger.info(
+            f"Training-ready subset ({len(train_ready)} passages) → {train_path}"
+        )
 
 
 # ── CLI ───────────────────────────────────────────────────────────────────────

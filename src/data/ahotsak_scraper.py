@@ -17,7 +17,6 @@ Usage:
 from __future__ import annotations
 
 import csv
-import hashlib
 import json
 import logging
 import re
@@ -104,31 +103,31 @@ def create_session() -> requests.Session:
 
 def index_towns(session: Optional[requests.Session] = None) -> list[dict]:
     """Index all towns from the herriak page, including transcription counts.
-    
-    Returns list of {slug, name, url, territory, speakers, tapes, passages, 
+
+    Returns list of {slug, name, url, territory, speakers, tapes, passages,
                       transcription_count, audio_count, video_count}.
     """
     if session is None:
         session = create_session()
 
     logger.info("Indexing towns from herriak page (with transcription counts)...")
-    
+
     resp = session.get(f"{AHOTSAK_BASE}/herriak/", timeout=TIMEOUT)
     resp.raise_for_status()
-    
+
     soup = BeautifulSoup(resp.text, "html.parser")
     towns = []
-    
+
     # The herriak page has multiple tables, one per province
     province_map = {
-        0: "Araba",     # Tables[0] is Araba
-        1: "Bizkaia",   # Tables[1] is Bizkaia
+        0: "Araba",  # Tables[0] is Araba
+        1: "Bizkaia",  # Tables[1] is Bizkaia
         # Tables[2] is Diaspora (not a province, skip)
         3: "Gipuzkoa",  # Tables[3] is Gipuzkoa
-        4: "Lapurdi",   # Tables[4] is Lapurdi
+        4: "Lapurdi",  # Tables[4] is Lapurdi
         5: "Nafarroa",  # Tables[5] is Nafarroa
         6: "Nafarroa Beherea",  # Tables[6] is Nafarroa Beherea
-        7: "Zuberoa",   # Tables[7] is Zuberoa
+        7: "Zuberoa",  # Tables[7] is Zuberoa
     }
 
     territory_counts = {
@@ -140,11 +139,11 @@ def index_towns(session: Optional[requests.Session] = None) -> list[dict]:
         6: "nafarroa_beherea",
         7: "zuberoa",
     }
-    
+
     for table_idx, table in enumerate(soup.find_all("table", class_="herriak")):
         province = province_map.get(table_idx, f"Unknown-{table_idx}")
         territory = territory_counts.get(table_idx, "unknown")
-        
+
         # If it's the Diaspora table (idx 2), skip
         if table_idx == 2:
             continue
@@ -153,21 +152,21 @@ def index_towns(session: Optional[requests.Session] = None) -> list[dict]:
             cells = tr.find_all("td")
             if not cells or len(cells) < 2:
                 continue
-            
+
             link = cells[1].find("a")
             if not link:
                 continue
-            
+
             town_name = link.get_text(strip=True)
             href = link.get("href", "")
             slug = href.rstrip("/").split("/")[-1] if href else town_name.lower()
             url = urljoin(AHOTSAK_BASE, href) if href else f"{AHOTSAK_BASE}/{slug}/"
-            
+
             # Parse numeric fields
             speakers = _parse_int(cells[2]) if len(cells) > 2 else 0
             tapes = _parse_int(cells[3]) if len(cells) > 3 else 0
             passages = _parse_int(cells[4]) if len(cells) > 4 else 0
-            
+
             # Extract transcription/audio/video counts from cell[5] img titles
             trans_count = 0
             audio_count = 0
@@ -181,29 +180,31 @@ def index_towns(session: Optional[requests.Session] = None) -> list[dict]:
                         audio_count = _parse_int_from_title(title)
                     elif title.startswith("Bideoak:"):
                         video_count = _parse_int_from_title(title)
-            
-            towns.append({
-                "slug": slug,
-                "name": town_name,
-                "url": url,
-                "territory": territory,
-                "province": province,
-                "speakers": speakers,
-                "tapes": tapes,
-                "passages": passages,
-                "transcription_count": trans_count,
-                "audio_count": audio_count,
-                "video_count": video_count,
-            })
-    
+
+            towns.append(
+                {
+                    "slug": slug,
+                    "name": town_name,
+                    "url": url,
+                    "territory": territory,
+                    "province": province,
+                    "speakers": speakers,
+                    "tapes": tapes,
+                    "passages": passages,
+                    "transcription_count": trans_count,
+                    "audio_count": audio_count,
+                    "video_count": video_count,
+                }
+            )
+
     logger.info(f"  Found {len(towns)} towns from page")
-    
+
     # Summary
     towns_with_trans = sum(1 for t in towns if t["transcription_count"] > 0)
     total_trans = sum(t["transcription_count"] for t in towns)
     logger.info(f"  Towns with transcriptions: {towns_with_trans}")
     logger.info(f"  Total transcriptions: {total_trans}")
-    
+
     return towns
 
 
@@ -232,7 +233,7 @@ def scrape_speakers(
     town_slug: str, session: Optional[requests.Session] = None
 ) -> list[dict]:
     """Scrape speakers for a town from the town page's speaker table.
-    
+
     The town page has a table with columns: #, Hizlaria, Zintak, Pasarteak, [icons].
     The last column has img icons with titles like 'Transkripzioak: 22'.
     Only returns speakers with transcriptions (Transkripzioak > 0).
@@ -317,7 +318,7 @@ def scrape_speaker_page(
     if not content:
         return {"error": "no content", **speaker}
 
-    # Extract passage list. Since we only visit speakers known to have 
+    # Extract passage list. Since we only visit speakers known to have
     # transcriptions, grab all passages. Filter later by actual presence of
     # Transkripzioa on the passage page.
     passages = []
@@ -429,9 +430,7 @@ def scrape_passage(
         key = strong.get_text(strip=True).rstrip(":")
         next_text = ""
         sibling = strong.next_sibling
-        while sibling and not (
-            hasattr(sibling, "name") and sibling.name == "strong"
-        ):
+        while sibling and not (hasattr(sibling, "name") and sibling.name == "strong"):
             if hasattr(sibling, "get_text"):
                 next_text += sibling.get_text(strip=True)
             elif isinstance(sibling, str):
@@ -594,9 +593,7 @@ def scrape_town(
             if max_passages and len(all_passages) >= max_passages:
                 break
 
-            passage = scrape_passage(
-                town_slug, p_data["slug"], dialect_map, session
-            )
+            passage = scrape_passage(town_slug, p_data["slug"], dialect_map, session)
             if passage:
                 all_passages.append(passage)
 
@@ -610,7 +607,7 @@ def scrape_all_towns(
     session: Optional[requests.Session] = None,
 ) -> list[Passage]:
     """Scrape transcribed passages from all towns with dialect mapping.
-    
+
     Only targets towns that have transcriptions (based on herriak page index).
     """
     if dialect_map is None:
@@ -619,25 +616,28 @@ def scrape_all_towns(
         session = create_session()
 
     towns = index_towns(session)
-    
+
     # Filter: only towns with transcriptions AND dialect mapping
     viable = [
-        t for t in towns 
+        t
+        for t in towns
         if t["transcription_count"] > 0 and t["slug"].lower() in dialect_map
     ]
-    
-    no_trans = [t for t in towns if t["transcription_count"] == 0 and t["slug"].lower() in dialect_map]
-    no_mapping = [t for t in towns if t["transcription_count"] > 0 and t["slug"].lower() not in dialect_map]
-    
-    logger.info(
-        f"Viable towns (transcriptions + dialect mapping): {len(viable)}"
-    )
-    logger.info(
-        f"Towns with mapping but no transcriptions: {len(no_trans)}"
-    )
-    logger.info(
-        f"Towns with transcriptions but no mapping: {len(no_mapping)}"
-    )
+
+    no_trans = [
+        t
+        for t in towns
+        if t["transcription_count"] == 0 and t["slug"].lower() in dialect_map
+    ]
+    no_mapping = [
+        t
+        for t in towns
+        if t["transcription_count"] > 0 and t["slug"].lower() not in dialect_map
+    ]
+
+    logger.info(f"Viable towns (transcriptions + dialect mapping): {len(viable)}")
+    logger.info(f"Towns with mapping but no transcriptions: {len(no_trans)}")
+    logger.info(f"Towns with transcriptions but no mapping: {len(no_mapping)}")
     if no_mapping:
         logger.info(f"  Unmapped (sample): {[t['name'] for t in no_mapping[:10]]}")
 
@@ -653,10 +653,13 @@ def scrape_all_towns(
 
     for town in viable:
         passages = scrape_town(
-            town["slug"], dialect_map, max_passages=max_passages_per_town, session=session
+            town["slug"],
+            dialect_map,
+            max_passages=max_passages_per_town,
+            session=session,
         )
         all_passages.extend(passages)
-        
+
         # Incremental save to avoid data loss on timeout
         with open(jsonl_path, "a", encoding="utf-8") as f:
             for p in passages:
@@ -679,7 +682,7 @@ def scrape_targeted_towns(
     session: Optional[requests.Session] = None,
 ) -> list[Passage]:
     """Scrape a specific set of towns with individual limits.
-    
+
     Args:
         per_town_limits: dict mapping town slug → max passages
     """
@@ -701,7 +704,7 @@ def scrape_targeted_towns(
 
     for i, (town_slug, limit) in enumerate(towns):
         dialect = dialect_map.get(town_slug.lower(), ("unknown", ""))[0]
-        logger.info(f"[{i+1}/{len(towns)}] {town_slug} ({dialect}) — limit: {limit}")
+        logger.info(f"[{i + 1}/{len(towns)}] {town_slug} ({dialect}) — limit: {limit}")
 
         passages = scrape_town(
             town_slug, dialect_map, max_passages=limit, session=session_obj
@@ -719,16 +722,20 @@ def scrape_targeted_towns(
     tsv_path = output_dir / f"ahotsak_transcriptions_{timestamp}.tsv"
     with open(tsv_path, "w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f, delimiter="\t")
-        writer.writerow(["text", "dialect", "town", "speaker", "passage_id", "confidence"])
+        writer.writerow(
+            ["text", "dialect", "town", "speaker", "passage_id", "confidence"]
+        )
         for p in all_passages:
-            writer.writerow([
-                p.transcription,
-                p.dialect_class,
-                p.town_name or p.town_slug,
-                p.speaker_name,
-                p.passage_id,
-                p.dialect_confidence,
-            ])
+            writer.writerow(
+                [
+                    p.transcription,
+                    p.dialect_class,
+                    p.town_name or p.town_slug,
+                    p.speaker_name,
+                    p.passage_id,
+                    p.dialect_confidence,
+                ]
+            )
 
     logger.info(f"\nFinal JSONL: {jsonl_path} ({len(all_passages)} passages)")
     logger.info(f"Final TSV:   {tsv_path}")
@@ -915,7 +922,9 @@ def cmd_stats():
     with open(latest) as f:
         for line in f:
             data = json.loads(line)
-            p = Passage(**{k: v for k, v in data.items() if k in Passage.__dataclass_fields__})
+            p = Passage(
+                **{k: v for k, v in data.items() if k in Passage.__dataclass_fields__}
+            )
             passages.append(p)
 
     show_stats(passages)
@@ -951,13 +960,21 @@ if __name__ == "__main__":
                 kwargs["town"] = "all"
                 i += 1
                 continue
-            raw = sys.argv[i + 1] if i + 1 < len(sys.argv) and not sys.argv[i + 1].startswith("--") else "true"
+            raw = (
+                sys.argv[i + 1]
+                if i + 1 < len(sys.argv) and not sys.argv[i + 1].startswith("--")
+                else "true"
+            )
             try:
                 val = int(raw)
             except ValueError:
                 val = raw
             kwargs[key] = val
-            i += 2 if i + 1 < len(sys.argv) and not sys.argv[i + 1].startswith("--") else 1
+            i += (
+                2
+                if i + 1 < len(sys.argv) and not sys.argv[i + 1].startswith("--")
+                else 1
+            )
         else:
             i += 1
 

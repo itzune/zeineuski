@@ -14,17 +14,12 @@ Usage:
 from __future__ import annotations
 
 import csv
-import json
 import logging
 import re
 import shutil
-import subprocess
 import sys
-import tempfile
 from collections import Counter
-from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -199,10 +194,10 @@ def train_with_ahotsak(
         use_sentences: If True, use sentence-level Ahotsak; if False, passage-level
         autotune_duration: Seconds for autotune (0 to skip)
     """
-    import numpy as np
 
     # Patch numpy 2.x compatibility
     import fasttext.FastText as ft_mod
+
     source = open(ft_mod.__file__).read()
     source = source.replace("np.array(probs, copy=False)", "np.asarray(probs)")
     exec(source, ft_mod.__dict__)
@@ -219,7 +214,9 @@ def train_with_ahotsak(
         ahotsak_lines = sum(1 for _ in f)
 
     logger.info(f"Existing data: {hybrid_lines:,} lines")
-    logger.info(f"Ahotsak data:  {ahotsak_lines:,} lines ({'sentences' if use_sentences else 'passages'})")
+    logger.info(
+        f"Ahotsak data:  {ahotsak_lines:,} lines ({'sentences' if use_sentences else 'passages'})"
+    )
 
     # Combine
     TRAIN_COMBINED.parent.mkdir(parents=True, exist_ok=True)
@@ -233,7 +230,9 @@ def train_with_ahotsak(
     logger.info(f"Combined: {total_lines:,} lines → {TRAIN_COMBINED}")
 
     # Step 2: Train
-    logger.info(f"Training fastText (dim={dim}, epoch={epoch}, lr={lr}, wordNgrams={word_ngrams})...")
+    logger.info(
+        f"Training fastText (dim={dim}, epoch={epoch}, lr={lr}, wordNgrams={word_ngrams})..."
+    )
 
     model = fasttext.train_supervised(
         str(TRAIN_COMBINED),
@@ -295,9 +294,9 @@ def train_with_ahotsak(
 
 def evaluate_model(model_path: Path, test_path: Path) -> dict:
     """Evaluate a fastText model on a test set."""
-    import numpy as np
 
     import fasttext.FastText as ft_mod
+
     source = open(ft_mod.__file__).read()
     source = source.replace("np.array(probs, copy=False)", "np.asarray(probs)")
     exec(source, ft_mod.__dict__)
@@ -330,7 +329,9 @@ def evaluate_model(model_path: Path, test_path: Path) -> dict:
     from sklearn.metrics import classification_report, confusion_matrix
 
     classes = sorted(set(y_true) | set(y_pred))
-    report = classification_report(y_true, y_pred, labels=classes, zero_division=0, output_dict=True)
+    report = classification_report(
+        y_true, y_pred, labels=classes, zero_division=0, output_dict=True
+    )
 
     cm = confusion_matrix(y_true, y_pred, labels=classes)
 
@@ -365,7 +366,6 @@ def load_xnli_test() -> Path:
 
 def compare_models():
     """Compare baseline model vs model trained with Ahotsak data."""
-    import numpy as np
 
     test_path = load_xnli_test()
 
@@ -388,7 +388,7 @@ def compare_models():
 
         result = evaluate_model(path, test_path)
 
-        print(f"Accuracy: {result['accuracy']:.4f} ({result['accuracy']*100:.2f}%)")
+        print(f"Accuracy: {result['accuracy']:.4f} ({result['accuracy'] * 100:.2f}%)")
         print(f"Samples: {result['samples']}")
 
         # Per-class
@@ -397,14 +397,19 @@ def compare_models():
         for cls in result["classes"]:
             if cls in cr and isinstance(cr[cls], dict):
                 metrics = cr[cls]
-                print(f"  {cls:12s}: P={metrics['precision']:.3f}  R={metrics['recall']:.3f}  F1={metrics['f1-score']:.3f}  support={metrics['support']:.0f}")
+                print(
+                    f"  {cls:12s}: P={metrics['precision']:.3f}  R={metrics['recall']:.3f}  F1={metrics['f1-score']:.3f}  support={metrics['support']:.0f}"
+                )
 
         # Confusion matrix
         print("\nConfusion matrix:")
         header = "         " + "".join(f"{c:>10s}" for c in result["classes"])
         print(header)
         for i, cls in enumerate(result["classes"]):
-            row = "".join(f"{result['confusion_matrix'][i][j]:>10d}" for j in range(len(result["classes"])))
+            row = "".join(
+                f"{result['confusion_matrix'][i][j]:>10d}"
+                for j in range(len(result["classes"]))
+            )
             print(f"  {cls:7s} {row}")
 
         results[name] = result
@@ -415,7 +420,7 @@ def compare_models():
         ahotsak_acc = results["Baseline + Ahotsak"]["accuracy"]
         delta = ahotsak_acc - base_acc
         print(f"\n{'=' * 40}")
-        print(f"Accuracy delta: {delta:+.4f} ({delta*100:+.2f}%)")
+        print(f"Accuracy delta: {delta:+.4f} ({delta * 100:+.2f}%)")
         if delta > 0:
             print("✓ Ahotsak data improves accuracy!")
         elif delta < 0:
@@ -450,16 +455,18 @@ def cmd_all():
     logger.info("Step 1: Prepare Ahotsak data")
     ahotsak_path, n_passages, n_sentences = prepare_ahotsak_data()
 
-    logger.info(f"\nStep 2: Train model with Ahotsak data")
+    logger.info("\nStep 2: Train model with Ahotsak data")
     train_with_ahotsak(ahotsak_path, use_sentences=True)
 
-    logger.info(f"\nStep 3: Compare models")
+    logger.info("\nStep 3: Compare models")
     compare_models()
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in ("prepare", "train", "evaluate", "all"):
-        print("Usage: python -m src.data.ahotsak_text_training [prepare|train|evaluate|all]")
+        print(
+            "Usage: python -m src.data.ahotsak_text_training [prepare|train|evaluate|all]"
+        )
         sys.exit(1)
 
     cmd = sys.argv[1]

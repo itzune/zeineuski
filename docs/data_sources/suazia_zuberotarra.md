@@ -1,9 +1,9 @@
 # SÜ AZIA Zuberotarra Corpus
 
-**Status**: integrated into training pipeline  
-**Date scraped**: 2026-06-11  
-**Source**: [www.suazia.com](http://www.suazia.com) (archived via Wayback Machine, 2011 snapshot)  
-**Scraper**: `nongoeuskara/build/scrape_suazia.py`  
+**Status**: integrated into training pipeline
+**Date scraped**: 2026-06-11
+**Source**: [www.suazia.com](http://www.suazia.com) (archived via Wayback Machine, 2011 snapshot)
+**Scraper**: `nongoeuskara/build/scrape_suazia.py`
 **Output**: `data/raw/text/suazia/suazia_train_clean.txt` (6,676 sentences)
 
 ## Overview

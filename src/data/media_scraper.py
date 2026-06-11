@@ -30,7 +30,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urlparse
 
 import feedparser
 import httpx
@@ -128,7 +128,9 @@ def load_outlet_registry() -> dict[str, OutletConfig]:
             # Outlet-specific overrides (known feeds)
             overrides = {
                 "berria": {
-                    "rss_urls": ["https://www.berria.eus/uploads/feeds/feed_berria_eu.xml"],
+                    "rss_urls": [
+                        "https://www.berria.eus/uploads/feeds/feed_berria_eu.xml"
+                    ],
                     "sitemap_urls": ["https://www.berria.eus/sitemap.xml"],
                     "article_body_selector": "div.article-body, div.c-post__body",
                     "max_articles_per_run": 200,
@@ -170,7 +172,9 @@ def load_outlet_registry() -> dict[str, OutletConfig]:
 
 
 def discover_from_sitemap(
-    sitemap_url: str, client: httpx.Client, limit: int = 1000,
+    sitemap_url: str,
+    client: httpx.Client,
+    limit: int = 1000,
     prefer_recent: bool = True,
 ) -> list[str]:
     """Parse a sitemap.xml and return article URLs.
@@ -203,7 +207,11 @@ def discover_from_sitemap(
             sub_sitemaps.reverse()
 
         for sm_url in sub_sitemaps:
-            urls.extend(discover_from_sitemap(sm_url, client, limit - len(urls), prefer_recent=False))
+            urls.extend(
+                discover_from_sitemap(
+                    sm_url, client, limit - len(urls), prefer_recent=False
+                )
+            )
             if len(urls) >= limit:
                 break
         return urls[:limit]
@@ -221,8 +229,19 @@ def discover_from_sitemap(
                 break
 
     # Filter out non-article URLs (tag pages, category pages, author pages)
-    skip_patterns = [r'/tag/', r'/kategoria/', r'/category/', r'/egilea/', r'/author/',
-                     r'/page/', r'/orria/', r'\?p=', r'/wp-admin/', r'/feed/', r'/comments/']
+    skip_patterns = [
+        r"/tag/",
+        r"/kategoria/",
+        r"/category/",
+        r"/egilea/",
+        r"/author/",
+        r"/page/",
+        r"/orria/",
+        r"\?p=",
+        r"/wp-admin/",
+        r"/feed/",
+        r"/comments/",
+    ]
     urls = [u for u in urls if not any(re.search(p, u) for p in skip_patterns)]
 
     logger.debug(f"Sitemap {sitemap_url}: {len(urls)} URLs")
@@ -247,7 +266,9 @@ def discover_from_rss(
             urls.append(entry.link)
         elif hasattr(entry, "links"):
             for link in entry.links:
-                if link.get("rel") == "alternate" or link.get("type", "").startswith("text/html"):
+                if link.get("rel") == "alternate" or link.get("type", "").startswith(
+                    "text/html"
+                ):
                     urls.append(link.href)
                     break
 
@@ -301,9 +322,21 @@ def extract_article_text(html: str, cfg: OutletConfig) -> Optional[str]:
         tag.decompose()
 
     # Remove sidebar/navigation/widget blocks
-    skip_classes = ["social-share", "comments", "related-posts", "sidebar", "advertisement",
-                    "publi", "iragarkia", "nabigazioa", "widget", "alboko-menua",
-                    "goiko-barra", "footer", "header"]
+    skip_classes = [
+        "social-share",
+        "comments",
+        "related-posts",
+        "sidebar",
+        "advertisement",
+        "publi",
+        "iragarkia",
+        "nabigazioa",
+        "widget",
+        "alboko-menua",
+        "goiko-barra",
+        "footer",
+        "header",
+    ]
     for cls in skip_classes:
         for tag in soup.find_all(class_=re.compile(cls, re.I)):
             tag.decompose()
@@ -338,9 +371,21 @@ def extract_article_text(html: str, cfg: OutletConfig) -> Optional[str]:
         for p in paragraphs:
             text = p.get_text(strip=True)
             # Skip boilerplate
-            skip_phrases = ["egin zaitez", "harpidedun", "zure babesa", "kalitatez jaso",
-                           "cookie", "pribatutasun", "lege ohar", "RSS"]
-            if text and len(text) > 30 and not any(s in text.lower() for s in skip_phrases):
+            skip_phrases = [
+                "egin zaitez",
+                "harpidedun",
+                "zure babesa",
+                "kalitatez jaso",
+                "cookie",
+                "pribatutasun",
+                "lege ohar",
+                "RSS",
+            ]
+            if (
+                text
+                and len(text) > 30
+                and not any(s in text.lower() for s in skip_phrases)
+            ):
                 # Also check the parent isn't a sidebar
                 parent = p.parent
                 if parent and parent.get("class"):
@@ -383,14 +428,21 @@ def extract_article_metadata(html: str, cfg: OutletConfig) -> dict:
             meta["title"] = str(og_title.get("content", ""))
 
     # Date
-    for selector in ["time", "meta[property='article:published_time']",
-                      "span.date", "div.date", "[datetime]"]:
+    for selector in [
+        "time",
+        "meta[property='article:published_time']",
+        "span.date",
+        "div.date",
+        "[datetime]",
+    ]:
         date_el = soup.select_one(selector)
         if date_el:
             if date_el.name == "meta":
                 meta["date"] = str(date_el.get("content", ""))
             else:
-                meta["date"] = str(date_el.get("datetime") or date_el.get_text(strip=True))
+                meta["date"] = str(
+                    date_el.get("datetime") or date_el.get_text(strip=True)
+                )
             break
 
     return meta
@@ -547,10 +599,14 @@ def cmd_discover() -> None:
 
             if urls:
                 dialect = cfg.dialect_class
-                logger.info(f"  ✓ {cfg.display_name:<35s} {dialect:<10s} {len(urls)} URLs via {'sitemap' if 'sitemap' in str(urls) else 'rss'}")
+                logger.info(
+                    f"  ✓ {cfg.display_name:<35s} {dialect:<10s} {len(urls)} URLs via {'sitemap' if 'sitemap' in str(urls) else 'rss'}"
+                )
                 working += 1
             elif urls is not None and len(urls) == 0:
-                logger.info(f"  - {cfg.display_name:<35s} {cfg.dialect_class:<10s} 0 URLs (empty)")
+                logger.info(
+                    f"  - {cfg.display_name:<35s} {cfg.dialect_class:<10s} 0 URLs (empty)"
+                )
                 no_discovery += 1
             else:
                 logger.info(f"  ✗ {cfg.display_name:<35s} {cfg.dialect_class:<10s}")
@@ -558,7 +614,9 @@ def cmd_discover() -> None:
 
             time.sleep(0.3)
 
-    logger.info(f"\nWorking: {working}, Empty: {no_discovery}, Failed: {fail}, Total: {len(registry)}")
+    logger.info(
+        f"\nWorking: {working}, Empty: {no_discovery}, Failed: {fail}, Total: {len(registry)}"
+    )
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────
@@ -576,7 +634,11 @@ if __name__ == "__main__":
     while i < len(sys.argv):
         if sys.argv[i].startswith("--"):
             key = sys.argv[i][2:].replace("-", "_")
-            raw = sys.argv[i + 1] if i + 1 < len(sys.argv) and not sys.argv[i + 1].startswith("--") else "true"
+            raw = (
+                sys.argv[i + 1]
+                if i + 1 < len(sys.argv) and not sys.argv[i + 1].startswith("--")
+                else "true"
+            )
             # Convert to int if numeric
             try:
                 val: str | int = int(raw)

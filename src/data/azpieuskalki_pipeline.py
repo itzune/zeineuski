@@ -96,21 +96,17 @@ def main():
 
     # Step 3: Re-run label validation
     logger.info("\n▶ Step 3: Re-running label cross-validation")
-    from src.data.ahotsak_label_validation import (
-        cmd_validate as validate,
-    )
     # Use the merged file for validation
     # (This will create a new validation CSV)
 
     # Step 4: Re-train azpieuskalki classifier
     logger.info("\n▶ Step 4: Re-training azpieuskalki classifier")
-    from src.data.train_azpieuskalki import cmd_all as train_azpi
     # train_azpi()  # Uncomment to auto-run
 
     # Step 5: Summary
     logger.info("\n▶ Pipeline complete!")
     logger.info(f"  Merged passages: {merged_path}")
-    logger.info(f"  Next: run validation → train azpieuskalki → build audio dataset")
+    logger.info("  Next: run validation → train azpieuskalki → build audio dataset")
 
 
 if __name__ == "__main__":

@@ -17,12 +17,10 @@ import json
 import csv
 import logging
 import random
-import sys
 import tempfile
 import warnings
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Optional
 
 warnings.filterwarnings("ignore")
 
@@ -48,16 +46,16 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # ── Transition zones ────────────────────────────────────────────────────
 TRANSITION_CROSSOVERS = {
-    'ipar-goi-nafarrera': ['beterri'],
-    'debagoiena': ['goierri'],
-    'goierri': ['debagoiena'],
-    'debabarrena': ['beterri', 'sortaldekoa'],
-    'beterri': ['debabarrena'],
-    'sortaldekoa': ['debabarrena'],
-    'sartaldeko-naf-lap': ['sortaldeko-naf-lap'],
-    'sortaldeko-naf-lap': ['sartaldeko-naf-lap', 'zuberera'],
-    'ipar-goi-nafarrera': ['hego-goi-nafarrera', 'beterri'],
-    'hego-goi-nafarrera': ['ipar-goi-nafarrera'],
+    "ipar-goi-nafarrera": ["beterri"],
+    "debagoiena": ["goierri"],
+    "goierri": ["debagoiena"],
+    "debabarrena": ["beterri", "sortaldekoa"],
+    "beterri": ["debabarrena"],
+    "sortaldekoa": ["debabarrena"],
+    "sartaldeko-naf-lap": ["sortaldeko-naf-lap"],
+    "sortaldeko-naf-lap": ["sartaldeko-naf-lap", "zuberera"],
+    "ipar-goi-nafarrera": ["hego-goi-nafarrera", "beterri"],
+    "hego-goi-nafarrera": ["ipar-goi-nafarrera"],
 }
 
 # ── Data loading ─────────────────────────────────────────────────────────
@@ -102,7 +100,9 @@ def load_town_map() -> dict[str, tuple]:
     return town_map
 
 
-def resolve_azpieuskalki(herria: str, town_map: dict, azpi_map: dict) -> tuple[str, str]:
+def resolve_azpieuskalki(
+    herria: str, town_map: dict, azpi_map: dict
+) -> tuple[str, str]:
     """Resolve town → (azpieuskalki, dialect). Handles both slug and name."""
     h = herria.lower().strip()
 
@@ -118,7 +118,9 @@ def resolve_azpieuskalki(herria: str, town_map: dict, azpi_map: dict) -> tuple[s
     if not info:
         # Last resort: check town_name field variants
         for csv_town, v in town_map.items():
-            if csv_town.lower().replace("  ", " ") == h.replace("-", " ").replace("  ", " "):
+            if csv_town.lower().replace("  ", " ") == h.replace("-", " ").replace(
+                "  ", " "
+            ):
                 info = v
                 break
     if not info:
@@ -131,7 +133,9 @@ def resolve_azpieuskalki(herria: str, town_map: dict, azpi_map: dict) -> tuple[s
 # ── Sentence extraction ──────────────────────────────────────────────────
 
 
-def extract_sentences(passages: list[dict], azpi_label: str = None) -> list[tuple[str, str]]:
+def extract_sentences(
+    passages: list[dict], azpi_label: str = None
+) -> list[tuple[str, str]]:
     """Extract sentences from passages, optionally filtered to a specific azpieuskalki.
 
     Returns list of (sentence, azpieuskalki_label).
@@ -187,7 +191,9 @@ def train_fasttext(
         return None, len(sentences), class_counts
 
     # Write training file
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False, encoding="utf-8") as f:
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".txt", delete=False, encoding="utf-8"
+    ) as f:
         train_path = f.name
         for text, label in sentences:
             f.write(f"__label__{label} {text}\n")
@@ -210,15 +216,15 @@ def train_fasttext(
     return model, len(sentences), class_counts
 
 
-def evaluate_model(
-    model, sentences: list[tuple[str, str]]
-) -> dict:
+def evaluate_model(model, sentences: list[tuple[str, str]]) -> dict:
     """Evaluate a fastText model on held-out sentences. Returns metrics dict."""
     if model is None or len(sentences) < 10:
         return {"accuracy": 0, "n": 0, "per_class": {}}
 
     # Write test file
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False, encoding="utf-8") as f:
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".txt", delete=False, encoding="utf-8"
+    ) as f:
         test_path = f.name
         for text, label in sentences:
             # Strip newlines (fastText error: "predict processes one line at a time")
@@ -258,7 +264,7 @@ def evaluate_model(
 
 
 def run_experiment():
-    from src.data.azpieuskalki_map import AZPIEUSKALKI_MAP, AZPIEUSKALKI_NAMES
+    from src.data.azpieuskalki_map import AZPIEUSKALKI_MAP
 
     town_map = load_town_map()
     passages = load_all_passages()
@@ -275,7 +281,9 @@ def run_experiment():
 
     print("=" * 70)
     print("  AZPIEUSKALKI SUBMODEL ARCHITECTURE TEST")
-    print(f"  Data: {len(passages)} passages ({azpi_counter.total()} with azpieuskalki)")
+    print(
+        f"  Data: {len(passages)} passages ({azpi_counter.total()} with azpieuskalki)"
+    )
     print("=" * 70)
     print()
     print("Azpieuskalki distribution:")
@@ -311,10 +319,10 @@ def run_experiment():
     model_flat, n_train_flat, _ = train_fasttext(train_sents, "/tmp/azpi_flat.bin")
     if model_flat:
         result_flat = evaluate_model(model_flat, test_sents)
-        print(f"  Accuracy: {result_flat['accuracy']*100:.2f}%")
-        print(f"  Per class:")
+        print(f"  Accuracy: {result_flat['accuracy'] * 100:.2f}%")
+        print("  Per class:")
         for cls, m in sorted(result_flat["per_class"].items()):
-            print(f"    {cls:25s} {m['accuracy']*100:5.1f}% (n={m['n']})")
+            print(f"    {cls:25s} {m['accuracy'] * 100:5.1f}% (n={m['n']})")
         print()
     else:
         print("  SKIPPED: not enough classes")
@@ -336,10 +344,14 @@ def run_experiment():
         dialect_test = [(s, l) for s, l in test_sents if l in own_azpis]
 
         if len(dialect_train) < 50 or len(dialect_test) < 10:
-            print(f"  {dialect}: train={len(dialect_train)}, test={len(dialect_test)} → skip")
+            print(
+                f"  {dialect}: train={len(dialect_train)}, test={len(dialect_test)} → skip"
+            )
             continue
 
-        model, n_train, class_counts = train_fasttext(dialect_train, f"/tmp/azpi_{dialect}.bin")
+        model, n_train, class_counts = train_fasttext(
+            dialect_train, f"/tmp/azpi_{dialect}.bin"
+        )
         if model is None:
             print(f"  {dialect}: couldn't train → skip")
             continue
@@ -347,10 +359,12 @@ def run_experiment():
         result = evaluate_model(model, dialect_test)
         dialect_models[dialect] = (model, result)
 
-        print(f"  {dialect}: {len(class_counts)} classes, {n_train} train, {len(dialect_test)} test")
-        print(f"    Accuracy: {result['accuracy']*100:.2f}%")
+        print(
+            f"  {dialect}: {len(class_counts)} classes, {n_train} train, {len(dialect_test)} test"
+        )
+        print(f"    Accuracy: {result['accuracy'] * 100:.2f}%")
         for cls, m in sorted(result["per_class"].items()):
-            print(f"      {cls:25s} {m['accuracy']*100:5.1f}% (n={m['n']})")
+            print(f"      {cls:25s} {m['accuracy'] * 100:5.1f}% (n={m['n']})")
     print()
 
     # ── EXPERIMENT 3: Per-dialect submodels WITH crossovers ───────────────
@@ -372,7 +386,9 @@ def run_experiment():
                 if azpi_counter.get(adj, 0) > 0:
                     all_azpis.add(adj)
 
-        print(f"  {dialect}: {len(own_azpis)} own + {len(all_azpis - own_azpis)} crossover = {len(all_azpis)} classes")
+        print(
+            f"  {dialect}: {len(own_azpis)} own + {len(all_azpis - own_azpis)} crossover = {len(all_azpis)} classes"
+        )
 
         dialect_train = [(s, l) for s, l in train_sents if l in all_azpis]
         dialect_test = [(s, l) for s, l in test_sents if l in all_azpis]
@@ -381,9 +397,11 @@ def run_experiment():
             print(f"    train={len(dialect_train)}, test={len(dialect_test)} → skip")
             continue
 
-        model, n_train, class_counts = train_fasttext(dialect_train, f"/tmp/azpi_x_{dialect}.bin")
+        model, n_train, class_counts = train_fasttext(
+            dialect_train, f"/tmp/azpi_x_{dialect}.bin"
+        )
         if model is None:
-            print(f"    couldn't train → skip")
+            print("    couldn't train → skip")
             continue
 
         result = evaluate_model(model, dialect_test)
@@ -392,8 +410,8 @@ def run_experiment():
         for cls in sorted(all_azpis):
             marker = "← own" if cls in own_azpis else "← crossover"
             m = result["per_class"].get(cls, {"accuracy": 0, "n": 0})
-            print(f"      {cls:25s} {m['accuracy']*100:5.1f}% (n={m['n']}) {marker}")
-        print(f"    OVERALL: {result['accuracy']*100:.2f}%")
+            print(f"      {cls:25s} {m['accuracy'] * 100:5.1f}% (n={m['n']}) {marker}")
+        print(f"    OVERALL: {result['accuracy'] * 100:.2f}%")
     print()
 
     # ── Summary ───────────────────────────────────────────────────────────
@@ -401,20 +419,24 @@ def run_experiment():
     print("  SUMMARY")
     print("=" * 70)
     if result_flat:
-        print(f"  Flat 10-class:         {result_flat['accuracy']*100:5.1f}%")
+        print(f"  Flat 10-class:         {result_flat['accuracy'] * 100:5.1f}%")
     for dialect, (_, result) in dialect_models.items():
-        print(f"  {dialect:12s} (own only):   {result['accuracy']*100:5.1f}%")
+        print(f"  {dialect:12s} (own only):   {result['accuracy'] * 100:5.1f}%")
     for dialect, (_, result) in dialect_models_xover.items():
-        print(f"  {dialect:12s} (xover):     {result['accuracy']*100:5.1f}%")
+        print(f"  {dialect:12s} (xover):     {result['accuracy'] * 100:5.1f}%")
     print()
 
     # Per-dialect macro average
     if dialect_models:
-        avg_own = sum(r["accuracy"] for _, r in dialect_models.values()) / len(dialect_models)
-        print(f"  Per-dialect macro avg (own):    {avg_own*100:.1f}%")
+        avg_own = sum(r["accuracy"] for _, r in dialect_models.values()) / len(
+            dialect_models
+        )
+        print(f"  Per-dialect macro avg (own):    {avg_own * 100:.1f}%")
     if dialect_models_xover:
-        avg_xover = sum(r["accuracy"] for _, r in dialect_models_xover.values()) / len(dialect_models_xover)
-        print(f"  Per-dialect macro avg (xover):  {avg_xover*100:.1f}%")
+        avg_xover = sum(r["accuracy"] for _, r in dialect_models_xover.values()) / len(
+            dialect_models_xover
+        )
+        print(f"  Per-dialect macro avg (xover):  {avg_xover * 100:.1f}%")
 
 
 if __name__ == "__main__":
