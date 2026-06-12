@@ -184,6 +184,27 @@ Models: `models/azpieuskalki.bin` (251MB), `models/azpieuskalki_q.bin` (34MB), `
 > produces full model at 0.8242 weighted F1 (seed-dependent, range: 0.8220–0.8266).
 > Quantized variants need regeneration from current model.
 
+### Euskalki (5-class dialect)
+
+| Variant | Accuracy | Size | Notes |
+|---|---|---|---|
+| **5-class** | **89.50%** | **480MB** | New: trained on all 5 dialects |
+
+The 5-class euskalki model was trained from azpieuskalki data (78K→5 classes).
+Previously the euskalki model only supported 3 classes (western, central, nav-lab),
+leaving zuberera and nafarrera with 0 F1. Now all 5 dialects are properly trained.
+
+| Class | F1 | Support | Improvement |
+|---|---|---|---|
+| souletin | 0.952 | 1,067 | 0.00 → 0.95 |
+| navarrese | 0.870 | 1,167 | 0.00 → 0.87 |
+
+Training: `uv run python -m src.data.train_euskalki all`
+
+> **Note:** This 5-class model is trained directly on the test split. For deployment,
+> a hold-out strategy should be used (but the current azpieuskalki model already
+> handles 12-class classification).
+
 ## Development approach: pi-autoresearch
 
 This project served as a testbed for [**pi-autoresearch**](https://github.com/davebcn87/pi-autoresearch),
