@@ -172,11 +172,17 @@ that are dialect-specific — this single change jumped accuracy from 72% to 82%
 | Variant | Accuracy | Size | vs original |
 |---|---:|---:|---:|
 | original | 83.59% | 233MB | baseline |
-| **quantized** | **83.28%** | **31MB** | -0.31pp, 7.5× smaller |
-| bucket=50K | 83.22% | 119MB | -0.37pp, 2× smaller |
-| bucket=50K quantized | 82.80% | 17MB | -0.79pp, 13.7× smaller |
+| **full (wordNgrams=3)** | **82.51%** | **251MB** | weighted F1: 0.824 |
+| quantized (default) | 84.22% | 34MB | ⚠ stale — from older config |
+| bucket=50K | 84.16% | 137MB | ⚠ stale — from older config |
 
-Models: `models/azpieuskalki.bin` (233MB), `models/azpieuskalki_q.bin` (31MB)
+Models: `models/azpieuskalki.bin` (251MB), `models/azpieuskalki_q.bin` (34MB), `models/azpieuskalki_b50000.bin` (137MB)
+
+> **Note:** Quantized variants above are from an older training run with a different
+> seed that scored higher on its split. Regenerating with the current best config
+> (`loss=ns, dim=200, epoch=100, lr=0.2, wordNgrams=3, targeted_oversample=-2`)
+> produces full model at 0.8242 weighted F1 (seed-dependent, range: 0.8220–0.8266).
+> Quantized variants need regeneration from current model.
 
 ## Development approach: pi-autoresearch
 
@@ -200,8 +206,15 @@ Each experiment logged its config, accuracy, F1 breakdown, confusion matrix, and
 an auto-generated analysis back to `PROJECT.md`, making the exploration fully
 traceable.
 
-**Total improvement:** from 51.02% baseline to 83.55% final — **+63.8% relative**,
-entirely through automated optimization without any manual hyperparameter tuning.
+**Total improvement:** from 51.02% baseline to 82.51% final (weighted F1: 0.8242)
+— entirely through automated optimization without any manual hyperparameter tuning.
+
+**Best config:** `loss=ns, dim=200, epoch=100, lr=0.2, wordNgrams=3, minn=2, maxn=6,
+minCount=1, targeted_oversample=-2`. Key innovations: trigrams for Nafarroa class
+distinction, targeted oversampling of minority classes, Sakana injection (Zuazo 2010).
+
+**Remaining challenge:** Nafarroa minority classes (nafar-erdigunea 0.639, ekialde-nafarra
+0.635) need more data from Ahotsak (~30 unscraped Nafarroa towns).
 
 ## Training
 
