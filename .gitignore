@@ -1,11 +1,22 @@
 __pycache__/
 *.pyc
 .venv/
-data/
+data/*
 !data/reference/
+!data/raw/
+!data/processed/
+data/raw/*
+!data/raw/text/
+data/raw/text/*
 !data/raw/text/*.csv
 !data/raw/text/*.tsv
 !data/raw/text/xnli_dialectal/
+!data/raw/text/suazia/
+!data/processed/*
+!data/processed/text/
+data/processed/text/*
+!data/processed/text/train_azpieuskalki.txt
+!data/processed/text/test_azpieuskalki.txt
 /models/
 *.pth
 *.bin
@@ -24,3 +35,7 @@ models/hier_*_tiny.bin
 models/hier_*_web.bin
 models/hier_*_webslim.bin
 models/hier_*_webultra.bin
+
+# Don't ignore src/data Python files
+!src/data/*.py
+!src/models/speech/*.py

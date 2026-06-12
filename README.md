@@ -118,10 +118,11 @@ Ekialdeko nafarrera (Zaraitzu/Erronkari) is merged into navarrese at Tier 2 due 
 tiny data (~65 Ahotsak passages) and its treatment as a sub-class in our literary
 corpus. It is a distinct class at Tier 3 (azpieuskalki).
 
-### Azpieuskalki (Sub-Dialect) Classification — 9 to 12-class
+### Azpieuskalki (Sub-Dialect) Classification — 12-class
 
-Fine-grained sub-dialect classifier trained on Ahotsak.eus oral history transcriptions, using Zuazo's
-sub-dialect taxonomy mapped through official Ahotsak.eus municipality→azpieuskalki assignments.
+Fine-grained sub-dialect classifier trained on Ahotsak.eus oral history transcriptions
+and augmented with the SÜ AZIA Zuberotarra corpus (6,676 pastoral + blog sentences).
+Uses Zuazo's sub-dialect taxonomy mapped through official Ahotsak.eus municipality→azpieuskalki assignments.
 
 | Variant | Classes | Accuracy | Model |
 |---------|:---:|:---:|---|
@@ -130,6 +131,26 @@ sub-dialect taxonomy mapped through official Ahotsak.eus municipality→azpieusk
 
 **Optimal config:** fastText with `dim=200, lr=0.2, epoch=75, wordNgrams=2, minn=2, maxn=6, loss=ns`.
 NO autotune — aggressive LR decay overfits to dominant classes.
+
+**Training data distribution (42,229 sentences):**
+
+| Azpieuskalki | Sentences | % | Source |
+|---|---:|---:|---|
+| mendebal-sortaldea | 13,059 | 30.9% | Ahotsak |
+| erdialde-sartaldea | 9,804 | 23.2% | Ahotsak |
+| **zuberera** | **6,050** | **14.3%** | **Ahotsak (441) + SÜ AZIA (6,676)** |
+| erdialde-sortaldea | 4,966 | 11.8% | Ahotsak |
+| nafar-ipar-sartaldea | 1,966 | 4.7% | Ahotsak |
+| nafar-sortaldea | 1,516 | 3.6% | Ahotsak |
+| naflap-sortaldea | 1,395 | 3.3% | Ahotsak |
+| nafar-hego-sartaldea | 1,101 | 2.6% | Ahotsak |
+| naflap-sartaldea | 726 | 1.7% | Ahotsak |
+| ekialde-nafarra | 710 | 1.7% | Ahotsak |
+| nafar-erdigunea | 497 | 1.2% | Ahotsak |
+| mendebal-sartaldea | 439 | 1.0% | Ahotsak |
+
+SÜ AZIA data brings zuberera from the smallest class (1.9%) to the 3rd largest (14.3%)
+— see [docs/data_sources/suazia_zuberotarra.md](docs/data_sources/suazia_zuberotarra.md).
 
 **Best 9-class per-class results:**
 
@@ -265,6 +286,17 @@ uv run python eval_all.py
 **Test sets:**
 - `test_expanded_3class.txt` — 2,505 samples, 3-class XNLI (western, central, nav-lab), 0% train overlap
 - `test_6class.txt` — 4,005 samples, 4-class (batua, western, central, nav-lab), 0% train overlap
+- `test_azpieuskalki.txt` — 7,445 samples, 12 azpieuskalki classes, 15% stratified hold-out from Ahotsak + external corpora
+
+### Data sources
+
+| Source | Content | Dialects | Status |
+|---|---|---|---|
+| [Klasikoak](https://klasikoak.armiarma.eus/) | Literary texts (pre-20th c.) | 5 euskalkis (6-class) | Train |
+| [Ahotsak.eus](https://ahotsak.eus) | Oral history transcriptions | 12 azpieuskalkis | Train + Test |
+| [SÜ AZIA](https://web.archive.org/web/20110920103304/http://www.suazia.com) | Pastoral scripts + blog articles | Zuberera | Train + Test |
+
+See [docs/data_sources/suazia_zuberotarra.md](docs/data_sources/suazia_zuberotarra.md) for the SÜ AZIA corpus documentation.
 
 `val_6class.txt` was found to have 68.4% overlap with `train_6class.txt` and is **not used**
 for evaluation. Navarrese and Souletin lack clean test splits — all their samples were
