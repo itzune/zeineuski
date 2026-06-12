@@ -46,7 +46,12 @@ SUAZIA_CORPUS_PATH = (
 )
 SUAZIA_DOCS_PATH = PROJECT_ROOT / "docs" / "data_sources" / "suazia_zuberotarra.md"
 
-from src.data.azpieuskalki_map import (
+# Ensure src/data is importable
+import sys  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
+
+from data.azpieuskalki_map import (  # noqa: E402
     AZPIEUSKALKI_MAP,
     AZPIEUSKALKI_NAMES,
     AHOTSAK_TO_OUR_LABEL,
@@ -99,6 +104,45 @@ def inject_suazia_zuberera(azpi_sentences: dict[str, list[str]]) -> int:
     return count
 
 
+SAKANA_EXAMPLES_PATH = (
+    PROJECT_ROOT / "data" / "raw" / "text" / "sakana" / "sakana_examples.txt"
+)
+
+
+def inject_sakana_examples(azpi_sentences: dict[str, list[str]]) -> int:
+    """Inject Sakana (Sakanako euskara) dialect examples from Zuazo 2010.
+
+    Koldo Zuazo's "Sakanako euskara" (2010) contains 53 example sentences
+    extracted from the Burundako hiztegia and field recordings. These are
+    genuine Sakana dialect utterances with distinctive morphological and
+    lexical features (gaituk 'we go', bajukagu 'we have', inko du 'he says',
+    seukak 'keep', etc.)
+
+    Returns: number of sentences injected.
+    """
+    if not SAKANA_EXAMPLES_PATH.exists():
+        logger.warning(f"Sakana examples not found at {SAKANA_EXAMPLES_PATH}")
+        return 0
+
+    lines = SAKANA_EXAMPLES_PATH.read_text(encoding="utf-8").split("\n")
+
+    count = 0
+    for line in lines:
+        line = line.strip()
+        if not line or not line.startswith("__label__nafar-hego-sartaldea "):
+            continue
+        text = line[len("__label__nafar-hego-sartaldea ") :].strip()
+        if len(text) < 10:
+            continue
+        azpi_sentences["nafar-hego-sartaldea"].append(text)
+        count += 1
+
+    logger.info(
+        f"Sakana (Zuazo 2010): injected {count} sentences → nafar-hego-sartaldea"
+    )
+    return count
+
+
 # ── Data loading ──────────────────────────────────────────────────────────────
 
 
@@ -139,7 +183,7 @@ def load_town_mappings() -> dict[str, dict]:
     return town_map
 
 
-def load_passages(jsonl_path: Optional[Path] = None) -> list[dict]:
+def load_passages(jsonl_path: "Path | None" = None) -> list[dict]:
     """Load scraped Ahotsak passages."""
     if jsonl_path is None:
         jsonl_files = sorted(AHOTSAK_DIR.glob("ahotsak_passages_*.jsonl"))
@@ -225,7 +269,7 @@ def prepare_azpieuskalki_data(
     min_samples: int = 15,
     test_split: float = 0.15,
     seed: int = 42,
-    jsonl_path: Optional[Path] = None,
+    jsonl_path: "Path | None" = None,
     validate: bool = True,
     oversample_factor: int | None = None,
 ) -> dict:
@@ -275,6 +319,15 @@ def prepare_azpieuskalki_data(
         logger.info(
             f"  Zuberera: {len(azpi_sentences.get('zuberera', []))} total "
             f"({injected} from SU AZIA)"
+        )
+
+    # Sakana (nafar-hego-sartaldea): inject 53 example sentences from
+    # Zuazo's "Sakanako euskara" (2010) with distinct Sakana morphology
+    injected_sakana = inject_sakana_examples(azpi_sentences)
+    if injected_sakana > 0:
+        logger.info(
+            f"  Sakana: {len(azpi_sentences.get('nafar-hego-sartaldea', []))} total "
+            f"({injected_sakana} from Zuazo 2010)"
         )
 
     # Filter: only keep azpieuskalkiak with enough samples
@@ -349,7 +402,9 @@ def prepare_azpieuskalki_data(
 
         balanced_train = []
         for azpi in active_azpies:
-            class_lines = [l for l in train_lines if l.startswith(f"__label__{azpi} ")]
+            class_lines = [
+                ln for ln in train_lines if ln.startswith(f"__label__{azpi} ")
+            ]
             count = len(class_lines)
 
             if targeted and count >= median_count:
@@ -598,8 +653,8 @@ def demo_hierarchical(texts: list[str]):
         print(f"\nText: {clean[:100]}...")
         print(f"  Tier 2 (dialect):   {dialect} ({d_conf:.2f})")
         print("  Tier 3 (azpi top-3):")
-        for l, p in zip(a_labels, a_probs):
-            label = l.replace("__label__", "")
+        for lbl, p in zip(a_labels, a_probs):
+            label = lbl.replace("__label__", "")
             name = AZPIEUSKALKI_NAMES.get(label, label)
             print(f"    {label:25s} → {name:50s} ({float(p):.3f})")
 
