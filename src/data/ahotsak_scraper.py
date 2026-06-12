@@ -76,12 +76,17 @@ class Passage:
 # ── Municipality mapping ──────────────────────────────────────────────────────
 
 
+def _normalize_town(name: str) -> str:
+    """Normalize town name for lookup: lowercase, hyphens→spaces."""
+    return name.strip().lower().replace("-", " ")
+
+
 def load_municipality_map() -> dict[str, tuple[str, str]]:
-    """Load municipality→dialect mapping. Returns {herria_lower: (dialect_class, confidence)}."""
+    """Load municipality→dialect mapping. Returns {herria_normalized: (dialect_class, confidence)}."""
     mapping = {}
     with open(MUNICIPALITY_CSV) as f:
         for row in csv.DictReader(f):
-            herria = row["herria"].strip().lower()
+            herria = _normalize_town(row["herria"])
             dialect = row["dialect_class"].strip().lower()
             confidence = row["dialect_confidence"].strip()
             if confidence in ("high", "medium", "low"):
@@ -446,7 +451,7 @@ def scrape_passage(
     date = metadata.get("Data", "")
     duration = metadata.get("Iraupena", "")
     reference = metadata.get("Erref", passage_slug)
-    coder = metadata.get("Kodifikatzailea", "")
+    _coder = metadata.get("Kodifikatzailea", "")
 
     # Speaker name may also be in a link
     if not speaker_name:
@@ -497,7 +502,7 @@ def scrape_passage(
         topics = [t.strip() for t in re.split(r"[;,]", gaia_text) if t.strip()]
 
     # ── Map to dialect ──
-    town_lower = town_slug.lower()
+    town_lower = _normalize_town(town_slug)
     dialect_class, dialect_confidence = dialect_map.get(town_lower, ("", ""))
 
     # Also try matching by town name from metadata
