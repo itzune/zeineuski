@@ -15,6 +15,7 @@ WORDNGRAMS="${WORDNGRAMS:-2}"
 MINN="${MINN:-2}"
 MAXN="${MAXN:-6}"
 MINCOUNT="${MINCOUNT:-1}"
+BUCKET="${BUCKET:-200000}"
 OVERSAMPLE_FACTOR="${OVERSAMPLE_FACTOR:-}"     # empty = no oversampling
 AUTOTUNE="${AUTOTUNE:-0}"                       # 0 = disabled
 
@@ -39,6 +40,7 @@ word_ngrams = int(os.environ.get("WORDNGRAMS", "2"))
 minn = int(os.environ.get("MINN", "2"))
 maxn = int(os.environ.get("MAXN", "6"))
 min_count = int(os.environ.get("MINCOUNT", "1"))
+bucket_param = int(os.environ.get("BUCKET", "200000"))
 oversample_factor = os.environ.get("OVERSAMPLE_FACTOR", "")
 autotune = int(os.environ.get("AUTOTUNE", "0"))
 
@@ -74,7 +76,7 @@ model = fasttext.train_supervised(
     minCount=min_count,
     minn=minn,
     maxn=maxn,
-    bucket=200000,
+    bucket=bucket_param,
     thread=8,
     verbose=0,
 )
