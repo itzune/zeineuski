@@ -5,13 +5,15 @@ Usage:
 """
 
 import json
-import csv
-import sys
 import time
 from pathlib import Path
 
-from src.data.ahotsak_scraper import scrape_town, load_municipality_map, passage_to_dict, \
-    create_session, _normalize_town
+from src.data.ahotsak_scraper import (
+    scrape_town,
+    load_municipality_map,
+    passage_to_dict,
+    create_session,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 AHOTSAK_DIR = PROJECT_ROOT / "data" / "raw" / "speech" / "ahotsak"
@@ -98,7 +100,7 @@ def main():
                 print(f"  ✓ {len(passages)} passages")
                 success += 1
             else:
-                print(f"  ○ 0 passages (no transcriptions)")
+                print("  ○ 0 passages (no transcriptions)")
                 success += 1
         except Exception as e:
             print(f"  ✗ FAILED: {e}")
@@ -122,6 +124,7 @@ def main():
 
     # Save merged
     from datetime import datetime
+
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_path = AHOTSAK_DIR / f"ahotsak_passages_{timestamp}.jsonl"
     with open(out_path, "w", encoding="utf-8") as f:

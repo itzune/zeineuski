@@ -1,0 +1,9 @@
+{
+  "total_segments": 1690,
+  "total_audio_hours": 3.11,
+  "train_segments": 1347,
+  "val_segments": 97,
+  "test_segments": 246,
+  "num_towns": 17,
+  "errors": 0
+}

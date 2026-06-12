@@ -329,15 +329,36 @@ def prepare_azpieuskalki_data(
         max_count = max(train_counts.values())
         target_count = max(max_count // oversample_factor, 100)
 
-        logger.info(
-            f"\nClass balancing (target: {target_count}, factor: {oversample_factor}x):"
-        )
+        # Targeted mode: only oversample classes below median count
+        # (oversample_factor < 0 triggers this; e.g., -4 = factor 4, targeted only)
+        targeted = oversample_factor < 0
+        abs_factor = abs(oversample_factor)
+        target_count = max(max_count // abs_factor, 100)
+
+        if targeted:
+            counts = sorted(train_counts.values())
+            median_count = counts[len(counts) // 2]
+            logger.info(
+                f"\nTargeted class balancing (factor: {abs_factor}x, "
+                f"target: {target_count}, only classes below median {median_count}):"
+            )
+        else:
+            logger.info(
+                f"\nClass balancing (target: {target_count}, factor: {abs_factor}x):"
+            )
 
         balanced_train = []
         for azpi in active_azpies:
             class_lines = [l for l in train_lines if l.startswith(f"__label__{azpi} ")]
             count = len(class_lines)
-            if count < target_count:
+
+            if targeted and count >= median_count:
+                # Keep original — class is above median, no oversampling needed
+                balanced_train.extend(class_lines)
+                logger.info(
+                    f"  {azpi:25s}: {count:5d} → {count} (above median, untouched)"
+                )
+            elif count < target_count:
                 # Oversample
                 repeat = (target_count // count) + 1
                 oversampled = (class_lines * repeat)[:target_count]
@@ -346,7 +367,7 @@ def prepare_azpieuskalki_data(
                     f"  {azpi:25s}: {count:5d} → {target_count} (oversampled {repeat}x)"
                 )
             else:
-                # Keep original (or downsample)
+                # Keep original (above target)
                 balanced_train.extend(class_lines[:target_count])
                 logger.info(f"  {azpi:25s}: {count:5d} → {target_count}")
 

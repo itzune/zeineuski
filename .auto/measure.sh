@@ -56,7 +56,8 @@ sys.path.insert(0, str(PROJECT_ROOT / "src" / "data"))
 from train_azpieuskalki import prepare_azpieuskalki_data, train_model
 
 # Prepare data (no validation filter — we use all passages)
-osf = int(oversample_factor) if oversample_factor.strip() else None
+osf_raw = oversample_factor.strip()
+osf = int(osf_raw) if osf_raw else None
 prep = prepare_azpieuskalki_data(min_samples=5, validate=False, oversample_factor=osf)
 
 # ── Training ──

@@ -9,25 +9,32 @@ Pending tasks and ideas for improving the Basque dialect identification corpus.
 | Task | Result |
 |---|---|
 | Fix hyphen-vs-space normalization | `_normalize_town()` in scraper. Backfilled 21 previously-unlabeled passages (Etxarri Aranatz, Espartza, Uharte-Arakil). |
-| Scrape mendebal-sartaldea towns | Zeberio, Orozko, Bilbo, Igorre, Mungia, Derio, Galdakao, Getxo. +903 train (439→1,342). |
+| Scrape mendebal-sartaldea towns (phase 1) | Zeberio, Orozko, Bilbo, Igorre, Mungia, Derio, Galdakao, Getxo. +903 train (439→1,342). |
+| Scrape mendebal-sartaldea towns (phase 2) | 19 additional sartaldekoa-m towns (Arrankudiaga, Arrigorriaga, Erandio, Sopela, Morga, etc.). +2,294 train (1,342→3,636). F1: 0.506→0.792 (+28.6pp!). |
 | Scrape nafar-erdigunea towns | Odieta, Lantz, Txulapain, Anue, Ezkabarte, Olaibar. +790 train (497→1,287). |
 | Scrape naflap-sartaldea towns | Arbona, Sara, Ainhoa, Donibane Lohizune, Baigorri. +145 train (726→871). |
 | Restore nafar-ipar-sartaldea passages | 165 passages (Arantza 43, Bera 31, Etxalar 30, Igantzi 27, Lesaka 34) were accidentally dropped during the backfill merge. Restored from `213742.jsonl`. Class back in the 12-class model. |
 | Retrain with optimal config | 12-class model, `dim=200/lr=0.2/epoch=75/minn=2/maxn=6/loss=ns`. Overall accuracy **82.38%**. |
 
-**Current 12-class state:**
+**Current 12-class state (best model: targeted oversample=-2, epoch=100):**
 
 ```
-Class                      Train    Test     F1    vs old
-────────────────────────────────────────────────────────────
-mendebal-sortaldea         13059    2304   88.4%    -2.4pp
-erdialde-sartaldea          9804    1729   81.7%    -2.0pp
-erdialde-sortaldea          4966     876   80.0%    +0.9pp
-nafar-ipar-sartaldea        1965     346   83.1%    -0.7pp
-zuberera                    6050    1067   95.3%   +31.7pp ★
-────────────────────────────────────────────────────────────
-naflap-sortaldea            1395     246   72.2%    -5.4pp
-mendebal-sartaldea          1342     236   68.3%   +21.5pp ★ rescued
+Class                      Train    Test     F1    Notes
+──────────────────────────────────────────────────────────────────
+zuberera                    6050    1067   95.1%   +31.7pp ★ (SU AZIA corpus)
+mendebal-sortaldea         13059    2304   86.8%   largest class
+nafar-ipar-sortaldea        1965     346   82.3%   stable
+──────────────────────────────────────────────────────────────────
+erdialde-sartaldea          9804    1729   81.5%   good
+mendebal-sartaldea          3636     641   79.2%   +28.6pp ★ rescued (phase 2)
+erdialde-sortaldea          4966     876   79.1%   good
+naflap-sortaldea            1395     246   74.0%   improved
+naflap-sartaldea             871     153   70.3%   +4.6pp (targeted oversampling)
+nafar-sortaldea             1516     267   70.5%   improved
+nafar-hego-sartaldea        1101     194   66.8%   limited data
+nafar-erdigunea             1287     227   63.8%   🔴 no more Ahotsak data
+ekialde-nafarra              710     125   62.5%   🔴 tiny class, high variance
+```
 nafar-sortaldea             1516     267   66.7%    -9.7pp ⚠
 naflap-sartaldea             871     153   64.0%    -3.0pp
 ekialde-nafarra              710     125   63.1%    -2.5pp
