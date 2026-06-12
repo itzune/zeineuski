@@ -1,104 +1,146 @@
 #!/bin/bash
 set -euo pipefail
-# Autoresearch measure.sh — Speech DID pipeline benchmark
-# Phases: download audio → preprocess → ECAPA-TDNN train → evaluate
-#
-# Outputs METRIC lines for autoresearch to parse.
+# Autoresearch measure script: train azpieuskalki and report F1 metrics.
+# Reads hyperparams from env vars (defaults to baseline if unset).
 
-START_TIME=$(date +%s)
+PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$PROJECT_ROOT"
 
-# ── Phase 1: Download Audio ───────────────────────────────────────────────────
+# ── Hyperparameters (set via env, default to baseline) ──
+LOSS="${LOSS:-ns}"
+DIM="${DIM:-200}"
+EPOCH="${EPOCH:-75}"
+LR="${LR:-0.2}"
+WORDNGRAMS="${WORDNGRAMS:-2}"
+MINN="${MINN:-2}"
+MAXN="${MAXN:-6}"
+MINCOUNT="${MINCOUNT:-1}"
+OVERSAMPLE_FACTOR="${OVERSAMPLE_FACTOR:-}"     # empty = no oversampling
+AUTOTUNE="${AUTOTUNE:-0}"                       # 0 = disabled
 
-echo "--- Phase 1: Downloading audio from Ahotsak S3 ---"
-PHASE1_START=$(date +%s)
+python3 << PYEOF
+import fasttext.FastText as ft_mod
+source = open(ft_mod.__file__).read()
+source = source.replace("np.array(probs, copy=False)", "np.asarray(probs)")
+exec(source, ft_mod.__dict__)
+import fasttext
+import sys
+import os
+from pathlib import Path
+from collections import defaultdict
+from sklearn.metrics import f1_score
 
-uv run python -m src.data.audio_downloader \
-  --passages data/raw/speech/ahotsak/ahotsak_passages_20260608_213742.jsonl \
-  --output data/raw/speech/ahotsak/audio \
-  --max-audio 0 \
-  --rate-limit 0.5
+# ── Config from env ──
+loss = os.environ.get("LOSS", "ns")
+dim = int(os.environ.get("DIM", "200"))
+epoch = int(os.environ.get("EPOCH", "75"))
+lr = float(os.environ.get("LR", "0.2"))
+word_ngrams = int(os.environ.get("WORDNGRAMS", "2"))
+minn = int(os.environ.get("MINN", "2"))
+maxn = int(os.environ.get("MAXN", "6"))
+min_count = int(os.environ.get("MINCOUNT", "1"))
+oversample_factor = os.environ.get("OVERSAMPLE_FACTOR", "")
+autotune = int(os.environ.get("AUTOTUNE", "0"))
 
-PHASE1_END=$(date +%s)
-DOWNLOAD_TIME=$((PHASE1_END - PHASE1_START))
+PROJECT_ROOT = Path(os.environ.get("PROJECT_ROOT", "."))
+TRAIN_PATH = PROJECT_ROOT / "data" / "processed" / "text" / "train_azpieuskalki.txt"
+TEST_PATH = PROJECT_ROOT / "data" / "processed" / "text" / "test_azpieuskalki.txt"
+MODEL_PATH = PROJECT_ROOT / "models" / "azpieuskalki.bin"
 
-AUDIO_FILES=$(find data/raw/speech/ahotsak/audio -type f | wc -l)
-echo "Downloaded ${AUDIO_FILES} audio files in ${DOWNLOAD_TIME}s"
+# ── Data preparation (via train_azpieuskalki module) ──
+import logging
+logging.basicConfig(level=logging.WARNING)
 
-# ── Phase 2: Preprocess Audio ─────────────────────────────────────────────────
+# Add src to path
+sys.path.insert(0, str(PROJECT_ROOT / "src" / "data"))
+from train_azpieuskalki import prepare_azpieuskalki_data, train_model
 
-echo "--- Phase 2: Preprocessing audio ---"
-PHASE2_START=$(date +%s)
+# Prepare data (no validation filter — we use all passages)
+osf = int(oversample_factor) if oversample_factor.strip() else None
+prep = prepare_azpieuskalki_data(min_samples=5, validate=False, oversample_factor=osf)
 
-uv run python -m src.data.speech_preprocessing run \
-  --audio-dir data/raw/speech/ahotsak/audio \
-  --passages data/raw/speech/ahotsak/ahotsak_passages_20260608_213742.jsonl \
-  --output data/processed/speech/ahotsak \
-  --config configs/speech/preprocessing.yaml
+# ── Training ──
+import time
+t0 = time.time()
 
-PHASE2_END=$(date +%s)
-PREPROC_TIME=$((PHASE2_END - PHASE2_START))
+model = fasttext.train_supervised(
+    str(prep["train_path"]),
+    dim=dim,
+    epoch=epoch,
+    lr=lr,
+    wordNgrams=word_ngrams,
+    loss=loss,
+    minCount=min_count,
+    minn=minn,
+    maxn=maxn,
+    bucket=200000,
+    thread=8,
+    verbose=0,
+)
+model.save_model(str(MODEL_PATH))
+train_time = time.time() - t0
 
-# Count processed samples
-TOTAL_SAMPLES=$(wc -l < data/processed/speech/ahotsak/train.csv 2>/dev/null || echo 0)
-TRAIN_SAMPLES=$(cat data/processed/speech/ahotsak/train.csv 2>/dev/null | wc -l || echo 0)
+# ── Evaluation ──
+class_names = sorted(os.listdir(str(PROJECT_ROOT / "data" / "processed" / "text")))
 
-echo "Preprocessed ${TOTAL_SAMPLES} samples in ${PREPROC_TIME}s"
+# Collect predictions
+y_true = []
+y_pred = []
+with open(prep["test_path"]) as f:
+    for line in f:
+        line = line.strip()
+        if not line or not line.startswith("__label__"):
+            continue
+        parts = line.split(None, 1)
+        if len(parts) < 2:
+            continue
+        true_label = parts[0].replace("__label__", "")
+        text = parts[1]
+        labels, probs = model.predict(text.strip(), k=1)
+        pred_label = labels[0].replace("__label__", "")
+        y_true.append(true_label)
+        y_pred.append(pred_label)
 
-# ── Phase 3: Train ECAPA-TDNN ─────────────────────────────────────────────────
+# Per-class F1
+classes = sorted(set(y_true) | set(y_pred))
+per_class_f1 = {}
+for cls in classes:
+    f1 = f1_score(
+        [1 if t == cls else 0 for t in y_true],
+        [1 if p == cls else 0 for p in y_pred],
+        zero_division=0
+    )
+    per_class_f1[cls] = f1
 
-echo "--- Phase 3: Training ECAPA-TDNN classifier ---"
-PHASE3_START=$(date +%s)
+# Aggregate metrics
+macro_f1 = sum(per_class_f1.values()) / len(per_class_f1) if per_class_f1 else 0
 
-uv run python -m src.models.speech.ecapa_tdnn train \
-  --train-manifest data/processed/speech/ahotsak/train.csv \
-  --val-manifest data/processed/speech/ahotsak/val.csv \
-  --test-manifest data/processed/speech/ahotsak/test.csv \
-  --output models/speech/ecapa_dialect \
-  --config configs/speech/ecapa.yaml \
-  --embedding-only
+# Weighted F1
+from sklearn.metrics import f1_score as wf1
+weighted_f1 = wf1(y_true, y_pred, average='weighted', zero_division=0)
 
-PHASE3_END=$(date +%s)
-TRAIN_TIME=$((PHASE3_END - PHASE3_START))
+# Bottom-5 mean/min F1
+f1_sorted = sorted(per_class_f1.values())
+bottom5 = f1_sorted[:5] if len(f1_sorted) >= 5 else f1_sorted
+bottom5_mean_f1 = sum(bottom5) / len(bottom5) if bottom5 else 0
+bottom5_min_f1 = min(bottom5) if bottom5 else 0
 
-echo "Training completed in ${TRAIN_TIME}s"
+# Overall accuracy
+correct = sum(1 for t, p in zip(y_true, y_pred) if t == p)
+accuracy = correct / len(y_true) if y_true else 0
 
-# ── Phase 4: Evaluate ─────────────────────────────────────────────────────────
+# ── Output ──
+print(f"METRIC weighted_f1={weighted_f1:.6f}")
+print(f"METRIC macro_f1={macro_f1:.6f}")
+print(f"METRIC bottom5_mean_f1={bottom5_mean_f1:.6f}")
+print(f"METRIC bottom5_min_f1={bottom5_min_f1:.6f}")
+print(f"METRIC overall_accuracy={accuracy:.6f}")
+print(f"METRIC train_time={train_time:.1f}")
 
-echo "--- Phase 4: Evaluating ---"
-PHASE4_START=$(date +%s)
+# Per-class for debugging
+for cls in sorted(per_class_f1.keys()):
+    print(f"DEBUG {cls}={per_class_f1[cls]:.4f}")
 
-EVAL_OUTPUT=$(uv run python -m src.models.speech.ecapa_tdnn evaluate \
-  --model models/speech/ecapa_dialect \
-  --test-manifest data/processed/speech/ahotsak/test.csv \
-  --output-stats 2>&1)
-
-PHASE4_END=$(date +%s)
-EVAL_TIME=$((PHASE4_END - PHASE4_START))
-
-# Parse metrics from eval output
-ACCURACY=$(echo "$EVAL_OUTPUT" | grep "^ACCURACY:" | awk '{print $2}')
-MACRO_F1=$(echo "$EVAL_OUTPUT" | grep "^MACRO_F1:" | awk '{print $2}')
-NUM_CLASSES=$(echo "$EVAL_OUTPUT" | grep "^NUM_CLASSES:" | awk '{print $2}')
-
-# ── Report Metrics ─────────────────────────────────────────────────────────────
-
-TOTAL_TIME=$((PHASE4_END - START_TIME))
-
-MODEL_SIZE=$(du -sb models/speech/ecapa_dialect 2>/dev/null | awk '{print $1}' || echo 0)
-MODEL_SIZE_MB=$((MODEL_SIZE / 1048576))
-
-AUDIO_HOURS=$(echo "$EVAL_OUTPUT" | grep "^AUDIO_HOURS:" | awk '{print $2}' || echo 0)
-
-echo ""
-echo "METRIC accuracy=${ACCURACY:-0}"
-echo "METRIC macro_f1=${MACRO_F1:-0}"
-echo "METRIC num_classes=${NUM_CLASSES:-0}"
-echo "METRIC total_time_s=${TOTAL_TIME}"
-echo "METRIC download_time_s=${DOWNLOAD_TIME}"
-echo "METRIC preprocess_time_s=${PREPROC_TIME}"
-echo "METRIC train_time_s=${TRAIN_TIME}"
-echo "METRIC eval_time_s=${EVAL_TIME}"
-echo "METRIC model_size_mb=${MODEL_SIZE_MB}"
-echo "METRIC audio_files=${AUDIO_FILES}"
-echo "METRIC audio_hours=${AUDIO_HOURS}"
-echo "METRIC train_samples=${TRAIN_SAMPLES}"
+print(f"DEBUG n_classes={len(classes)}")
+print(f"DEBUG total_test={len(y_true)}")
+PYEOF
