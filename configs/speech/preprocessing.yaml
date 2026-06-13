@@ -1,6 +1,6 @@
 # Speech preprocessing config
 target_sample_rate: 16000
-min_duration_sec: 1.0
+min_duration_sec: 3.0
 max_duration_sec: 15.0
 vad_method: energy
 normalize_volume: true
