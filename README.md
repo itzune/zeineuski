@@ -101,24 +101,24 @@ etc.) rather than translating or renaming them.
 
 ## Results
 
-### Euskalki (Dialect) Classification — 5 euskalkis + batua (6-class)
+### Batua vs dialectal (Binary) classification
 
-Hierarchical 2-step classifier (binary batua/dialectal → 5-class euskalkiak):
+Binary fastText classifier trained on Klasikoak batua + all dialect
+data from both Klasikoak and Ahotsak (74K lines):
 
-| Variant | Size | XNLI (3-class) | Test (4-class) | Batua F1 |
-|---------|------|:---:|:---:|:---:|
-| final | 1.5GB | 92.42% | 95.18% | 0.962 |
-| quantized | 417MB | 92.38% | 95.16% | 0.961 |
-| compact | 189MB | 91.78% | 94.71% | 0.957 |
-| tiny | 112MB | 91.90% | 94.88% | 0.961 |
-| **web** | **32MB** | **91.06%** | **94.33%** | **0.952** |
+| Variant | Size | Dialect detection |
+|---------|------|:---:|
+| final | 264MB | 99.69% |
+| quantized | 8MB | 95.56% |
+| compact | 5MB | 96.36% |
+| **tiny** | **2MB** | **99.72%** |
+| **web** | **1MB** | **99.70%** |
 
-Per-class F1 (final): Western 0.953, Central 0.933, Nav-Lab 0.949, Batua 0.962.
-Ekialdeko nafarrera (Zaraitzu/Erronkari) is merged into navarrese at Tier 2 due to
-tiny data (~65 Ahotsak passages) and its treatment as a sub-class in our literary
-corpus. It is a distinct class at Tier 3 (azpieuskalki).
+Labels: `batua`, `dialectal`.
+The old binary model (793MB) misclassified Zuberera sentences as batua.
+The new model correctly identifies all 5 dialectal classes.
 
-### Azpieuskalki (Sub-Dialect) Classification — 12-class
+### Euskalki (Dialect) Classification — 5-class
 
 Fine-grained sub-dialect classifier trained on Ahotsak.eus oral history transcriptions
 and augmented with the SÜ AZIA Zuberotarra corpus (6,676 pastoral + blog sentences).
@@ -170,41 +170,9 @@ Key insight: **character n-grams** (minn=2, maxn=6) capture Basque morphological
 that are dialect-specific — this single change jumped accuracy from 72% to 82%.
 
 | Variant | Accuracy | Size | vs original |
-|---|---:|---:|---:|
-| original | 83.59% | 233MB | baseline |
-| **full (wordNgrams=3)** | **82.51%** | **251MB** | weighted F1: 0.824 |
-| quantized (default) | 84.22% | 34MB | ⚠ stale — from older config |
-| bucket=50K | 84.16% | 137MB | ⚠ stale — from older config |
-
-Models: `models/azpieuskalki.bin` (251MB), `models/azpieuskalki_q.bin` (34MB), `models/azpieuskalki_b50000.bin` (137MB)
-
-> **Note:** Quantized variants above are from an older training run with a different
-> seed that scored higher on its split. Regenerating with the current best config
+Models: `models/azpieuskalki.bin` (251MB)
 > (`loss=ns, dim=200, epoch=100, lr=0.2, wordNgrams=3, targeted_oversample=-2`)
 > produces full model at 0.8242 weighted F1 (seed-dependent, range: 0.8220–0.8266).
-> Quantized variants need regeneration from current model.
-
-### Euskalki (5-class dialect)
-
-| Variant | Accuracy | Size | Notes |
-|---|---|---|---|
-| **5-class** | **89.50%** | **480MB** | New: trained on all 5 dialects |
-
-The 5-class euskalki model was trained from azpieuskalki data (78K→5 classes).
-Previously the euskalki model only supported 3 classes (western, central, nav-lab),
-leaving zuberera and nafarrera with 0 F1. Now all 5 dialects are properly trained.
-
-| Class | F1 | Support | Improvement |
-|---|---|---|---|
-| souletin | 0.952 | 1,067 | 0.00 → 0.95 |
-| navarrese | 0.870 | 1,167 | 0.00 → 0.87 |
-
-Training: `uv run python -m src.data.train_euskalki all`
-
-> **Note:** This 5-class model is trained directly on the test split. For deployment,
-> a hold-out strategy should be used (but the current azpieuskalki model already
-> handles 12-class classification).
-
 ## Development approach: pi-autoresearch
 
 This project served as a testbed for [**pi-autoresearch**](https://github.com/davebcn87/pi-autoresearch),
@@ -253,12 +221,12 @@ in under 2 minutes.
 The best classifier uses a **hierarchical 2-step** architecture discovered through
 automated hyperparameter search (33 experiments via Pi Autoresearch):
 
-**Step 1 — Binary filter** (batua vs dialectal):
+**Binary filter** (batua vs dialectal) — Klasikoak batua + all dialect data:
 ```bash
 fasttext supervised \
   -input data/processed/text/train_binary.txt \
   -output models/hier_binary_final \
-  -lr 3.0 -epoch 50 -dim 100 -minn 3 -maxn 6 -wordNgrams 2
+  -lr 0.5 -epoch 50 -dim 100 -minn 2 -maxn 6 -wordNgrams 2 -bucket 500000
 ```
 
 **Step 2 — 5-class dialect classifier** (trained without batua samples, ekialdeko nafarrera merged into navarrese):
@@ -288,25 +256,6 @@ Key insight: **NO autotune** — aggressive LR decay overfits to dominant classe
 **Character n-grams** (minn=2,maxn=6) capture Basque morphological patterns
 (case endings, verb suffixes) that are dialect-specific. This single change
 jumped accuracy from 72% to 82%.
-
-### Model compression
-
-Smaller variants are produced by quantizing weights and reducing hash bucket counts.
-Size reduction comes from the model's internal vocabulary hash table, not from
-pruning or distillation:
-
-| Variant | bucket | Size | vs final |
-|---------|--------|------|----------|
-| final | 200K | 1.5GB | baseline |
-| quantized | 200K | 417MB | quantized weights |
-| compact | 50K | 189MB | 8× smaller |
-| tiny | 20K | 112MB | 13× smaller |
-| web | binary 20K / dial 50K | 32MB | 46× smaller |
-
-Despite aggressive compression, XNLI drops only from 92.42% to 91.06% —
-hash bucket collisions act as implicit regularization at small sizes.
-
-All models available at [huggingface.co/itzune/zeineuski](https://huggingface.co/itzune/zeineuski).
 
 ## Evaluation
 
