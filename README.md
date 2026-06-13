@@ -59,13 +59,24 @@ zeineuski/
 
 ## Architecture
 
-Zeineuski uses a **three-tier hierarchical classification** architecture:
+Zeineuski uses a **three-tier hierarchical classification** architecture for text,
+and a separate **Whisper encoder pipeline** for speech-based dialect identification:
+
+### Text pipeline
 
 ```
 Tier 1: batua / dialectal (binary)
   └─ Tier 2: 5-class euskalkia (dialect classification)
        └─ Tier 3: 9 to 12-class azpieuskalkia (sub-dialect classification)
 ```
+
+### Speech pipeline (experimental)
+
+```
+Audio → Whisper Encoder (phonetic features, no batua normalization) → MLP → Dialect
+```
+
+See the [Speech-based Dialect Identification](#-speech-based-dialect-identification-work-in-progress) section for details.
 
 ### Classification taxonomy
 
@@ -170,9 +181,6 @@ Key insight: **character n-grams** (minn=2, maxn=6) capture Basque morphological
 that are dialect-specific — this single change jumped accuracy from 72% to 82%.
 
 | Variant | Accuracy | Size | vs original |
-Models: `models/azpieuskalki.bin` (251MB)
-> (`loss=ns, dim=200, epoch=100, lr=0.2, wordNgrams=3, targeted_oversample=-2`)
-> produces full model at 0.8242 weighted F1 (seed-dependent, range: 0.8220–0.8266).
 ## Development approach: pi-autoresearch
 
 This project served as a testbed for [**pi-autoresearch**](https://github.com/davebcn87/pi-autoresearch),
@@ -204,6 +212,96 @@ distinction, targeted oversampling of minority classes, Sakana injection (Zuazo 
 
 **Remaining challenge:** Nafarroa minority classes (nafar-erdigunea 0.639, ekialde-nafarra
 0.635) need more data from Ahotsak (~30 unscraped Nafarroa towns).
+
+---
+
+## 🔊 Speech-based Dialect Identification (Work in Progress)
+
+> **Status**: Experimental pipeline with promising results. Not yet deployed in production.
+
+We are building a speech-based Basque dialect classifier using audio recordings scraped
+from [Ahotsak.eus](https://ahotsak.eus) (2,422 files, 78.1 hours, 5 dialects).
+
+The goal is to identify the dialect directly from spoken audio, bypassing the need for
+orthographic transcription.
+
+### Approach
+
+We use a **frozen Whisper encoder** as a phonetic feature extractor, followed by a
+small MLP classifier:
+
+```
+Audio (16kHz) → Whisper Encoder (32 layers, frozen) → Temporal Pooling → MLP → Dialect
+```
+
+The key insight: the Whisper **encoder** captures phonetic and prosodic features
+(pronunciation, intonation, rhythm) that are dialect-specific. By discarding the
+**decoder** (which normalizes speech to standard batua orthography), we preserve
+dialectal pronunciation patterns that would otherwise be erased.
+
+### Current Results (5-class, town-disjoint splits)
+
+| Model | Accuracy | Macro F1 | Western F1 | Central F1 | Navarrese F1 |
+|---|---:|---:|---:|---:|---:|
+| ECAPA-TDNN (frozen, SVM) | 49.5% | 0.258 | 0.65 | 0.34 | 0.32 |
+| **Whisper encoder + MLP** | **59.6%** | **0.362** | **0.79** | **0.42** | **0.47** |
+
+The Whisper encoder approach yields a **+10.1pp** accuracy improvement over ECAPA-TDNN
+speaker embeddings. The ECAPA-TDNN model was pretrained for speaker identification
+(VoxCeleb) and encodes "who is speaking" rather than "what dialect they speak" —
+a fundamental mismatch for dialect classification.
+
+### Why not ASR → text classification?
+
+Both available Basque ASR models ([HiTZ/whisper-large-v3-eu](https://huggingface.co/HiTZ/whisper-large-v3-eu),
+WER 10.6%, and [stefan-it/wav2vec2-large-xlsr-53-basque](https://huggingface.co/stefan-it/wav2vec2-large-xlsr-53-basque),
+WER 18.3%) were fine-tuned on Common Voice eu, which is 95%+ batua (standard Basque).
+They transcribe dialectal speech to batua, erasing the orthographic dialect markers
+that the text classifier relies on (e.g., "nua" → "noa", "etxerat" → "etxera").
+
+### Known Limitations
+
+- **Nav-lab (0-2% F1)**: The Navarrese-Labourdin dialect is nearly indistinguishable
+  from Navarrese in the town-disjoint split — effectively a 4.5-class problem.
+- **Souletin (8-13% F1)**: Only 37 source towns and 348 training segments — severe
+  data scarcity for this phonetically distinct dialect.
+- **Stochastic variance**: MLP training has ~1-2pp variance between runs due to
+  random initialization. Multi-seed ensembling would improve stability.
+- **GPU required**: Embedding extraction uses an NVIDIA L40 (46GB VRAM). Inference
+  is lightweight but training requires GPU for the Whisper encoder.
+
+### Next Steps
+
+- [ ] **3-class mode** (western/central/navarrese group) — should exceed 65-70% accuracy
+- [ ] **Attention pooling** during training (instead of frozen mean+std+max) —
+  proven in the ADI-20 Arabic dialect paper (arxiv 2511.10070)
+- [ ] **Whisper encoder fine-tuning** — unfreeze last 2-3 encoder layers to learn
+  dialect-specific phonetic features
+- [ ] **wav2vec2 XLSR models** — cross-lingual pretraining (53 languages) may give
+  finer phonetic granularity than Whisper
+- [ ] **Souletin data expansion** — scrape remaining unscraped Zuberoa towns from Ahotsak
+
+### Running the Speech Pipeline
+
+```bash
+# Requires GPU (NVIDIA L40 or similar, 16GB+ VRAM)
+# 1. Extract Whisper embeddings (one-time, ~25 min for 36K segments)
+uv run python -m src.models.speech.whisper_did extract \
+  --manifest data/processed/speech/ahotsak_full/train.csv \
+  --output models/speech/whisper_train_emb.pkl \
+  --pooling mean_std_max
+
+# 2. Train MLP classifier (CPU, ~30s)
+uv run python -m src.models.speech.whisper_did train \
+  --train-emb models/speech/whisper_train_emb.pkl \
+  --val-emb models/speech/whisper_val_emb.pkl \
+  --test-emb models/speech/whisper_test_emb.pkl \
+  --config configs/speech/whisper.yaml
+```
+
+Models: `models/speech/whisper_dialect/` (classifier.pkl + config.json).
+
+---
 
 ## Training
 
