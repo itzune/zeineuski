@@ -751,6 +751,23 @@ Use fastText with language-specific subword embeddings (already covered in Task 
 - Accuracy > 60% (3-class) on held-out test set.
 - SpeechBrain imports and runs without errors.
 
+**⚠️ Attempted (2026-06-08→2026-06-13) — Unsuccessful.**
+We built the full ECAPA-TDNN embedding + RBF SVM pipeline with 2,422 Ahotsak.eus
+MP3 files (5 dialects, 78h, town-disjoint splits). After 5 experiments (class weights,
+kernel tuning, duration filtering, class reduction), results plateaued at **49.5%
+accuracy on 5-class** and **51.2% on 3-class**. Nav-lab consistently scored 0% F1.
+
+**Root cause:** ECAPA-TDNN is pretrained on VoxCeleb for *speaker identification* —
+its 192-dim embeddings encode "who is speaking", not "what dialect they speak". Dialect
+classification requires phoneme-level, prosodic, and intonational features that speaker
+embeddings explicitly discard to achieve speaker invariance.
+
+**Recommendation:** For future speech dialect work, use phoneme-aware representations:
+- **XLSR/wav2vec2** fine-tuning (cross-lingual, pretrained on 53 languages incl. Basque)
+- **Whisper encoder features** (multilingual ASR encoder captures phonetic information)
+- **ASR → text classification pipeline** (transcribe with Whisper, classify with the
+  existing 96.7% fastText model — proven, pragmatic, 1 day of integration work)
+
 ---
 
 ### Task 5.2 — Whisper Fine-Tuning for Dialect ID
