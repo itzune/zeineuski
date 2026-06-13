@@ -753,20 +753,20 @@ Use fastText with language-specific subword embeddings (already covered in Task 
 
 **⚠️ Attempted (2026-06-08→2026-06-13) — Unsuccessful.**
 We built the full ECAPA-TDNN embedding + RBF SVM pipeline with 2,422 Ahotsak.eus
-MP3 files (5 dialects, 78h, town-disjoint splits). After 5 experiments (class weights,
-kernel tuning, duration filtering, class reduction), results plateaued at **49.5%
-accuracy on 5-class** and **51.2% on 3-class**. Nav-lab consistently scored 0% F1.
+MP3 files (5 dialects, 78h, town-disjoint splits). After 5 experiments, results
+plateaued at 49.5% accuracy. Nav-lab consistently scored 0% F1.
 
 **Root cause:** ECAPA-TDNN is pretrained on VoxCeleb for *speaker identification* —
-its 192-dim embeddings encode "who is speaking", not "what dialect they speak". Dialect
-classification requires phoneme-level, prosodic, and intonational features that speaker
-embeddings explicitly discard to achieve speaker invariance.
+its 192-dim embeddings encode "who is speaking", not "what dialect they speak".
 
-**Recommendation:** For future speech dialect work, use phoneme-aware representations:
-- **XLSR/wav2vec2** fine-tuning (cross-lingual, pretrained on 53 languages incl. Basque)
-- **Whisper encoder features** (multilingual ASR encoder captures phonetic information)
-- **ASR → text classification pipeline** (transcribe with Whisper, classify with the
-  existing 96.7% fastText model — proven, pragmatic, 1 day of integration work)
+**Successful alternative (2026-06-13): Whisper Encoder + MLP — 59.1% accuracy.**
+Using the Whisper encoder only (no decoder, skipping batua normalization) as a
+frozen feature extractor, then mean-pooling the time dimension and training a
+2-layer MLP (512→256→5). The encoder captures phonetic/prosodic features that
+preserve dialectal pronunciation patterns. Results: western F1=0.76, navarrese=0.47,
+central=0.40. Nav-lab (0.02) and souletin (0.03) still limited by data scarcity
+(37-225 source files). **Recommendation:** explore XLSR fine-tuning or more data
+for minority dialects; 3-class (western/central/navarrese) should surpass 65%.
 
 ---
 
