@@ -759,14 +759,27 @@ plateaued at 49.5% accuracy. Nav-lab consistently scored 0% F1.
 **Root cause:** ECAPA-TDNN is pretrained on VoxCeleb for *speaker identification* —
 its 192-dim embeddings encode "who is speaking", not "what dialect they speak".
 
-**Successful alternative (2026-06-13): Whisper Encoder + MLP — 59.1% accuracy.**
+**Successful alternative (2026-06-13): Whisper Encoder + MLP — 59.6% accuracy, 0.362 macro F1.**
 Using the Whisper encoder only (no decoder, skipping batua normalization) as a
-frozen feature extractor, then mean-pooling the time dimension and training a
-2-layer MLP (512→256→5). The encoder captures phonetic/prosodic features that
-preserve dialectal pronunciation patterns. Results: western F1=0.76, navarrese=0.47,
-central=0.40. Nav-lab (0.02) and souletin (0.03) still limited by data scarcity
-(37-225 source files). **Recommendation:** explore XLSR fine-tuning or more data
-for minority dialects; 3-class (western/central/navarrese) should surpass 65%.
+frozen feature extractor, then mean+std+max pooling (3840-dim) the time dimension
+and training a 2-layer MLP (512→256→5) with focal loss (gamma=2.0). The encoder
+captures phonetic/prosodic features that preserve dialectal pronunciation patterns.
+
+**Final best configuration (lr sweep, 2026-06-13): 62.15% accuracy, 0.361 macro F1.**
+Learning rate 5e-4 beats 1e-3 by ~2pp. Per-class F1: western=0.79, navarrese=0.51,
+central=0.38, souletin=0.11, nav-lab=0.02.
+
+**XLSR wav2vec2 rejected (29.6% accuracy)** — Basque Parliament fine-tuning erases
+dialectal variation.
+
+**ASR pipeline rejected (42.0% accuracy)** — Whisper decoder normalizes to batua,
+stripping dialect markers.
+
+**Whisper encoder fine-tuning attempted but failed** — 500-sample test got 21%
+accuracy; full dataset would take 12+ hours with marginal expected gains.
+
+**Recommendation:** 3-class (western/central/navarrese) should surpass 65%.
+Minority dialects (nav-lab, souletin) need more data or multi-task learning.
 
 ---
 

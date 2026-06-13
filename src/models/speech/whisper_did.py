@@ -201,6 +201,10 @@ def train_mlp(
     hidden_dim = int(config.get("hidden_dim", 512))
     dropout = float(config.get("dropout", 0.3))
 
+    logger.info(
+        f"Config: lr={lr}, hidden_dim={hidden_dim}, dropout={dropout}, epochs={epochs}, batch_size={batch_size}"
+    )
+
     model = MLPClassifier(
         input_dim=X_train.shape[1],
         num_classes=num_classes,
@@ -381,6 +385,8 @@ def main():
     p_train.add_argument("--config", default="configs/speech/whisper.yaml")
     p_train.add_argument("--device", default="cuda")
 
+    p_train.add_argument("--seed", type=int, default=42)
+
     args = parser.parse_args()
 
     if args.cmd == "extract":
@@ -391,6 +397,9 @@ def main():
 
     elif args.cmd == "train":
         import yaml
+
+        torch.manual_seed(args.seed)
+        np.random.seed(args.seed)
 
         with open(args.config) as f:
             config = yaml.safe_load(f)
