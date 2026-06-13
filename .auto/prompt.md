@@ -1,42 +1,46 @@
-# Autoresearch: Azpieuskalki 12-class F1 Optimization
+# Autoresearch: Whisper Encoder Basque Dialect Classification
 
 ## Objective
-Maximize the overall macro-averaged F1 score of the 12-class azpieuskalki (sub-dialect) fastText classifier. The current baseline is 82.38% accuracy with severe class imbalance in per-class F1: top-5 classes are 80-95% F1 but bottom-5 are 55-68% F1. The training data is fixed (51,837 sentences from Ahotsak oral archive + SU AZIA Zuberotarra corpus). All optimization is through fastText hyperparameters and data preparation strategies.
+Maximize 5-class Basque dialect classification accuracy using a frozen Whisper
+large-v3-eu encoder + MLP classifier. Target: >60% overall accuracy on town-disjoint
+splits. The embeddings are pre-extracted (no re-extraction needed between runs).
 
 ## Metrics
-- **Primary**: weighted_f1 (higher is better) — weighted-average F1 across all 12 classes
-- **Secondary**: macro_f1, bottom5_mean_f1, bottom5_min_f1, overall_accuracy — tradeoff monitors
+- **Primary**: accuracy (higher is better)
+- **Secondary**: macro_f1, per-class F1 — tradeoff monitors (especially nav-lab, souletin)
 
 ## How to Run
-`./.auto/measure.sh` — re-prepares data, trains model, evaluates, outputs `METRIC` lines.
+`./.auto/measure.sh` — syncs code to GPU, trains MLP on pre-extracted embeddings, evaluates.
 
 ## Files in Scope
-- `src/data/train_azpieuskalki.py` — **THE file**. Contains `prepare_azpieuskalki_data()` (data loading, sentence cleaning, ovsersampling) and `train_model()` (fastText config). All hyperparameter changes happen here.
-- `.auto/measure.sh` — benchmark script, may be updated to capture more signals
+- `src/models/speech/whisper_did.py` — **THE file**. Contains `MLPClassifier` and `train_mlp()`.
+- `configs/speech/whisper.yaml` — hyperparameters: hidden_dim, dropout, lr, epochs, batch_size
+- `.auto/measure.sh` — benchmark script
 
 ## Off Limits
-- `data/` directories — training/test data is fixed, do NOT modify passages, CSV, or text files
-- `models/` — the output model file is temporary, always written to `models/azpieuskalki.bin`
-- Any file outside this project — no new deps, no system-level changes
+- `models/speech/whisper_*_emb.pkl` — embeddings are fixed (pre-extracted from 36K audio segments)
+- `data/` directories — training/test data is fixed
+- The Whisper encoder weights — frozen, cannot be fine-tuned in this setup
 
 ## Constraints
-- fastText only — no architecture changes, no PyTorch, no sklearn classifiers
-- Training must complete within 5 minutes (single run)
-- Must produce a valid `azpieuskalki.bin` model file
-- The `loss` parameter supports: `ns` (negative sampling), `hs` (hierarchical softmax), `ova` (one-vs-all)
-- The `oversample_factor` parameter: None (disabled), or int divisor for target count per class
-- Existing optimal baseline: dim=200, lr=0.2, epoch=75, wordNgrams=2, minn=2, maxn=6, loss=ns, minCount=1, NO oversampling, NO autotune
+- Train MLP only — no architecture changes to Whisper encoder
+- Training must complete within 5 minutes
+- Must use the fixed town-disjoint train/val/test splits
 
 ## Hyperparameter Space
+- **hidden_dim**: 128, 256, 512, 1024 — MLP hidden layers
+- **dropout**: 0.1, 0.3, 0.5, 0.7
+- **epochs**: 30, 50, 100, 200
+- **lr**: 1e-4, 3e-4, 1e-3, 3e-3
+- **batch_size**: 32, 64, 128, 256
+- **weight_decay**: 1e-5, 1e-4, 1e-3
+- **MLP depth**: 1 layer vs 2 layers vs 3 layers
+- **Class weights**: none vs balanced vs custom
 
-Key knobs to explore:
-- **loss**: `ns` (current), `hs` (hierarchical softmax, good for structure), `ova` (one-vs-all binary CE, theoretically best for imbalanced multi-class)
-- **oversample_factor**: None, 2, 4, 8 — controls `target = max(max_class_count // factor, 100)`. Lower factor = closer to balanced.
-- **wordNgrams**: 2 (current), 3 — more context for dialectal phrases
-- **minn/maxn**: (2,6) current, (2,8), (3,7), (3,8) — char n-gram coverage for Basque morphology
-- **dim**: 200 (current), 300 — model capacity
-- **epoch**: 75 (current), 50, 100, 150 — training duration
-- **lr**: 0.2 (current), 0.1, 0.3, 0.5 — learning rate
+## Baseline
+- Accuracy: 59.06%
+- Western: 76%, Navarrese: 47%, Central: 40%
+- Souletin: 3%, Nav-lab: 2%
 
 ## What's Been Tried
-_(will be updated as experiments run)_
+- Initial run: hidden_dim=512, dropout=0.3, epochs=50, lr=1e-3, batch=64, 2-layer MLP — 59.06%
