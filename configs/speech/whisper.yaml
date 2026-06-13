@@ -1,15 +1,21 @@
 # Whisper encoder → dialect classifier config
 model: whisper_encoder_mlp
 whisper_model: xezpeleta/whisper-large-v3-eu
+pooling: mean_std_max
 
 # MLP classifier on top of pooled encoder embeddings
-input_dim: 1280
+# mean_std_max pooling → 3 × 1280 = 3840 dims
+input_dim: 3840
 hidden_dim: 512
 dropout: 0.3
+num_layers: 2
 num_classes: 5
+
+# Class balancing
+class_weights: true
 
 # Training
 batch_size: 64
 learning_rate: 1e-3
-epochs: 50
+epochs: 100
 weight_decay: 1e-4
