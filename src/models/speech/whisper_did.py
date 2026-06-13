@@ -5,13 +5,13 @@ then mean-pools the time dimension and trains a linear classifier on top.
 
 Approach from ADI-20 paper (arxiv 2511.10070) adapted for Basque dialects.
 """
+
 import argparse
 import csv
 import json
 import logging
 import pickle
 import time
-from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -21,7 +21,7 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.metrics import accuracy_score, classification_report, f1_score
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 from transformers import WhisperModel, WhisperProcessor
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -51,9 +51,14 @@ class WhisperEncoder:
             wav = wav.mean(axis=1)  # mono
         if sr != 16000:
             import torchaudio
-            wav = torchaudio.functional.resample(
-                torch.tensor(wav).unsqueeze(0), sr, 16000
-            ).squeeze(0).numpy()
+
+            wav = (
+                torchaudio.functional.resample(
+                    torch.tensor(wav).unsqueeze(0), sr, 16000
+                )
+                .squeeze(0)
+                .numpy()
+            )
 
         mel = self.processor(
             wav, sampling_rate=16000, return_tensors="pt"
@@ -72,10 +77,12 @@ class WhisperDialectDataset(Dataset):
         self.samples = []
         with open(manifest_path) as f:
             for row in csv.DictReader(f):
-                self.samples.append({
-                    "path": row["path"],
-                    "label": row["dialect"],
-                })
+                self.samples.append(
+                    {
+                        "path": row["path"],
+                        "label": row["dialect"],
+                    }
+                )
         self.label_encoder = label_encoder
         self.labels = self.label_encoder.transform([s["label"] for s in self.samples])
 
@@ -83,15 +90,21 @@ class WhisperDialectDataset(Dataset):
         return len(self.samples)
 
     def __getitem__(self, idx):
-        return torch.tensor(self.samples[idx]["embedding"], dtype=torch.float32), \
-               torch.tensor(self.labels[idx], dtype=torch.long)
+        return torch.tensor(
+            self.samples[idx]["embedding"], dtype=torch.float32
+        ), torch.tensor(self.labels[idx], dtype=torch.long)
 
 
 class MLPClassifier(nn.Module):
     """Simple MLP on top of pooled Whisper embeddings."""
 
-    def __init__(self, input_dim: int = 1280, num_classes: int = 5,
-                 hidden_dim: int = 512, dropout: float = 0.3):
+    def __init__(
+        self,
+        input_dim: int = 1280,
+        num_classes: int = 5,
+        hidden_dim: int = 512,
+        dropout: float = 0.3,
+    ):
         super().__init__()
         self.net = nn.Sequential(
             nn.Linear(input_dim, hidden_dim),
@@ -109,8 +122,12 @@ class MLPClassifier(nn.Module):
         return self.net(x)
 
 
-def extract_all_embeddings(encoder: WhisperEncoder, manifest_path: str,
-                           output_path: str, batch_report_every: int = 200):
+def extract_all_embeddings(
+    encoder: WhisperEncoder,
+    manifest_path: str,
+    output_path: str,
+    batch_report_every: int = 200,
+):
     """Extract and cache Whisper embeddings for all audio files."""
     samples = []
     with open(manifest_path) as f:
@@ -133,8 +150,14 @@ def extract_all_embeddings(encoder: WhisperEncoder, manifest_path: str,
     return samples
 
 
-def train_mlp(train_emb: str, val_emb: str, test_emb: str, output_dir: str,
-              config: dict, device: str = "cuda"):
+def train_mlp(
+    train_emb: str,
+    val_emb: str,
+    test_emb: str,
+    output_dir: str,
+    config: dict,
+    device: str = "cuda",
+):
     """Train MLP classifier on pre-extracted train/val/test embeddings."""
     # Load train
     with open(train_emb, "rb") as f:
@@ -160,7 +183,9 @@ def train_mlp(train_emb: str, val_emb: str, test_emb: str, output_dir: str,
     y_val = label_encoder.transform(y_val_raw)
     y_test = label_encoder.transform(y_test_raw)
 
-    logger.info(f"Train: {len(train_samples)} samples, Val: {len(val_samples)}, Test: {len(test_samples)}")
+    logger.info(
+        f"Train: {len(train_samples)} samples, Val: {len(val_samples)}, Test: {len(test_samples)}"
+    )
     logger.info(f"Embedding dim: {X_train.shape[1]}")
 
     # Scale
@@ -185,7 +210,28 @@ def train_mlp(train_emb: str, val_emb: str, test_emb: str, output_dir: str,
 
     optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
-    criterion = nn.CrossEntropyLoss()
+    # Loss function
+    loss_type = config.get("loss", "crossentropy")
+    if loss_type == "focal":
+        gamma = float(config.get("focal_gamma", 2.0))
+        alpha = float(config.get("focal_alpha", 0.25))
+
+        # Focal Loss implementation: FL(p) = -alpha * (1-p)^gamma * log(p)
+        class FocalLoss(nn.Module):
+            def __init__(self, alpha=0.25, gamma=2.0):
+                super().__init__()
+                self.alpha = alpha
+                self.gamma = gamma
+
+            def forward(self, inputs, targets):
+                ce_loss = nn.functional.cross_entropy(inputs, targets, reduction="none")
+                pt = torch.exp(-ce_loss)
+                return (self.alpha * (1 - pt) ** self.gamma * ce_loss).mean()
+
+        criterion = FocalLoss(alpha=alpha, gamma=gamma)
+        logger.info(f"Using Focal Loss (alpha={alpha}, gamma={gamma})")
+    else:
+        criterion = nn.CrossEntropyLoss()
 
     X_train_t = torch.tensor(X_train, dtype=torch.float32)
     y_train_t = torch.tensor(y_train, dtype=torch.long)
@@ -202,7 +248,7 @@ def train_mlp(train_emb: str, val_emb: str, test_emb: str, output_dir: str,
         perm = torch.randperm(len(X_train_t))
         total_loss = 0.0
         for i in range(0, len(X_train_t), batch_size):
-            idx = perm[i:i + batch_size]
+            idx = perm[i : i + batch_size]
             xb = X_train_t[idx].to(device)
             yb = y_train_t[idx].to(device)
             optimizer.zero_grad()
@@ -224,7 +270,9 @@ def train_mlp(train_emb: str, val_emb: str, test_emb: str, output_dir: str,
             best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
 
         if (epoch + 1) % 10 == 0:
-            logger.info(f"  Epoch {epoch + 1}/{epochs}  loss={total_loss:.3f}  val_acc={val_acc:.4f}")
+            logger.info(
+                f"  Epoch {epoch + 1}/{epochs}  loss={total_loss:.3f}  val_acc={val_acc:.4f}"
+            )
 
     model.load_state_dict(best_state)
     model.eval()
@@ -240,7 +288,9 @@ def train_mlp(train_emb: str, val_emb: str, test_emb: str, output_dir: str,
     logger.info(f"Test macro F1: {macro_f1:.4f}")
 
     class_names = label_encoder.classes_
-    report = classification_report(y_test_t, test_preds, target_names=class_names, zero_division=0)
+    report = classification_report(
+        y_test_t, test_preds, target_names=class_names, zero_division=0
+    )
     logger.info(f"\n{report}")
 
     # Save model
@@ -248,36 +298,45 @@ def train_mlp(train_emb: str, val_emb: str, test_emb: str, output_dir: str,
     output_dir.mkdir(parents=True, exist_ok=True)
     model_path = output_dir / "classifier.pkl"
     with open(model_path, "wb") as f:
-        pickle.dump({
-            "model_state": {k: v.numpy() for k, v in model.cpu().state_dict().items()},
-            "config": config,
-            "classes": list(class_names),
-            "label_encoder": label_encoder,
-            "scaler": scaler,
-            "input_dim": X_train.shape[1],
-            "hidden_dim": hidden_dim,
-            "num_classes": num_classes,
-        }, f)
+        pickle.dump(
+            {
+                "model_state": {
+                    k: v.numpy() for k, v in model.cpu().state_dict().items()
+                },
+                "config": config,
+                "classes": list(class_names),
+                "label_encoder": label_encoder,
+                "scaler": scaler,
+                "input_dim": X_train.shape[1],
+                "hidden_dim": hidden_dim,
+                "num_classes": num_classes,
+            },
+            f,
+        )
 
     cfg_path = output_dir / "config.json"
     with open(cfg_path, "w") as f:
-        json.dump({
-            "model": "whisper_encoder_mlp",
-            "whisper_model": config["whisper_model"],
-            "num_classes": num_classes,
-            "classes": list(class_names),
-            "num_train": len(y_train),
-            "num_val": len(y_val),
-            "num_test": len(y_test),
-            "test_accuracy": float(acc),
-            "test_macro_f1": float(macro_f1),
-            "hidden_dim": hidden_dim,
-            "dropout": dropout,
-            "batch_size": batch_size,
-            "learning_rate": lr,
-            "epochs": epochs,
-            "train_time_s": round(train_time, 1),
-        }, f, indent=2)
+        json.dump(
+            {
+                "model": "whisper_encoder_mlp",
+                "whisper_model": config["whisper_model"],
+                "num_classes": num_classes,
+                "classes": list(class_names),
+                "num_train": len(y_train),
+                "num_val": len(y_val),
+                "num_test": len(y_test),
+                "test_accuracy": float(acc),
+                "test_macro_f1": float(macro_f1),
+                "hidden_dim": hidden_dim,
+                "dropout": dropout,
+                "batch_size": batch_size,
+                "learning_rate": lr,
+                "epochs": epochs,
+                "train_time_s": round(train_time, 1),
+            },
+            f,
+            indent=2,
+        )
 
     logger.info(f"Model saved → {model_path}")
     logger.info(f"Config saved → {cfg_path}")
@@ -332,10 +391,20 @@ def main():
 
     elif args.cmd == "train":
         import yaml
+
         with open(args.config) as f:
             config = yaml.safe_load(f)
-        config["whisper_model"] = config.get("whisper_model", "xezpeleta/whisper-large-v3-eu")
-        results = train_mlp(args.train_emb, args.val_emb, args.test_emb, args.output, config, args.device)
+        config["whisper_model"] = config.get(
+            "whisper_model", "xezpeleta/whisper-large-v3-eu"
+        )
+        results = train_mlp(
+            args.train_emb,
+            args.val_emb,
+            args.test_emb,
+            args.output,
+            config,
+            args.device,
+        )
 
         # Print METRIC lines for autoresearch
         print(f"ACCURACY: {results['accuracy']:.6f}")

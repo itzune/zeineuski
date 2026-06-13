@@ -11,8 +11,10 @@ dropout: 0.3
 num_layers: 2
 num_classes: 5
 
-# Class balancing
-class_weights: true
+# Loss function
+loss: focal
+focal_gamma: 2.0
+focal_alpha: 0.25
 
 # Training
 batch_size: 64
