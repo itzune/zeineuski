@@ -1,7 +1,15 @@
-# Whisper fine-tuning config
-model_name: openai/whisper-medium
-freeze_encoder: true
-batch_size: 8
-lr: 1e-4
-epochs: 5
-max_audio_length_sec: 30
+# Whisper encoder → dialect classifier config
+model: whisper_encoder_mlp
+whisper_model: xezpeleta/whisper-large-v3-eu
+
+# MLP classifier on top of pooled encoder embeddings
+input_dim: 1280
+hidden_dim: 512
+dropout: 0.3
+num_classes: 5
+
+# Training
+batch_size: 64
+learning_rate: 1e-3
+epochs: 50
+weight_decay: 1e-4
