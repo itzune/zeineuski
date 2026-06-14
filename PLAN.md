@@ -781,7 +781,7 @@ accuracy; full dataset would take 12+ hours with marginal expected gains.
 **Recommendation:** 3-class (western/central/navarrese) should surpass 65%.
 Minority dialects (nav-lab, souletin) need more data or multi-task learning.
 
-**Mintzoak.eus data integration (2026-06-14): 73.89% accuracy, 0.433 macro F1.**
+**Mintzoak.eus data integration (2026-06-14): 73.89% accuracy, 0.433 macro F1. → 70.52% accuracy, 0.510 macro F1 (balanced).**
 Mintzoak.eus, Ahotsak's sister site for Iparralde (French Basque Country), provides
 Vimeo-hosted oral history recordings. We scraped and downloaded 4,111 audio passages
 (28 GB), extracted 160,472 VAD segments (180.8h), and merged with the existing
@@ -791,10 +791,22 @@ The merged dataset dramatically improved minority dialects:
 - **Nav-Lab**: 2,291 → 88,791 train segments (39×), F1: 0.02 → **0.86**
 - **Souletin**: 348 → 10,283 train segments (30×), F1: 0.11 → **0.28**
 
-However, the 9:1 nav-lab:western imbalance caused western (−21pp) and navarrese
+However, the 18:1 nav-lab:central imbalance caused western (−21pp) and navarrese
 (−41pp) to regress as the model defaults to nav-lab for ambiguous samples.
 
-Next steps: balanced subsampling or higher focal gamma to recover Hegoalde classes.
+**Balanced subsampling solution (14 experiments via autoresearch):**
+Downsampling each class to 10K samples (50K total balanced dataset) recovers
+most lost performance:
+- Navarrese: 0.10 → 0.31 (+21pp)
+- Western: 0.58 → 0.69 (+11pp)
+- Souletin: 0.28 → 0.40 (+12pp)
+- Nav-lab: holds at 0.82 (only −4pp)
+- Macro F1: 0.433 → **0.510** (+17.8%)
+
+Best config: `balanced_subsample=10000`, `loss=crossentropy`, `lr=5e-4`,
+`hidden_dim=512`, `dropout=0.3`, `epochs=100`. Focal loss and class weights
+proved unnecessary — the subsampling alone handles the imbalance. Training
+time improved from 4 min to 90s (50K vs 123K samples).
 
 ---
 

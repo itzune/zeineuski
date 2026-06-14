@@ -267,33 +267,33 @@ Navarrese, Central, and Western are unaffected — Mintzoak only covers Iparrald
 
 #### Merged dataset (Ahotsak + Mintzoak)
 
-| Metric | Value |
-|---|--:|
-| Accuracy | **73.89%** |
-| Macro F1 | **0.433** |
-| Nav-Lab F1 | **0.86** |
-| Western F1 | 0.58 |
-| Central F1 | 0.35 |
-| Souletin F1 | 0.28 |
-| Navarrese F1 | 0.10 |
+| Metric | Imbalanced (raw) | Balanced (10K/class) |
+|---|--:|--:|
+| Accuracy | 73.89% | 70.52% |
+| **Macro F1** | **0.433** | **0.510** |
+| Nav-Lab F1 | 0.86 | 0.82 |
+| Western F1 | 0.58 | **0.69** |
+| Central F1 | 0.35 | 0.33 |
+| Souletin F1 | 0.28 | **0.40** |
+| Navarrese F1 | 0.10 | **0.31** |
 
-#### Ahotsak-only (for comparison)
+#### Ahotsak-only → Merged (improvement over original)
 
-| Metric | Before | After | Change |
-|---|--:|--:|:--:|
-| Accuracy | 62.15% | **73.89%** | **+11.7pp** |
-| Macro F1 | 0.361 | **0.433** | **+7.2pp** |
-| Nav-Lab F1 | 0.02 | **0.86** | **+84pp** 🔥 |
-| Souletin F1 | 0.11 | **0.28** | **+17pp** |
-| Western F1 | 0.79 | 0.58 | −21pp |
-| Navarrese F1 | 0.51 | 0.10 | −41pp |
-| Central F1 | 0.38 | 0.35 | −3pp |
+| Metric | Ahotsak only | +Mintzoak (imbalanced) | +Mintzoak (balanced) | Total gain |
+|---|--:|--:|--:|:--:|
+| Accuracy | 62.15% | 73.89% | 70.52% | **+8.4pp** |
+| Macro F1 | 0.361 | 0.433 | 0.510 | **+14.9pp** |
+| Nav-Lab F1 | 0.02 | 0.86 | 0.82 | **+80pp** 🔥 |
+| Souletin F1 | 0.11 | 0.28 | 0.40 | **+29pp** |
+| Western F1 | 0.79 | 0.58 | 0.69 | −10pp |
+| Navarrese F1 | 0.51 | 0.10 | 0.31 | −20pp |
+| Central F1 | 0.38 | 0.35 | 0.33 | −5pp |
 
-Key insight: Mintzoak's 89K nav-lab samples turned what was effectively a
-non-classifier (2% F1) into the strongest class at 86%. Souletin also improved
-2.5×. However, the 15:1 nav-lab:others imbalance pushed the model to over-predict
-nav-lab, depressing western (−21pp) and navarrese (−41pp). Future work should
-tune focal gamma or downsample nav-lab to rebalance.
+Key insight: Mintzoak's 89K nav-lab samples solved the minority dialect problem
+(2%→82% nav-lab, 11%→40% souletin), but the 18:1 class imbalance depressed
+western/navarrese. **Downsampling each class to 10K samples** (50K total balanced)
+recovers most of the loss: western +11pp, navarrese +21pp, while nav-lab holds
+at 82%. The balanced config is the recommended deployment model.
 
 ### Discarded Approaches
 
@@ -308,26 +308,28 @@ tune focal gamma or downsample nav-lab to rebalance.
 
 ### Known Limitations
 
-- **Navarrese collapse (10% F1)**: The 89K→10K nav-lab dominance causes
-  the model to misclassify most navarrese samples as nav-lab. Navarrese is
-  phonetically intermediate between central and nav-lab — the model now
-  defaults to nav-lab for ambiguous samples.
-- **Class imbalance**: Nav-lab (89K train) outnumbers western (10K) 9:1 and
-  central (5K) 18:1. Focal loss at γ=2.0 helps but doesn't fully compensate.
-- **Downsampling opportunity**: Train on 10K/class would give a balanced 50K
-  dataset — nav-lab could easily absorb the reduction.
+- **Navarrese (31% F1)**: Still the weakest class. Navarrese is phonetically
+  intermediate between central and nav-lab — the model defaults to nav-lab for
+  ambiguous samples even with balanced data.
+- **Central (33% F1)**: Large geographic spread (658 towns) with diverse
+  sub-varieties and inconsistent recording quality.
+- **Nav-lab (82% F1)**: Now the strongest class thanks to Mintzoak data.
+  Risk of over-reliance on this class for ambiguous inputs.
+- **Souletin (40% F1)**: 30× more data from Mintzoak, but still the most
+  phonetically distinct dialect — the encoder may need more capacity.
+- **Training speed**: ~90s on GPU with balanced 10K/class (down from 4 min with
+  imbalanced 123K).
 - **GPU required for extraction**: Embedding extraction uses an NVIDIA L40 (46GB).
-  Training is ~30s on CPU after embeddings are cached.
+  Training is ~90s on GPU after embeddings are cached.
 
 ### Remaining Ideas
 
-- **Balanced subsampling**: Downsample nav-lab to 10K → 50K balanced dataset
-  should recover western/navarrese while keeping nav-lab gains.
-- **Higher focal gamma**: γ=3.0 or γ=4.0 may better penalize the dominant
-  nav-lab class without needing to downsample.
+- **Navarrese-specific augmentation**: Generate synthetic navarrese samples
+  (pitch shift, speed perturbation, noise) to boost the smallest class.
 - **Attention pooling**: Train-time attention over encoder time dimension
-  (instead of frozen mean pooling) — proven in ADI-20 Arabic dialect paper.
-- **3-class mode** (western/central/navarrese) — already >65% with Ahotsak-only.
+  — proven in ADI-20 Arabic dialect paper (arxiv 2511.10070).
+- **Multi-task learning**: Joint dialect + speaker prediction to force encoder
+  to disentangle speaker identity from dialect.
 
 ### Running the Speech Pipeline
 
