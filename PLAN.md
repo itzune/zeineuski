@@ -781,6 +781,21 @@ accuracy; full dataset would take 12+ hours with marginal expected gains.
 **Recommendation:** 3-class (western/central/navarrese) should surpass 65%.
 Minority dialects (nav-lab, souletin) need more data or multi-task learning.
 
+**Mintzoak.eus data integration (2026-06-14): 73.89% accuracy, 0.433 macro F1.**
+Mintzoak.eus, Ahotsak's sister site for Iparralde (French Basque Country), provides
+Vimeo-hosted oral history recordings. We scraped and downloaded 4,111 audio passages
+(28 GB), extracted 160,472 VAD segments (180.8h), and merged with the existing
+Ahotsak dataset (36,176 segments, 78.1h) for a combined 196,648 segments (258.9h).
+
+The merged dataset dramatically improved minority dialects:
+- **Nav-Lab**: 2,291 → 88,791 train segments (39×), F1: 0.02 → **0.86**
+- **Souletin**: 348 → 10,283 train segments (30×), F1: 0.11 → **0.28**
+
+However, the 9:1 nav-lab:western imbalance caused western (−21pp) and navarrese
+(−41pp) to regress as the model defaults to nav-lab for ambiguous samples.
+
+Next steps: balanced subsampling or higher focal gamma to recover Hegoalde classes.
+
 ---
 
 ### Task 5.2 — Whisper Fine-Tuning for Dialect ID

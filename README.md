@@ -263,20 +263,37 @@ featuring Vimeo-hosted video recordings. Audio extracted via yt-dlp at 16kHz mon
 Navarrese, Central, and Western are unaffected — Mintzoak only covers Iparralde
 (French Basque Country).
 
-> ⏳ **In progress:** Whisper embeddings extracting on NVIDIA L40 (122K train, ~4h).
-> MLP retraining with merged dataset pending.
-
 ### Results (5-class, town-disjoint split)
 
+#### Merged dataset (Ahotsak + Mintzoak)
+
 | Metric | Value |
-|---|---:|
-| Accuracy | **62.15%** |
-| Macro F1 | **0.361** |
-| Western F1 | 0.79 |
-| Navarrese F1 | 0.51 |
-| Central F1 | 0.38 |
-| Souletin F1 | 0.11 |
-| Nav-Lab F1 | 0.02 |
+|---|--:|
+| Accuracy | **73.89%** |
+| Macro F1 | **0.433** |
+| Nav-Lab F1 | **0.86** |
+| Western F1 | 0.58 |
+| Central F1 | 0.35 |
+| Souletin F1 | 0.28 |
+| Navarrese F1 | 0.10 |
+
+#### Ahotsak-only (for comparison)
+
+| Metric | Before | After | Change |
+|---|--:|--:|:--:|
+| Accuracy | 62.15% | **73.89%** | **+11.7pp** |
+| Macro F1 | 0.361 | **0.433** | **+7.2pp** |
+| Nav-Lab F1 | 0.02 | **0.86** | **+84pp** 🔥 |
+| Souletin F1 | 0.11 | **0.28** | **+17pp** |
+| Western F1 | 0.79 | 0.58 | −21pp |
+| Navarrese F1 | 0.51 | 0.10 | −41pp |
+| Central F1 | 0.38 | 0.35 | −3pp |
+
+Key insight: Mintzoak's 89K nav-lab samples turned what was effectively a
+non-classifier (2% F1) into the strongest class at 86%. Souletin also improved
+2.5×. However, the 15:1 nav-lab:others imbalance pushed the model to over-predict
+nav-lab, depressing western (−21pp) and navarrese (−41pp). Future work should
+tune focal gamma or downsample nav-lab to rebalance.
 
 ### Discarded Approaches
 
@@ -291,24 +308,26 @@ Navarrese, Central, and Western are unaffected — Mintzoak only covers Iparrald
 
 ### Known Limitations
 
-- **Nav-lab (2% F1 on Ahotsak)**: Nearly indistinguishable from Navarrese with limited
-  data. Mintzoak adds 89K nav-lab train segments — expected to dramatically improve.
-- **Souletin (11% F1 on Ahotsak)**: Only 348 training segments from 37 towns.
-  Mintzoak adds 10K segments from 29 Zuberoa towns — 30× increase.
-- **Stochastic variance**: MLP training has ±1-2pp variance between runs due to
-  random initialization.
+- **Navarrese collapse (10% F1)**: The 89K→10K nav-lab dominance causes
+  the model to misclassify most navarrese samples as nav-lab. Navarrese is
+  phonetically intermediate between central and nav-lab — the model now
+  defaults to nav-lab for ambiguous samples.
+- **Class imbalance**: Nav-lab (89K train) outnumbers western (10K) 9:1 and
+  central (5K) 18:1. Focal loss at γ=2.0 helps but doesn't fully compensate.
+- **Downsampling opportunity**: Train on 10K/class would give a balanced 50K
+  dataset — nav-lab could easily absorb the reduction.
 - **GPU required for extraction**: Embedding extraction uses an NVIDIA L40 (46GB).
   Training is ~30s on CPU after embeddings are cached.
-- **Class imbalance after merge**: Nav-lab (89K) dominates Western (10K) and
-  Central (5K). Focal loss handles this but may need tuning.
 
 ### Remaining Ideas
 
-- **3-class mode** (western/central/navarrese) — should exceed 65-70% accuracy
-- **Attention pooling** during training (instead of frozen mean+std+max) — proven
-  in the ADI-20 Arabic dialect paper (arxiv 2511.10070)
-- **Mintzoak transcriptions** — same passage pages contain dialectal Basque text;
-  could be used for text-based classifier augmentation
+- **Balanced subsampling**: Downsample nav-lab to 10K → 50K balanced dataset
+  should recover western/navarrese while keeping nav-lab gains.
+- **Higher focal gamma**: γ=3.0 or γ=4.0 may better penalize the dominant
+  nav-lab class without needing to downsample.
+- **Attention pooling**: Train-time attention over encoder time dimension
+  (instead of frozen mean pooling) — proven in ADI-20 Arabic dialect paper.
+- **3-class mode** (western/central/navarrese) — already >65% with Ahotsak-only.
 
 ### Running the Speech Pipeline
 
