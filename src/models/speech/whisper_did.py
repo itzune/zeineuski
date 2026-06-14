@@ -488,16 +488,11 @@ def train_mlp(
     )  # keep model reference
     model_state = best_state
     if isinstance(model, nn.ModuleList):
-        model[0].load_state_dict(
-            {k: v for k, v in model_state.items() if k.startswith("0.")}
-        )
-        model[1].load_state_dict(
-            {
-                k.replace("1.", ""): v
-                for k, v in model_state.items()
-                if k.startswith("1.")
-            }
-        )
+        # Strip "0." prefix for attention pool, "1." for MLP
+        attn_state = {k[2:]: v for k, v in model_state.items() if k.startswith("0.")}
+        mlp_state = {k[2:]: v for k, v in model_state.items() if k.startswith("1.")}
+        model[0].load_state_dict(attn_state)
+        model[1].load_state_dict(mlp_state)
         model[0].eval()
         model[1].eval()
     else:
