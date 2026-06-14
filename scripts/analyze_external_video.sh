@@ -55,15 +55,26 @@ echo "=== Step 3: Extract Whisper embeddings (GPU) ==="
 uv run python -m src.models.speech.whisper_did extract \
     --manifest "$MANIFEST" \
     --output "$OUT_DIR/embeddings.pkl" \
+    --pooling mean \
     --device cuda
 
 echo ""
 echo "=== Step 4: Classify each segment ==="
 uv run python -c "
-import pickle, json, torch
+import pickle, json, torch, csv
 import numpy as np
 from collections import Counter
+from pathlib import Path
 from src.models.speech.whisper_did import load_speech_model
+
+# Load timing from manifest (pickle only stores path/embedding/label)
+timeline = {}
+with open('$MANIFEST') as f:
+    for row in csv.DictReader(f):
+        timeline[row['path']] = {
+            'start_sec': float(row['start_sec']),
+            'end_sec': float(row['end_sec']),
+        }
 
 encoder, mlp, label_encoder, scaler, config = load_speech_model(
     'models/speech/whisper_dialect_merged', 'cuda'
@@ -89,9 +100,10 @@ for sample in samples:
         probs = torch.softmax(logits, dim=1).cpu().numpy().squeeze(0)
     pred_idx = probs.argmax()
     dialect = label_encoder.classes_[pred_idx]
+    timings = timeline.get(sample['path'], {})
     results.append({
-        'start_sec': float(sample.get('start_sec', 0)),
-        'end_sec': float(sample.get('end_sec', 0)),
+        'start_sec': timings.get('start_sec', 0),
+        'end_sec': timings.get('end_sec', 0),
         'dialect': dialect,
         'dialect_name': DIALECT_NAMES.get(dialect, dialect),
         'confidence': float(probs[pred_idx]),

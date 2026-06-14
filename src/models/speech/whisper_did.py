@@ -8,6 +8,7 @@ Approach from ADI-20 paper (arxiv 2511.10070) adapted for Basque dialects.
 
 import argparse
 import csv
+import gc
 import json
 import logging
 import pickle
@@ -261,34 +262,69 @@ def train_mlp(
     device: str = "cuda",
 ):
     """Train MLP classifier on pre-extracted train/val/test embeddings."""
-    # Load train
+
+    pooling = config.get("pooling", "mean_std_max")
+
+    # Load labels first (cheap) to build label encoder
     with open(train_emb, "rb") as f:
-        train_samples = pickle.load(f)
-    X_train = np.stack([s["embedding"] for s in train_samples], axis=0)
-    y_train_raw = [s["label"] for s in train_samples]
-
-    # Load val
+        y_train_raw = [s["label"] for s in pickle.load(f)]
     with open(val_emb, "rb") as f:
-        val_samples = pickle.load(f)
-    X_val = np.stack([s["embedding"] for s in val_samples], axis=0)
-    y_val_raw = [s["label"] for s in val_samples]
-
-    # Load test
+        y_val_raw = [s["label"] for s in pickle.load(f)]
     with open(test_emb, "rb") as f:
-        test_samples = pickle.load(f)
-    X_test = np.stack([s["embedding"] for s in test_samples], axis=0)
-    y_test_raw = [s["label"] for s in test_samples]
+        y_test_raw = [s["label"] for s in pickle.load(f)]
 
-    # Unified label encoder from all splits
     label_encoder = LabelEncoder().fit(y_train_raw + y_val_raw + y_test_raw)
     y_train = label_encoder.transform(y_train_raw)
     y_val = label_encoder.transform(y_val_raw)
     y_test = label_encoder.transform(y_test_raw)
+    num_classes = len(label_encoder.classes_)
+
+    # ── Determine subsample indices (from labels only, before loading embeddings) ──
+    subsample_per_class = config.get("balanced_subsample", 0)
+    train_indices = None
+    if subsample_per_class > 0:
+        train_indices = []
+        for cls_idx in range(num_classes):
+            cls_mask = np.array(y_train) == cls_idx
+            cls_indices = np.where(cls_mask)[0]
+            n_available = len(cls_indices)
+            n_sample = min(subsample_per_class, n_available)
+            if n_sample < n_available:
+                sampled = np.random.choice(cls_indices, n_sample, replace=False)
+            else:
+                sampled = cls_indices
+            train_indices.append(sampled)
+            logger.info(
+                f"  Class {label_encoder.classes_[cls_idx]}: {n_sample}/{n_available} samples"
+            )
+        train_indices = np.sort(np.concatenate(train_indices))
+        logger.info(f"  Total after subsampling: {len(train_indices)} samples")
+
+    # ── Load embeddings (only needed subset for train) ──
+    def _load_split(emb_path, indices=None):
+        with open(emb_path, "rb") as f:
+            all_samples = pickle.load(f)
+        if indices is not None:
+            embeddings = [all_samples[i]["embedding"] for i in indices]
+        else:
+            embeddings = [s["embedding"] for s in all_samples]
+        del all_samples
+        gc.collect()
+        return np.stack(embeddings, axis=0)
+
+    logger.info("Loading train embeddings...")
+    X_train = _load_split(train_emb, train_indices)
+    if train_indices is not None:
+        y_train = y_train[train_indices]
+
+    logger.info("Loading val/test embeddings...")
+    X_val = _load_split(val_emb)
+    X_test = _load_split(test_emb)
 
     logger.info(
-        f"Train: {len(train_samples)} samples, Val: {len(val_samples)}, Test: {len(test_samples)}"
+        f"Train: {len(X_train)} samples, Val: {len(X_val)}, Test: {len(X_test)}"
     )
-    logger.info(f"Embedding dim: {X_train.shape[1]}")
+    logger.info(f"Embedding shape: {X_train.shape}")
 
     # Scale (only for flat 2D embeddings; attention uses 3D segment tensors)
     pooling = config.get("pooling", "mean_std_max")
@@ -303,29 +339,6 @@ def train_mlp(
         logger.info("Attention pooling: skipping StandardScaler (3D segment input)")
 
     num_classes = len(label_encoder.classes_)
-
-    # ── Balanced subsampling ──
-    subsample_per_class = config.get("balanced_subsample", 0)
-    if subsample_per_class > 0:
-        indices = []
-        for cls_idx in range(num_classes):
-            cls_mask = y_train == cls_idx
-            cls_indices = np.where(cls_mask)[0]
-            n_available = len(cls_indices)
-            n_sample = min(subsample_per_class, n_available)
-            if n_sample < n_available:
-                sampled = np.random.choice(cls_indices, n_sample, replace=False)
-            else:
-                sampled = cls_indices
-            indices.append(sampled)
-            logger.info(
-                f"  Class {label_encoder.classes_[cls_idx]}: {n_sample}/{n_available} samples"
-            )
-        indices = np.concatenate(indices)
-        np.random.shuffle(indices)
-        X_train = X_train[indices]
-        y_train = y_train[indices]
-        logger.info(f"  Total after subsampling: {len(indices)} samples")
 
     # ── Class weights ──
     use_class_weights = config.get("class_weights", False)

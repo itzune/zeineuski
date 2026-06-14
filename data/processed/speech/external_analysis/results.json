@@ -1,0 +1,3152 @@
+[
+  {
+    "start_sec": 0.0,
+    "end_sec": 10.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7902189493179321,
+    "probs": {
+      "central": 0.0675743818283081,
+      "nav-lab": 0.7902189493179321,
+      "navarrese": 0.08905389904975891,
+      "souletin": 0.04818515479564667,
+      "western": 0.004967600107192993
+    }
+  },
+  {
+    "start_sec": 8.0,
+    "end_sec": 18.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.61307692527771,
+    "probs": {
+      "central": 0.10188716650009155,
+      "nav-lab": 0.61307692527771,
+      "navarrese": 0.2699151337146759,
+      "souletin": 0.0014858664944767952,
+      "western": 0.013634842820465565
+    }
+  },
+  {
+    "start_sec": 16.0,
+    "end_sec": 26.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9628050923347473,
+    "probs": {
+      "central": 0.016178661957383156,
+      "nav-lab": 0.9628050923347473,
+      "navarrese": 0.004721156787127256,
+      "souletin": 0.014976528473198414,
+      "western": 0.0013185543939471245
+    }
+  },
+  {
+    "start_sec": 24.0,
+    "end_sec": 34.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.4809526205062866,
+    "probs": {
+      "central": 0.4809526205062866,
+      "nav-lab": 0.2877645492553711,
+      "navarrese": 0.15537391602993011,
+      "souletin": 0.040056075900793076,
+      "western": 0.035852912813425064
+    }
+  },
+  {
+    "start_sec": 32.0,
+    "end_sec": 42.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6829646229743958,
+    "probs": {
+      "central": 0.20557183027267456,
+      "nav-lab": 0.6829646229743958,
+      "navarrese": 0.024236395955085754,
+      "souletin": 0.07693146169185638,
+      "western": 0.010295688174664974
+    }
+  },
+  {
+    "start_sec": 40.0,
+    "end_sec": 50.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6900745034217834,
+    "probs": {
+      "central": 0.2961888015270233,
+      "nav-lab": 0.6900745034217834,
+      "navarrese": 0.0018105359049513936,
+      "souletin": 0.011612679809331894,
+      "western": 0.0003134883882012218
+    }
+  },
+  {
+    "start_sec": 48.0,
+    "end_sec": 58.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9959033131599426,
+    "probs": {
+      "central": 0.003869605716317892,
+      "nav-lab": 0.9959033131599426,
+      "navarrese": 2.8141390430391766e-05,
+      "souletin": 0.00019818387227132916,
+      "western": 7.968865816110338e-07
+    }
+  },
+  {
+    "start_sec": 56.0,
+    "end_sec": 66.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.6830955147743225,
+    "probs": {
+      "central": 0.6830955147743225,
+      "nav-lab": 0.27233555912971497,
+      "navarrese": 0.005579291842877865,
+      "souletin": 0.0022042274940758944,
+      "western": 0.03678547218441963
+    }
+  },
+  {
+    "start_sec": 64.0,
+    "end_sec": 74.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9714704155921936,
+    "probs": {
+      "central": 0.9714704155921936,
+      "nav-lab": 0.008124035783112049,
+      "navarrese": 0.0035298545844852924,
+      "souletin": 5.8232293667970225e-05,
+      "western": 0.01681743562221527
+    }
+  },
+  {
+    "start_sec": 72.0,
+    "end_sec": 82.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9186829328536987,
+    "probs": {
+      "central": 0.0005533150979317725,
+      "nav-lab": 0.9186829328536987,
+      "navarrese": 0.0015941038727760315,
+      "souletin": 0.01775474287569523,
+      "western": 0.06141485273838043
+    }
+  },
+  {
+    "start_sec": 80.0,
+    "end_sec": 90.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.991319477558136,
+    "probs": {
+      "central": 0.004579572007060051,
+      "nav-lab": 0.991319477558136,
+      "navarrese": 0.0007539561484009027,
+      "souletin": 0.001755760284140706,
+      "western": 0.0015912562375888228
+    }
+  },
+  {
+    "start_sec": 88.0,
+    "end_sec": 98.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9963726997375488,
+    "probs": {
+      "central": 0.0004143455589655787,
+      "nav-lab": 0.9963726997375488,
+      "navarrese": 0.00018648557306732982,
+      "souletin": 0.0030134336557239294,
+      "western": 1.2999999853491317e-05
+    }
+  },
+  {
+    "start_sec": 96.0,
+    "end_sec": 106.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9904423356056213,
+    "probs": {
+      "central": 0.008666847832500935,
+      "nav-lab": 0.9904423356056213,
+      "navarrese": 0.0006564951618202031,
+      "souletin": 0.0001767975918482989,
+      "western": 5.759199120802805e-05
+    }
+  },
+  {
+    "start_sec": 104.0,
+    "end_sec": 114.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9592538475990295,
+    "probs": {
+      "central": 0.012789452448487282,
+      "nav-lab": 0.9592538475990295,
+      "navarrese": 0.024584054946899414,
+      "souletin": 0.0002462084230501205,
+      "western": 0.0031263704877346754
+    }
+  },
+  {
+    "start_sec": 112.0,
+    "end_sec": 122.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9373961091041565,
+    "probs": {
+      "central": 0.019065044820308685,
+      "nav-lab": 0.9373961091041565,
+      "navarrese": 0.014746507629752159,
+      "souletin": 0.005261237267404795,
+      "western": 0.02353111281991005
+    }
+  },
+  {
+    "start_sec": 120.0,
+    "end_sec": 130.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9236612319946289,
+    "probs": {
+      "central": 0.0678168535232544,
+      "nav-lab": 0.9236612319946289,
+      "navarrese": 0.0034129638224840164,
+      "souletin": 0.005029189400374889,
+      "western": 7.979560905368999e-05
+    }
+  },
+  {
+    "start_sec": 128.0,
+    "end_sec": 138.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.544035017490387,
+    "probs": {
+      "central": 0.2851729094982147,
+      "nav-lab": 0.544035017490387,
+      "navarrese": 0.13090956211090088,
+      "souletin": 0.006670838687568903,
+      "western": 0.033211685717105865
+    }
+  },
+  {
+    "start_sec": 136.0,
+    "end_sec": 146.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8891851902008057,
+    "probs": {
+      "central": 0.026025013998150826,
+      "nav-lab": 0.8891851902008057,
+      "navarrese": 0.007111429236829281,
+      "souletin": 0.043345190584659576,
+      "western": 0.034333162009716034
+    }
+  },
+  {
+    "start_sec": 144.0,
+    "end_sec": 154.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9886366724967957,
+    "probs": {
+      "central": 0.0022730769123882055,
+      "nav-lab": 0.9886366724967957,
+      "navarrese": 0.002304358873516321,
+      "souletin": 0.006419006735086441,
+      "western": 0.0003669279394671321
+    }
+  },
+  {
+    "start_sec": 152.0,
+    "end_sec": 162.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.5335352420806885,
+    "probs": {
+      "central": 0.00015720866213086993,
+      "nav-lab": 0.46500280499458313,
+      "navarrese": 2.2530282876687124e-05,
+      "souletin": 0.5335352420806885,
+      "western": 0.0012822264106944203
+    }
+  },
+  {
+    "start_sec": 160.0,
+    "end_sec": 170.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9161978960037231,
+    "probs": {
+      "central": 0.002160032745450735,
+      "nav-lab": 0.9161978960037231,
+      "navarrese": 0.015664875507354736,
+      "souletin": 0.02216864749789238,
+      "western": 0.04380850866436958
+    }
+  },
+  {
+    "start_sec": 168.0,
+    "end_sec": 178.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8417078852653503,
+    "probs": {
+      "central": 0.003421806963160634,
+      "nav-lab": 0.8417078852653503,
+      "navarrese": 0.009583730250597,
+      "souletin": 0.007451309356838465,
+      "western": 0.13783523440361023
+    }
+  },
+  {
+    "start_sec": 176.0,
+    "end_sec": 186.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.727675199508667,
+    "probs": {
+      "central": 0.003648932557553053,
+      "nav-lab": 0.727675199508667,
+      "navarrese": 0.0025122419465333223,
+      "souletin": 0.16609732806682587,
+      "western": 0.10006625205278397
+    }
+  },
+  {
+    "start_sec": 184.0,
+    "end_sec": 194.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6281670928001404,
+    "probs": {
+      "central": 0.0028888534288853407,
+      "nav-lab": 0.6281670928001404,
+      "navarrese": 0.003325991565361619,
+      "souletin": 0.3648613691329956,
+      "western": 0.0007567459833808243
+    }
+  },
+  {
+    "start_sec": 192.0,
+    "end_sec": 202.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9323240518569946,
+    "probs": {
+      "central": 0.0033811023458838463,
+      "nav-lab": 0.9323240518569946,
+      "navarrese": 0.0015172924613580108,
+      "souletin": 0.06264660507440567,
+      "western": 0.00013097492046654224
+    }
+  },
+  {
+    "start_sec": 200.0,
+    "end_sec": 210.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9324114918708801,
+    "probs": {
+      "central": 0.0017469931626692414,
+      "nav-lab": 0.9324114918708801,
+      "navarrese": 0.0025425762869417667,
+      "souletin": 0.0627983957529068,
+      "western": 0.0005005522398278117
+    }
+  },
+  {
+    "start_sec": 208.0,
+    "end_sec": 218.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.8094961047172546,
+    "probs": {
+      "central": 0.8094961047172546,
+      "nav-lab": 0.03555142134428024,
+      "navarrese": 0.00028227968141436577,
+      "souletin": 0.1459074318408966,
+      "western": 0.008762853220105171
+    }
+  },
+  {
+    "start_sec": 216.0,
+    "end_sec": 226.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.997296154499054,
+    "probs": {
+      "central": 0.997296154499054,
+      "nav-lab": 0.0018496982520446181,
+      "navarrese": 8.242265175795183e-05,
+      "souletin": 0.00010397846926935017,
+      "western": 0.0006678049685433507
+    }
+  },
+  {
+    "start_sec": 224.0,
+    "end_sec": 234.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8792325258255005,
+    "probs": {
+      "central": 0.07142838090658188,
+      "nav-lab": 0.8792325258255005,
+      "navarrese": 0.0014540267875418067,
+      "souletin": 0.04573329538106918,
+      "western": 0.00215169508010149
+    }
+  },
+  {
+    "start_sec": 232.0,
+    "end_sec": 242.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9694404602050781,
+    "probs": {
+      "central": 0.9694404602050781,
+      "nav-lab": 0.027756748721003532,
+      "navarrese": 9.517487342236564e-06,
+      "souletin": 0.001470831106416881,
+      "western": 0.0013225560542196035
+    }
+  },
+  {
+    "start_sec": 240.0,
+    "end_sec": 250.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.9606286287307739,
+    "probs": {
+      "central": 0.014414343051612377,
+      "nav-lab": 0.02495388500392437,
+      "navarrese": 2.487297933839727e-06,
+      "souletin": 0.9606286287307739,
+      "western": 5.960373528068885e-07
+    }
+  },
+  {
+    "start_sec": 248.0,
+    "end_sec": 258.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9931926131248474,
+    "probs": {
+      "central": 0.00010990116425091401,
+      "nav-lab": 0.9931926131248474,
+      "navarrese": 4.939900463796221e-05,
+      "souletin": 0.006642958614975214,
+      "western": 5.107280685479054e-06
+    }
+  },
+  {
+    "start_sec": 256.0,
+    "end_sec": 266.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9998595714569092,
+    "probs": {
+      "central": 2.973869050038047e-05,
+      "nav-lab": 0.9998595714569092,
+      "navarrese": 1.0551066225161776e-06,
+      "souletin": 0.00010955836478387937,
+      "western": 3.807554449508643e-08
+    }
+  },
+  {
+    "start_sec": 264.0,
+    "end_sec": 274.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.5102950930595398,
+    "probs": {
+      "central": 0.00037598979542963207,
+      "nav-lab": 0.48927417397499084,
+      "navarrese": 8.684412932780106e-06,
+      "souletin": 0.5102950930595398,
+      "western": 4.609858660842292e-05
+    }
+  },
+  {
+    "start_sec": 272.0,
+    "end_sec": 282.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6400633454322815,
+    "probs": {
+      "central": 0.016751732677221298,
+      "nav-lab": 0.6400633454322815,
+      "navarrese": 0.0011237483704462647,
+      "souletin": 0.3419221043586731,
+      "western": 0.0001390990219078958
+    }
+  },
+  {
+    "start_sec": 280.0,
+    "end_sec": 290.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.8923677206039429,
+    "probs": {
+      "central": 0.8923677206039429,
+      "nav-lab": 0.05297025293111801,
+      "navarrese": 0.018853366374969482,
+      "souletin": 0.010930446907877922,
+      "western": 0.024878185242414474
+    }
+  },
+  {
+    "start_sec": 288.0,
+    "end_sec": 298.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9990234375,
+    "probs": {
+      "central": 0.9990234375,
+      "nav-lab": 0.0009155142470262945,
+      "navarrese": 1.3116999980411492e-05,
+      "souletin": 1.963554495887365e-06,
+      "western": 4.59154907730408e-05
+    }
+  },
+  {
+    "start_sec": 296.0,
+    "end_sec": 306.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.48364701867103577,
+    "probs": {
+      "central": 0.3405713737010956,
+      "nav-lab": 0.48364701867103577,
+      "navarrese": 0.0005881572724319994,
+      "souletin": 0.17479528486728668,
+      "western": 0.0003981349291279912
+    }
+  },
+  {
+    "start_sec": 304.0,
+    "end_sec": 314.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9974506497383118,
+    "probs": {
+      "central": 0.0006496640853583813,
+      "nav-lab": 0.9974506497383118,
+      "navarrese": 1.0815766700034146e-06,
+      "souletin": 0.001898334245197475,
+      "western": 2.790215773984528e-07
+    }
+  },
+  {
+    "start_sec": 312.0,
+    "end_sec": 322.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8202196955680847,
+    "probs": {
+      "central": 0.14285892248153687,
+      "nav-lab": 0.8202196955680847,
+      "navarrese": 0.0009082098840735853,
+      "souletin": 0.03600258752703667,
+      "western": 1.0620094144542236e-05
+    }
+  },
+  {
+    "start_sec": 320.0,
+    "end_sec": 330.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9962092638015747,
+    "probs": {
+      "central": 0.0005669501260854304,
+      "nav-lab": 0.9962092638015747,
+      "navarrese": 2.5913877266248164e-08,
+      "souletin": 0.00322374003008008,
+      "western": 1.5440008382938686e-08
+    }
+  },
+  {
+    "start_sec": 328.0,
+    "end_sec": 338.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8150439262390137,
+    "probs": {
+      "central": 0.04364220052957535,
+      "nav-lab": 0.8150439262390137,
+      "navarrese": 0.0025882520712912083,
+      "souletin": 0.020892402157187462,
+      "western": 0.11783326417207718
+    }
+  },
+  {
+    "start_sec": 336.0,
+    "end_sec": 346.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9881695508956909,
+    "probs": {
+      "central": 5.76333659410011e-05,
+      "nav-lab": 0.9881695508956909,
+      "navarrese": 0.00011328943219268695,
+      "souletin": 0.011659416370093822,
+      "western": 9.357356844930109e-08
+    }
+  },
+  {
+    "start_sec": 344.0,
+    "end_sec": 354.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9790560603141785,
+    "probs": {
+      "central": 0.010365170426666737,
+      "nav-lab": 0.9790560603141785,
+      "navarrese": 4.0003116737352684e-05,
+      "souletin": 0.010534187778830528,
+      "western": 4.52311633125646e-06
+    }
+  },
+  {
+    "start_sec": 352.0,
+    "end_sec": 362.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9981062412261963,
+    "probs": {
+      "central": 6.898310402903007e-06,
+      "nav-lab": 0.9981062412261963,
+      "navarrese": 8.493911423101963e-07,
+      "souletin": 0.0018859310075640678,
+      "western": 5.8367692901128976e-08
+    }
+  },
+  {
+    "start_sec": 360.0,
+    "end_sec": 370.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6620486378669739,
+    "probs": {
+      "central": 0.0012899457942694426,
+      "nav-lab": 0.6620486378669739,
+      "navarrese": 3.3949372664210387e-06,
+      "souletin": 0.33661964535713196,
+      "western": 3.8427642721217126e-05
+    }
+  },
+  {
+    "start_sec": 368.0,
+    "end_sec": 378.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9867597222328186,
+    "probs": {
+      "central": 2.7175835839443607e-06,
+      "nav-lab": 0.9867597222328186,
+      "navarrese": 2.4427074549748795e-06,
+      "souletin": 0.01323471125215292,
+      "western": 5.298042538015579e-07
+    }
+  },
+  {
+    "start_sec": 376.0,
+    "end_sec": 386.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8266454339027405,
+    "probs": {
+      "central": 0.014274048618972301,
+      "nav-lab": 0.8266454339027405,
+      "navarrese": 0.0019098883494734764,
+      "souletin": 0.1568162441253662,
+      "western": 0.00035433206357993186
+    }
+  },
+  {
+    "start_sec": 384.0,
+    "end_sec": 394.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9982781410217285,
+    "probs": {
+      "central": 5.728578003072471e-07,
+      "nav-lab": 0.9982781410217285,
+      "navarrese": 2.007945880677653e-07,
+      "souletin": 0.0017207941273227334,
+      "western": 2.483680532350263e-07
+    }
+  },
+  {
+    "start_sec": 392.0,
+    "end_sec": 402.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9787529706954956,
+    "probs": {
+      "central": 9.339494135929272e-05,
+      "nav-lab": 0.9787529706954956,
+      "navarrese": 1.464903380110627e-05,
+      "souletin": 0.021138997748494148,
+      "western": 8.306404453151117e-10
+    }
+  },
+  {
+    "start_sec": 400.0,
+    "end_sec": 410.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9878590703010559,
+    "probs": {
+      "central": 5.482149845192907e-06,
+      "nav-lab": 0.9878590703010559,
+      "navarrese": 8.766813834881759e-07,
+      "souletin": 0.012133665382862091,
+      "western": 7.700389801357232e-07
+    }
+  },
+  {
+    "start_sec": 408.0,
+    "end_sec": 418.0,
+    "dialect": "western",
+    "dialect_name": "Mendebaldekoa / Bizkaiera",
+    "confidence": 0.5377375483512878,
+    "probs": {
+      "central": 0.005515237804502249,
+      "nav-lab": 0.43262946605682373,
+      "navarrese": 0.020869212225079536,
+      "souletin": 0.003248464548960328,
+      "western": 0.5377375483512878
+    }
+  },
+  {
+    "start_sec": 416.0,
+    "end_sec": 426.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8305412530899048,
+    "probs": {
+      "central": 0.0009452934027649462,
+      "nav-lab": 0.8305412530899048,
+      "navarrese": 0.0056709717027843,
+      "souletin": 0.0013263330329209566,
+      "western": 0.16151617467403412
+    }
+  },
+  {
+    "start_sec": 424.0,
+    "end_sec": 434.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7057098746299744,
+    "probs": {
+      "central": 0.052431587129831314,
+      "nav-lab": 0.7057098746299744,
+      "navarrese": 0.028073305264115334,
+      "souletin": 0.013067074120044708,
+      "western": 0.20071819424629211
+    }
+  },
+  {
+    "start_sec": 432.0,
+    "end_sec": 442.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.941092848777771,
+    "probs": {
+      "central": 0.04904070124030113,
+      "nav-lab": 0.941092848777771,
+      "navarrese": 0.0013716507237404585,
+      "souletin": 0.002164173638448119,
+      "western": 0.006330640520900488
+    }
+  },
+  {
+    "start_sec": 440.0,
+    "end_sec": 450.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9934723377227783,
+    "probs": {
+      "central": 0.0010955779580399394,
+      "nav-lab": 0.9934723377227783,
+      "navarrese": 0.00048631118261255324,
+      "souletin": 0.004889339674264193,
+      "western": 5.6497719924664125e-05
+    }
+  },
+  {
+    "start_sec": 448.0,
+    "end_sec": 458.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6619584560394287,
+    "probs": {
+      "central": 6.528128869831562e-05,
+      "nav-lab": 0.6619584560394287,
+      "navarrese": 0.00014871270104777068,
+      "souletin": 0.337823748588562,
+      "western": 3.829789875453571e-06
+    }
+  },
+  {
+    "start_sec": 456.0,
+    "end_sec": 466.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.862038254737854,
+    "probs": {
+      "central": 0.006822249386459589,
+      "nav-lab": 0.862038254737854,
+      "navarrese": 0.0002287001843797043,
+      "souletin": 0.12610037624835968,
+      "western": 0.004810431972146034
+    }
+  },
+  {
+    "start_sec": 464.0,
+    "end_sec": 474.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7594428658485413,
+    "probs": {
+      "central": 0.002259084489196539,
+      "nav-lab": 0.7594428658485413,
+      "navarrese": 0.00039302458753809333,
+      "souletin": 0.23747098445892334,
+      "western": 0.0004340634332038462
+    }
+  },
+  {
+    "start_sec": 472.0,
+    "end_sec": 482.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8526865839958191,
+    "probs": {
+      "central": 0.0015991959953680634,
+      "nav-lab": 0.8526865839958191,
+      "navarrese": 0.000253649108344689,
+      "souletin": 0.14544332027435303,
+      "western": 1.7278463928960264e-05
+    }
+  },
+  {
+    "start_sec": 480.0,
+    "end_sec": 490.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.6339551210403442,
+    "probs": {
+      "central": 0.0013662150595337152,
+      "nav-lab": 0.36464938521385193,
+      "navarrese": 1.577602597535588e-05,
+      "souletin": 0.6339551210403442,
+      "western": 1.3440687325783074e-05
+    }
+  },
+  {
+    "start_sec": 488.0,
+    "end_sec": 498.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8997868895530701,
+    "probs": {
+      "central": 0.003238631645217538,
+      "nav-lab": 0.8997868895530701,
+      "navarrese": 3.217517587472685e-05,
+      "souletin": 0.09690214693546295,
+      "western": 4.01782599510625e-05
+    }
+  },
+  {
+    "start_sec": 496.0,
+    "end_sec": 506.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.6893510818481445,
+    "probs": {
+      "central": 0.02027943730354309,
+      "nav-lab": 0.29036328196525574,
+      "navarrese": 6.18076683167601e-06,
+      "souletin": 0.6893510818481445,
+      "western": 4.3559513329682886e-08
+    }
+  },
+  {
+    "start_sec": 504.0,
+    "end_sec": 514.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9886693358421326,
+    "probs": {
+      "central": 0.004959502723067999,
+      "nav-lab": 0.9886693358421326,
+      "navarrese": 8.49924108479172e-05,
+      "souletin": 0.006273553241044283,
+      "western": 1.2528899787866976e-05
+    }
+  },
+  {
+    "start_sec": 512.0,
+    "end_sec": 522.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9332863092422485,
+    "probs": {
+      "central": 0.9332863092422485,
+      "nav-lab": 0.06381885707378387,
+      "navarrese": 0.00010231801570625976,
+      "souletin": 0.0012322580441832542,
+      "western": 0.0015602916246280074
+    }
+  },
+  {
+    "start_sec": 520.0,
+    "end_sec": 530.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.997495174407959,
+    "probs": {
+      "central": 0.997495174407959,
+      "nav-lab": 0.0014036990469321609,
+      "navarrese": 0.0010565869743004441,
+      "souletin": 7.84776966611389e-06,
+      "western": 3.666521661216393e-05
+    }
+  },
+  {
+    "start_sec": 528.0,
+    "end_sec": 538.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.7005058526992798,
+    "probs": {
+      "central": 0.7005058526992798,
+      "nav-lab": 0.13628216087818146,
+      "navarrese": 0.13487419486045837,
+      "souletin": 0.0275438092648983,
+      "western": 0.0007939561037346721
+    }
+  },
+  {
+    "start_sec": 536.0,
+    "end_sec": 546.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.5430493950843811,
+    "probs": {
+      "central": 0.5430493950843811,
+      "nav-lab": 0.4269199073314667,
+      "navarrese": 0.022736717015504837,
+      "souletin": 0.007275003008544445,
+      "western": 1.9034687284147367e-05
+    }
+  },
+  {
+    "start_sec": 544.0,
+    "end_sec": 554.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6653640270233154,
+    "probs": {
+      "central": 0.0009101869654841721,
+      "nav-lab": 0.6653640270233154,
+      "navarrese": 0.015665331855416298,
+      "souletin": 0.2905718684196472,
+      "western": 0.027488669380545616
+    }
+  },
+  {
+    "start_sec": 552.0,
+    "end_sec": 562.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.5636680126190186,
+    "probs": {
+      "central": 0.5636680126190186,
+      "nav-lab": 0.011956945061683655,
+      "navarrese": 0.3991156816482544,
+      "souletin": 0.0007043773657642305,
+      "western": 0.024554980918765068
+    }
+  },
+  {
+    "start_sec": 560.0,
+    "end_sec": 570.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7998855710029602,
+    "probs": {
+      "central": 0.10729692131280899,
+      "nav-lab": 0.7998855710029602,
+      "navarrese": 0.038757313042879105,
+      "souletin": 0.020237242802977562,
+      "western": 0.03382299095392227
+    }
+  },
+  {
+    "start_sec": 568.0,
+    "end_sec": 578.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.45539525151252747,
+    "probs": {
+      "central": 0.45539525151252747,
+      "nav-lab": 0.20674704015254974,
+      "navarrese": 0.08455781638622284,
+      "souletin": 0.006126475520431995,
+      "western": 0.247173473238945
+    }
+  },
+  {
+    "start_sec": 576.0,
+    "end_sec": 586.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.45881780982017517,
+    "probs": {
+      "central": 0.45881780982017517,
+      "nav-lab": 0.3876867890357971,
+      "navarrese": 0.01553037017583847,
+      "souletin": 0.01922686956822872,
+      "western": 0.11873820424079895
+    }
+  },
+  {
+    "start_sec": 584.0,
+    "end_sec": 594.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8918795585632324,
+    "probs": {
+      "central": 0.002932231407612562,
+      "nav-lab": 0.8918795585632324,
+      "navarrese": 0.024486826732754707,
+      "souletin": 0.07916224747896194,
+      "western": 0.0015391282504424453
+    }
+  },
+  {
+    "start_sec": 592.0,
+    "end_sec": 602.0,
+    "dialect": "western",
+    "dialect_name": "Mendebaldekoa / Bizkaiera",
+    "confidence": 0.4242243766784668,
+    "probs": {
+      "central": 0.40931087732315063,
+      "nav-lab": 0.03321914002299309,
+      "navarrese": 0.13197235763072968,
+      "souletin": 0.0012732006143778563,
+      "western": 0.4242243766784668
+    }
+  },
+  {
+    "start_sec": 600.0,
+    "end_sec": 610.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9988603591918945,
+    "probs": {
+      "central": 0.9988603591918945,
+      "nav-lab": 0.001018444076180458,
+      "navarrese": 1.8599679606268182e-05,
+      "souletin": 2.6881625672103837e-05,
+      "western": 7.57055968279019e-05
+    }
+  },
+  {
+    "start_sec": 608.0,
+    "end_sec": 618.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9959671497344971,
+    "probs": {
+      "central": 0.9959671497344971,
+      "nav-lab": 0.003695086808875203,
+      "navarrese": 0.00019308723858557642,
+      "souletin": 0.0001425457448931411,
+      "western": 2.107065029122168e-06
+    }
+  },
+  {
+    "start_sec": 616.0,
+    "end_sec": 626.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9999194145202637,
+    "probs": {
+      "central": 0.9999194145202637,
+      "nav-lab": 7.992418431967963e-06,
+      "navarrese": 2.8538464903249405e-05,
+      "souletin": 8.468777679127015e-08,
+      "western": 4.3981330236420035e-05
+    }
+  },
+  {
+    "start_sec": 624.0,
+    "end_sec": 634.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9481258392333984,
+    "probs": {
+      "central": 0.9481258392333984,
+      "nav-lab": 0.037761151790618896,
+      "navarrese": 8.463186532026157e-05,
+      "souletin": 0.012318204157054424,
+      "western": 0.0017100517870858312
+    }
+  },
+  {
+    "start_sec": 632.0,
+    "end_sec": 642.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.9841547012329102,
+    "probs": {
+      "central": 5.36220904905349e-05,
+      "nav-lab": 0.0157206729054451,
+      "navarrese": 7.100879884092137e-05,
+      "souletin": 0.9841547012329102,
+      "western": 1.9859811573041952e-08
+    }
+  },
+  {
+    "start_sec": 640.0,
+    "end_sec": 650.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7658786177635193,
+    "probs": {
+      "central": 0.0006768133025616407,
+      "nav-lab": 0.7658786177635193,
+      "navarrese": 4.4990283640800044e-05,
+      "souletin": 0.23337335884571075,
+      "western": 2.619129554659594e-05
+    }
+  },
+  {
+    "start_sec": 648.0,
+    "end_sec": 658.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7923218011856079,
+    "probs": {
+      "central": 0.00030651851557195187,
+      "nav-lab": 0.7923218011856079,
+      "navarrese": 5.563040303968592e-06,
+      "souletin": 0.20735947787761688,
+      "western": 6.701258826069534e-06
+    }
+  },
+  {
+    "start_sec": 656.0,
+    "end_sec": 666.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8667072653770447,
+    "probs": {
+      "central": 0.0006114371935836971,
+      "nav-lab": 0.8667072653770447,
+      "navarrese": 6.336176738841459e-05,
+      "souletin": 0.1325995922088623,
+      "western": 1.8406646631774493e-05
+    }
+  },
+  {
+    "start_sec": 664.0,
+    "end_sec": 674.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.8214786648750305,
+    "probs": {
+      "central": 0.8214786648750305,
+      "nav-lab": 0.1551695019006729,
+      "navarrese": 4.950422862748383e-06,
+      "souletin": 0.011277495883405209,
+      "western": 0.01206935290247202
+    }
+  },
+  {
+    "start_sec": 672.0,
+    "end_sec": 682.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9971051812171936,
+    "probs": {
+      "central": 0.9971051812171936,
+      "nav-lab": 0.0027575057465583086,
+      "navarrese": 1.0686694622563664e-05,
+      "souletin": 4.415344665176235e-05,
+      "western": 8.254442946054041e-05
+    }
+  },
+  {
+    "start_sec": 680.0,
+    "end_sec": 690.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6411282420158386,
+    "probs": {
+      "central": 0.3467468023300171,
+      "nav-lab": 0.6411282420158386,
+      "navarrese": 0.00014783973165322095,
+      "souletin": 0.011956571601331234,
+      "western": 2.0547751773847267e-05
+    }
+  },
+  {
+    "start_sec": 688.0,
+    "end_sec": 698.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9669996500015259,
+    "probs": {
+      "central": 1.0271880455547944e-05,
+      "nav-lab": 0.9669996500015259,
+      "navarrese": 1.8150930145566235e-06,
+      "souletin": 0.03298819437623024,
+      "western": 1.0466890465465895e-08
+    }
+  },
+  {
+    "start_sec": 696.0,
+    "end_sec": 706.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.988899827003479,
+    "probs": {
+      "central": 4.2230308139323824e-08,
+      "nav-lab": 0.988899827003479,
+      "navarrese": 2.5254120572526517e-08,
+      "souletin": 0.011100033298134804,
+      "western": 7.053284067914944e-10
+    }
+  },
+  {
+    "start_sec": 704.0,
+    "end_sec": 714.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9937719702720642,
+    "probs": {
+      "central": 0.002457377966493368,
+      "nav-lab": 0.9937719702720642,
+      "navarrese": 3.7758010876132175e-05,
+      "souletin": 0.003689540084451437,
+      "western": 4.340209125075489e-05
+    }
+  },
+  {
+    "start_sec": 712.0,
+    "end_sec": 722.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.6698297262191772,
+    "probs": {
+      "central": 0.6698297262191772,
+      "nav-lab": 0.31748512387275696,
+      "navarrese": 5.00609130540397e-05,
+      "souletin": 0.012624548748135567,
+      "western": 1.0536567970120814e-05
+    }
+  },
+  {
+    "start_sec": 720.0,
+    "end_sec": 730.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7641516327857971,
+    "probs": {
+      "central": 0.05182168632745743,
+      "nav-lab": 0.7641516327857971,
+      "navarrese": 0.00046351735363714397,
+      "souletin": 0.18237537145614624,
+      "western": 0.0011878078803420067
+    }
+  },
+  {
+    "start_sec": 728.0,
+    "end_sec": 738.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9819491505622864,
+    "probs": {
+      "central": 0.00346375978551805,
+      "nav-lab": 0.9819491505622864,
+      "navarrese": 2.1235649910522625e-05,
+      "souletin": 0.01456548273563385,
+      "western": 3.8356066056621785e-07
+    }
+  },
+  {
+    "start_sec": 736.0,
+    "end_sec": 746.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9763143658638,
+    "probs": {
+      "central": 1.7437203496228904e-05,
+      "nav-lab": 0.9763143658638,
+      "navarrese": 4.5943232862555305e-07,
+      "souletin": 0.023667726665735245,
+      "western": 5.604457786745343e-09
+    }
+  },
+  {
+    "start_sec": 744.0,
+    "end_sec": 754.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.9523131847381592,
+    "probs": {
+      "central": 3.5551824112189934e-05,
+      "nav-lab": 0.047134898602962494,
+      "navarrese": 0.0005079896654933691,
+      "souletin": 0.9523131847381592,
+      "western": 8.342323781107552e-06
+    }
+  },
+  {
+    "start_sec": 752.0,
+    "end_sec": 762.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7212247848510742,
+    "probs": {
+      "central": 0.0004900334752164781,
+      "nav-lab": 0.7212247848510742,
+      "navarrese": 1.654599873290863e-05,
+      "souletin": 0.27826744318008423,
+      "western": 1.1792834584412049e-06
+    }
+  },
+  {
+    "start_sec": 760.0,
+    "end_sec": 770.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8998467326164246,
+    "probs": {
+      "central": 8.595736289862543e-05,
+      "nav-lab": 0.8998467326164246,
+      "navarrese": 0.0003193383745383471,
+      "souletin": 0.09974663704633713,
+      "western": 1.396290713273629e-06
+    }
+  },
+  {
+    "start_sec": 768.0,
+    "end_sec": 778.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9759435653686523,
+    "probs": {
+      "central": 1.5197612412976014e-07,
+      "nav-lab": 0.9759435653686523,
+      "navarrese": 1.956787627932499e-06,
+      "souletin": 0.024054354056715965,
+      "western": 3.202826670545278e-09
+    }
+  },
+  {
+    "start_sec": 776.0,
+    "end_sec": 786.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9996059536933899,
+    "probs": {
+      "central": 2.770066748780664e-05,
+      "nav-lab": 0.9996059536933899,
+      "navarrese": 2.303446308360435e-06,
+      "souletin": 0.00036303402157500386,
+      "western": 1.0351915307182935e-06
+    }
+  },
+  {
+    "start_sec": 784.0,
+    "end_sec": 794.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9532111287117004,
+    "probs": {
+      "central": 0.0028171706944704056,
+      "nav-lab": 0.9532111287117004,
+      "navarrese": 0.005381486844271421,
+      "souletin": 0.03769390285015106,
+      "western": 0.0008963035070337355
+    }
+  },
+  {
+    "start_sec": 792.0,
+    "end_sec": 802.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.6520769000053406,
+    "probs": {
+      "central": 8.230101116168953e-07,
+      "nav-lab": 0.3479020297527313,
+      "navarrese": 2.021209365921095e-05,
+      "souletin": 0.6520769000053406,
+      "western": 1.1335917982080446e-08
+    }
+  },
+  {
+    "start_sec": 800.0,
+    "end_sec": 810.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9008658528327942,
+    "probs": {
+      "central": 4.4267840166867245e-06,
+      "nav-lab": 0.9008658528327942,
+      "navarrese": 1.8634789739735425e-05,
+      "souletin": 0.09911102801561356,
+      "western": 2.428772383211708e-08
+    }
+  },
+  {
+    "start_sec": 808.0,
+    "end_sec": 818.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8730533123016357,
+    "probs": {
+      "central": 6.363941793097183e-05,
+      "nav-lab": 0.8730533123016357,
+      "navarrese": 7.073869346641004e-05,
+      "souletin": 0.12681171298027039,
+      "western": 5.747489240093273e-07
+    }
+  },
+  {
+    "start_sec": 816.0,
+    "end_sec": 826.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9807712435722351,
+    "probs": {
+      "central": 0.00016200558457057923,
+      "nav-lab": 0.9807712435722351,
+      "navarrese": 3.65492633136455e-05,
+      "souletin": 0.019029326736927032,
+      "western": 9.12198686364718e-07
+    }
+  },
+  {
+    "start_sec": 824.0,
+    "end_sec": 834.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.8917880654335022,
+    "probs": {
+      "central": 0.002631385810673237,
+      "nav-lab": 0.10210610181093216,
+      "navarrese": 0.0034094806760549545,
+      "souletin": 0.8917880654335022,
+      "western": 6.497734284494072e-05
+    }
+  },
+  {
+    "start_sec": 832.0,
+    "end_sec": 842.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.6400018334388733,
+    "probs": {
+      "central": 0.0005848488071933389,
+      "nav-lab": 0.3591134548187256,
+      "navarrese": 0.00025231411564163864,
+      "souletin": 0.6400018334388733,
+      "western": 4.764950790558942e-05
+    }
+  },
+  {
+    "start_sec": 840.0,
+    "end_sec": 850.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9808182716369629,
+    "probs": {
+      "central": 5.938538379268721e-05,
+      "nav-lab": 0.9808182716369629,
+      "navarrese": 0.0001277649134863168,
+      "souletin": 0.018976792693138123,
+      "western": 1.783904190233443e-05
+    }
+  },
+  {
+    "start_sec": 848.0,
+    "end_sec": 858.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9937676191329956,
+    "probs": {
+      "central": 0.0012609479017555714,
+      "nav-lab": 0.9937676191329956,
+      "navarrese": 0.0007529123686254025,
+      "souletin": 0.0041944305412471294,
+      "western": 2.416421557427384e-05
+    }
+  },
+  {
+    "start_sec": 856.0,
+    "end_sec": 866.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9111601710319519,
+    "probs": {
+      "central": 0.0074909827671945095,
+      "nav-lab": 0.9111601710319519,
+      "navarrese": 3.785976878134534e-05,
+      "souletin": 0.08130989968776703,
+      "western": 1.0346766430302523e-06
+    }
+  },
+  {
+    "start_sec": 864.0,
+    "end_sec": 874.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9876019358634949,
+    "probs": {
+      "central": 2.7329870135872625e-06,
+      "nav-lab": 0.9876019358634949,
+      "navarrese": 8.647458002997155e-07,
+      "souletin": 0.012391746044158936,
+      "western": 2.7059966214437736e-06
+    }
+  },
+  {
+    "start_sec": 872.0,
+    "end_sec": 882.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8840674161911011,
+    "probs": {
+      "central": 0.028605425730347633,
+      "nav-lab": 0.8840674161911011,
+      "navarrese": 0.03412581607699394,
+      "souletin": 0.03997026011347771,
+      "western": 0.013231097720563412
+    }
+  },
+  {
+    "start_sec": 880.0,
+    "end_sec": 890.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8186313509941101,
+    "probs": {
+      "central": 0.006297586485743523,
+      "nav-lab": 0.8186313509941101,
+      "navarrese": 0.0035044546239078045,
+      "souletin": 0.17156368494033813,
+      "western": 2.9244602046674117e-06
+    }
+  },
+  {
+    "start_sec": 888.0,
+    "end_sec": 898.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9640893340110779,
+    "probs": {
+      "central": 0.0011370466090738773,
+      "nav-lab": 0.9640893340110779,
+      "navarrese": 0.00012949146912433207,
+      "souletin": 0.03464299812912941,
+      "western": 1.0846318900803453e-06
+    }
+  },
+  {
+    "start_sec": 896.0,
+    "end_sec": 906.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8603913187980652,
+    "probs": {
+      "central": 0.00016408227384090424,
+      "nav-lab": 0.8603913187980652,
+      "navarrese": 3.634394670370966e-05,
+      "souletin": 0.13940824568271637,
+      "western": 5.832634375479984e-09
+    }
+  },
+  {
+    "start_sec": 904.0,
+    "end_sec": 914.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.5568581223487854,
+    "probs": {
+      "central": 0.07008324563503265,
+      "nav-lab": 0.5568581223487854,
+      "navarrese": 1.6732185486034723e-06,
+      "souletin": 0.37304964661598206,
+      "western": 7.295324394362979e-06
+    }
+  },
+  {
+    "start_sec": 912.0,
+    "end_sec": 922.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9991219639778137,
+    "probs": {
+      "central": 1.4457031056736014e-06,
+      "nav-lab": 0.9991219639778137,
+      "navarrese": 7.711960847700539e-07,
+      "souletin": 0.0008758031763136387,
+      "western": 6.006714414752423e-08
+    }
+  },
+  {
+    "start_sec": 920.0,
+    "end_sec": 930.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9704484939575195,
+    "probs": {
+      "central": 0.0004726790066342801,
+      "nav-lab": 0.9704484939575195,
+      "navarrese": 4.364542292023543e-06,
+      "souletin": 0.029074357822537422,
+      "western": 1.7213913849900564e-07
+    }
+  },
+  {
+    "start_sec": 928.0,
+    "end_sec": 938.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.8448189496994019,
+    "probs": {
+      "central": 1.09378734123311e-05,
+      "nav-lab": 0.1546027958393097,
+      "navarrese": 0.0005672894767485559,
+      "souletin": 0.8448189496994019,
+      "western": 4.523707985981673e-08
+    }
+  },
+  {
+    "start_sec": 936.0,
+    "end_sec": 946.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6057923436164856,
+    "probs": {
+      "central": 1.695094942988362e-05,
+      "nav-lab": 0.6057923436164856,
+      "navarrese": 0.0008544772863388062,
+      "souletin": 0.39333590865135193,
+      "western": 2.607431213164091e-07
+    }
+  },
+  {
+    "start_sec": 944.0,
+    "end_sec": 954.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.580339789390564,
+    "probs": {
+      "central": 0.0071801370941102505,
+      "nav-lab": 0.580339789390564,
+      "navarrese": 0.00012801081174984574,
+      "souletin": 0.4123486876487732,
+      "western": 3.333855147502618e-06
+    }
+  },
+  {
+    "start_sec": 952.0,
+    "end_sec": 962.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.967975378036499,
+    "probs": {
+      "central": 0.012040801346302032,
+      "nav-lab": 0.967975378036499,
+      "navarrese": 0.00011646206257864833,
+      "souletin": 0.019783413037657738,
+      "western": 8.39452986838296e-05
+    }
+  },
+  {
+    "start_sec": 960.0,
+    "end_sec": 970.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9534991383552551,
+    "probs": {
+      "central": 0.036412302404642105,
+      "nav-lab": 0.9534991383552551,
+      "navarrese": 7.045373786240816e-05,
+      "souletin": 0.009452559985220432,
+      "western": 0.0005655712448060513
+    }
+  },
+  {
+    "start_sec": 968.0,
+    "end_sec": 978.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6924927830696106,
+    "probs": {
+      "central": 0.18923985958099365,
+      "nav-lab": 0.6924927830696106,
+      "navarrese": 0.0019642100669443607,
+      "souletin": 0.09416505694389343,
+      "western": 0.022138047963380814
+    }
+  },
+  {
+    "start_sec": 976.0,
+    "end_sec": 986.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.928678572177887,
+    "probs": {
+      "central": 0.009417826309800148,
+      "nav-lab": 0.928678572177887,
+      "navarrese": 0.0010653156787157059,
+      "souletin": 0.05953500047326088,
+      "western": 0.001303283148445189
+    }
+  },
+  {
+    "start_sec": 984.0,
+    "end_sec": 994.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9956949949264526,
+    "probs": {
+      "central": 4.119164259464014e-06,
+      "nav-lab": 0.9956949949264526,
+      "navarrese": 2.2496878955280408e-05,
+      "souletin": 0.0033481866121292114,
+      "western": 0.0009302074904553592
+    }
+  },
+  {
+    "start_sec": 992.0,
+    "end_sec": 1002.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9532164335250854,
+    "probs": {
+      "central": 0.00015077463467605412,
+      "nav-lab": 0.9532164335250854,
+      "navarrese": 8.36830076877959e-06,
+      "souletin": 0.046619005501270294,
+      "western": 5.357132067729253e-06
+    }
+  },
+  {
+    "start_sec": 1000.0,
+    "end_sec": 1010.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.5338647961616516,
+    "probs": {
+      "central": 0.5338647961616516,
+      "nav-lab": 0.45090049505233765,
+      "navarrese": 0.007115505635738373,
+      "souletin": 0.007635417394340038,
+      "western": 0.0004837191663682461
+    }
+  },
+  {
+    "start_sec": 1008.0,
+    "end_sec": 1018.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9622902274131775,
+    "probs": {
+      "central": 0.017751425504684448,
+      "nav-lab": 0.9622902274131775,
+      "navarrese": 0.019068725407123566,
+      "souletin": 0.000666447973344475,
+      "western": 0.00022314759553410113
+    }
+  },
+  {
+    "start_sec": 1016.0,
+    "end_sec": 1026.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8691226840019226,
+    "probs": {
+      "central": 0.024988533928990364,
+      "nav-lab": 0.8691226840019226,
+      "navarrese": 0.02998223528265953,
+      "souletin": 0.06740102171897888,
+      "western": 0.008505534380674362
+    }
+  },
+  {
+    "start_sec": 1024.0,
+    "end_sec": 1034.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9887959957122803,
+    "probs": {
+      "central": 0.002816485706716776,
+      "nav-lab": 0.9887959957122803,
+      "navarrese": 0.004810520447790623,
+      "souletin": 0.0035384437069296837,
+      "western": 3.860627839458175e-05
+    }
+  },
+  {
+    "start_sec": 1032.0,
+    "end_sec": 1042.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9980102181434631,
+    "probs": {
+      "central": 3.562818619684549e-06,
+      "nav-lab": 0.9980102181434631,
+      "navarrese": 1.7482861949247308e-06,
+      "souletin": 0.00198364001698792,
+      "western": 8.986953048406576e-07
+    }
+  },
+  {
+    "start_sec": 1040.0,
+    "end_sec": 1050.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9291661977767944,
+    "probs": {
+      "central": 0.005800090730190277,
+      "nav-lab": 0.9291661977767944,
+      "navarrese": 0.002348491456359625,
+      "souletin": 0.06259135156869888,
+      "western": 9.390067862113938e-05
+    }
+  },
+  {
+    "start_sec": 1048.0,
+    "end_sec": 1058.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9969694018363953,
+    "probs": {
+      "central": 4.776262358063832e-05,
+      "nav-lab": 0.9969694018363953,
+      "navarrese": 6.410844071069732e-05,
+      "souletin": 0.002839332213625312,
+      "western": 7.944311073515564e-05
+    }
+  },
+  {
+    "start_sec": 1056.0,
+    "end_sec": 1066.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9034414887428284,
+    "probs": {
+      "central": 0.03569279611110687,
+      "nav-lab": 0.9034414887428284,
+      "navarrese": 0.03560212254524231,
+      "souletin": 0.0022496101446449757,
+      "western": 0.02301391214132309
+    }
+  },
+  {
+    "start_sec": 1064.0,
+    "end_sec": 1074.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9904572367668152,
+    "probs": {
+      "central": 0.00039823140832595527,
+      "nav-lab": 0.9904572367668152,
+      "navarrese": 0.00028874556301161647,
+      "souletin": 0.008831304498016834,
+      "western": 2.451375621603802e-05
+    }
+  },
+  {
+    "start_sec": 1072.0,
+    "end_sec": 1082.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6191155910491943,
+    "probs": {
+      "central": 4.79699629067909e-05,
+      "nav-lab": 0.6191155910491943,
+      "navarrese": 3.7353004245233024e-06,
+      "souletin": 0.380831778049469,
+      "western": 9.199675901072624e-07
+    }
+  },
+  {
+    "start_sec": 1080.0,
+    "end_sec": 1090.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9976643323898315,
+    "probs": {
+      "central": 7.56622512199101e-07,
+      "nav-lab": 0.9976643323898315,
+      "navarrese": 5.996280805220522e-08,
+      "souletin": 0.0023348729591816664,
+      "western": 3.78231668207718e-09
+    }
+  },
+  {
+    "start_sec": 1088.0,
+    "end_sec": 1098.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9981069564819336,
+    "probs": {
+      "central": 0.00010700384882511571,
+      "nav-lab": 0.9981069564819336,
+      "navarrese": 0.0008277430315501988,
+      "souletin": 0.0009507068898528814,
+      "western": 7.653257853235118e-06
+    }
+  },
+  {
+    "start_sec": 1096.0,
+    "end_sec": 1106.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9811914563179016,
+    "probs": {
+      "central": 0.0009985570795834064,
+      "nav-lab": 0.9811914563179016,
+      "navarrese": 0.0004500508075580001,
+      "souletin": 0.01674862578511238,
+      "western": 0.0006112640840001404
+    }
+  },
+  {
+    "start_sec": 1104.0,
+    "end_sec": 1114.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6378044486045837,
+    "probs": {
+      "central": 0.26369208097457886,
+      "nav-lab": 0.6378044486045837,
+      "navarrese": 0.05129667744040489,
+      "souletin": 0.037953704595565796,
+      "western": 0.009253151714801788
+    }
+  },
+  {
+    "start_sec": 1112.0,
+    "end_sec": 1122.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9237516522407532,
+    "probs": {
+      "central": 0.0049876500852406025,
+      "nav-lab": 0.9237516522407532,
+      "navarrese": 0.0002014569181483239,
+      "souletin": 0.06970815360546112,
+      "western": 0.0013511324068531394
+    }
+  },
+  {
+    "start_sec": 1120.0,
+    "end_sec": 1130.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9446595311164856,
+    "probs": {
+      "central": 0.0015192776918411255,
+      "nav-lab": 0.9446595311164856,
+      "navarrese": 0.0130177466198802,
+      "souletin": 0.03946545720100403,
+      "western": 0.0013379607116803527
+    }
+  },
+  {
+    "start_sec": 1128.0,
+    "end_sec": 1138.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9916766881942749,
+    "probs": {
+      "central": 0.0030804628040641546,
+      "nav-lab": 0.9916766881942749,
+      "navarrese": 0.0009052201057784259,
+      "souletin": 0.0033971434459090233,
+      "western": 0.0009405029122717679
+    }
+  },
+  {
+    "start_sec": 1136.0,
+    "end_sec": 1146.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7876673936843872,
+    "probs": {
+      "central": 0.19043155014514923,
+      "nav-lab": 0.7876673936843872,
+      "navarrese": 0.008911240845918655,
+      "souletin": 0.0016432333504781127,
+      "western": 0.011346644721925259
+    }
+  },
+  {
+    "start_sec": 1144.0,
+    "end_sec": 1154.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9917682409286499,
+    "probs": {
+      "central": 0.001929258112795651,
+      "nav-lab": 0.9917682409286499,
+      "navarrese": 0.00041253602830693126,
+      "souletin": 0.005870867054909468,
+      "western": 1.9077337128692307e-05
+    }
+  },
+  {
+    "start_sec": 1152.0,
+    "end_sec": 1162.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8020529747009277,
+    "probs": {
+      "central": 0.0935586616396904,
+      "nav-lab": 0.8020529747009277,
+      "navarrese": 0.0027568202931433916,
+      "souletin": 0.0956609770655632,
+      "western": 0.005970625672489405
+    }
+  },
+  {
+    "start_sec": 1160.0,
+    "end_sec": 1170.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.5587731599807739,
+    "probs": {
+      "central": 7.965334225445986e-05,
+      "nav-lab": 0.44041499495506287,
+      "navarrese": 2.8910497462675266e-07,
+      "souletin": 0.5587731599807739,
+      "western": 0.0007318912539631128
+    }
+  },
+  {
+    "start_sec": 1168.0,
+    "end_sec": 1178.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8921804428100586,
+    "probs": {
+      "central": 0.0026130471378564835,
+      "nav-lab": 0.8921804428100586,
+      "navarrese": 0.03134538605809212,
+      "souletin": 0.010319236665964127,
+      "western": 0.063541941344738
+    }
+  },
+  {
+    "start_sec": 1176.0,
+    "end_sec": 1186.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8486217260360718,
+    "probs": {
+      "central": 0.0037125032395124435,
+      "nav-lab": 0.8486217260360718,
+      "navarrese": 0.010267186909914017,
+      "souletin": 0.01870487444102764,
+      "western": 0.1186937615275383
+    }
+  },
+  {
+    "start_sec": 1184.0,
+    "end_sec": 1194.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8626108765602112,
+    "probs": {
+      "central": 0.000770100683439523,
+      "nav-lab": 0.8626108765602112,
+      "navarrese": 0.010831824503839016,
+      "souletin": 0.11357405036687851,
+      "western": 0.012213125824928284
+    }
+  },
+  {
+    "start_sec": 1192.0,
+    "end_sec": 1202.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9628620147705078,
+    "probs": {
+      "central": 0.00017014327750075608,
+      "nav-lab": 0.9628620147705078,
+      "navarrese": 0.0038425473030656576,
+      "souletin": 0.004734619986265898,
+      "western": 0.02839069440960884
+    }
+  },
+  {
+    "start_sec": 1200.0,
+    "end_sec": 1210.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9658254981040955,
+    "probs": {
+      "central": 0.00010148469300474972,
+      "nav-lab": 0.9658254981040955,
+      "navarrese": 0.001670867670327425,
+      "souletin": 0.004707528743892908,
+      "western": 0.02769460901618004
+    }
+  },
+  {
+    "start_sec": 1208.0,
+    "end_sec": 1218.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9783594012260437,
+    "probs": {
+      "central": 0.00027298813802190125,
+      "nav-lab": 0.9783594012260437,
+      "navarrese": 0.002148924395442009,
+      "souletin": 0.007681735325604677,
+      "western": 0.01153701264411211
+    }
+  },
+  {
+    "start_sec": 1216.0,
+    "end_sec": 1226.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9757747650146484,
+    "probs": {
+      "central": 0.00011856770288432017,
+      "nav-lab": 0.9757747650146484,
+      "navarrese": 0.0037627648562192917,
+      "souletin": 0.005406648851931095,
+      "western": 0.014937221072614193
+    }
+  },
+  {
+    "start_sec": 1224.0,
+    "end_sec": 1234.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9763157963752747,
+    "probs": {
+      "central": 0.00028636245406232774,
+      "nav-lab": 0.9763157963752747,
+      "navarrese": 0.00422322191298008,
+      "souletin": 0.005784300621598959,
+      "western": 0.013390280306339264
+    }
+  },
+  {
+    "start_sec": 1232.0,
+    "end_sec": 1242.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9554188251495361,
+    "probs": {
+      "central": 0.00030131108360365033,
+      "nav-lab": 0.9554188251495361,
+      "navarrese": 0.005554576404392719,
+      "souletin": 0.008166512474417686,
+      "western": 0.030558783560991287
+    }
+  },
+  {
+    "start_sec": 1240.0,
+    "end_sec": 1250.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9600258469581604,
+    "probs": {
+      "central": 0.00033056482789106667,
+      "nav-lab": 0.9600258469581604,
+      "navarrese": 0.00818441528826952,
+      "souletin": 0.009943646378815174,
+      "western": 0.0215155016630888
+    }
+  },
+  {
+    "start_sec": 1248.0,
+    "end_sec": 1258.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9808938503265381,
+    "probs": {
+      "central": 7.55582659621723e-05,
+      "nav-lab": 0.9808938503265381,
+      "navarrese": 0.003861123463138938,
+      "souletin": 0.0067858463153243065,
+      "western": 0.008383546955883503
+    }
+  },
+  {
+    "start_sec": 1256.0,
+    "end_sec": 1266.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9501909613609314,
+    "probs": {
+      "central": 0.00028975136228837073,
+      "nav-lab": 0.9501909613609314,
+      "navarrese": 0.008622522465884686,
+      "souletin": 0.004534529522061348,
+      "western": 0.03636230155825615
+    }
+  },
+  {
+    "start_sec": 1264.0,
+    "end_sec": 1274.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9329023957252502,
+    "probs": {
+      "central": 0.0005510334158316255,
+      "nav-lab": 0.9329023957252502,
+      "navarrese": 0.014912137761712074,
+      "souletin": 0.008428605273365974,
+      "western": 0.04320576414465904
+    }
+  },
+  {
+    "start_sec": 1272.0,
+    "end_sec": 1282.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9635603427886963,
+    "probs": {
+      "central": 7.124544936232269e-05,
+      "nav-lab": 0.9635603427886963,
+      "navarrese": 0.013240005820989609,
+      "souletin": 0.0020796244498342276,
+      "western": 0.02104870416224003
+    }
+  },
+  {
+    "start_sec": 1280.0,
+    "end_sec": 1290.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9727391004562378,
+    "probs": {
+      "central": 9.29418092709966e-05,
+      "nav-lab": 0.9727391004562378,
+      "navarrese": 0.003503831336274743,
+      "souletin": 0.008996742777526379,
+      "western": 0.014667429029941559
+    }
+  },
+  {
+    "start_sec": 1288.0,
+    "end_sec": 1298.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9720345735549927,
+    "probs": {
+      "central": 9.479972504777834e-05,
+      "nav-lab": 0.9720345735549927,
+      "navarrese": 0.007157701998949051,
+      "souletin": 0.0020753659773617983,
+      "western": 0.018637560307979584
+    }
+  },
+  {
+    "start_sec": 1296.0,
+    "end_sec": 1306.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9438881874084473,
+    "probs": {
+      "central": 0.0003483107720967382,
+      "nav-lab": 0.9438881874084473,
+      "navarrese": 0.014855706132948399,
+      "souletin": 0.007156786508858204,
+      "western": 0.03375104069709778
+    }
+  },
+  {
+    "start_sec": 1304.0,
+    "end_sec": 1314.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9457551836967468,
+    "probs": {
+      "central": 0.00020713331468869,
+      "nav-lab": 0.9457551836967468,
+      "navarrese": 0.006656569428741932,
+      "souletin": 0.0036397487856447697,
+      "western": 0.04374139755964279
+    }
+  },
+  {
+    "start_sec": 1312.0,
+    "end_sec": 1322.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9747142195701599,
+    "probs": {
+      "central": 0.00010394318087492138,
+      "nav-lab": 0.9747142195701599,
+      "navarrese": 0.0067338100634515285,
+      "souletin": 0.0019800160080194473,
+      "western": 0.016468040645122528
+    }
+  },
+  {
+    "start_sec": 1320.0,
+    "end_sec": 1330.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9937627911567688,
+    "probs": {
+      "central": 0.0009619100019335747,
+      "nav-lab": 0.9937627911567688,
+      "navarrese": 0.0002722487843129784,
+      "souletin": 0.001221420243382454,
+      "western": 0.0037816802505403757
+    }
+  },
+  {
+    "start_sec": 1328.0,
+    "end_sec": 1338.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.5609092116355896,
+    "probs": {
+      "central": 0.5609092116355896,
+      "nav-lab": 0.4379056990146637,
+      "navarrese": 0.0006580647313967347,
+      "souletin": 0.0005077631212770939,
+      "western": 1.9183602489647456e-05
+    }
+  },
+  {
+    "start_sec": 1336.0,
+    "end_sec": 1346.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.938247561454773,
+    "probs": {
+      "central": 0.938247561454773,
+      "nav-lab": 0.061187926679849625,
+      "navarrese": 0.00010504326928639784,
+      "souletin": 0.00029802913195453584,
+      "western": 0.00016144257097039372
+    }
+  },
+  {
+    "start_sec": 1344.0,
+    "end_sec": 1354.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.8614997267723083,
+    "probs": {
+      "central": 0.8614997267723083,
+      "nav-lab": 0.12958185374736786,
+      "navarrese": 8.047519258980174e-06,
+      "souletin": 0.00043169528362341225,
+      "western": 0.008478712290525436
+    }
+  },
+  {
+    "start_sec": 1352.0,
+    "end_sec": 1362.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8539800643920898,
+    "probs": {
+      "central": 0.006565478164702654,
+      "nav-lab": 0.8539800643920898,
+      "navarrese": 0.0002484447613824159,
+      "souletin": 0.1391797661781311,
+      "western": 2.6188781703240238e-05
+    }
+  },
+  {
+    "start_sec": 1360.0,
+    "end_sec": 1370.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9952065348625183,
+    "probs": {
+      "central": 0.0008171329973265529,
+      "nav-lab": 0.9952065348625183,
+      "navarrese": 9.391666026203893e-06,
+      "souletin": 0.0039603570476174355,
+      "western": 6.532012321258662e-06
+    }
+  },
+  {
+    "start_sec": 1368.0,
+    "end_sec": 1378.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8238067030906677,
+    "probs": {
+      "central": 0.0010187211446464062,
+      "nav-lab": 0.8238067030906677,
+      "navarrese": 4.0409569919575006e-05,
+      "souletin": 0.17507043480873108,
+      "western": 6.379401020240039e-05
+    }
+  },
+  {
+    "start_sec": 1376.0,
+    "end_sec": 1386.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8761546015739441,
+    "probs": {
+      "central": 0.011554579250514507,
+      "nav-lab": 0.8761546015739441,
+      "navarrese": 0.003801947459578514,
+      "souletin": 0.10810545086860657,
+      "western": 0.0003834970702882856
+    }
+  },
+  {
+    "start_sec": 1384.0,
+    "end_sec": 1394.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8272667527198792,
+    "probs": {
+      "central": 0.01446446031332016,
+      "nav-lab": 0.8272667527198792,
+      "navarrese": 0.005039083305746317,
+      "souletin": 0.15260902047157288,
+      "western": 0.0006206831894814968
+    }
+  },
+  {
+    "start_sec": 1392.0,
+    "end_sec": 1402.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.794941246509552,
+    "probs": {
+      "central": 4.4247248297324404e-05,
+      "nav-lab": 0.794941246509552,
+      "navarrese": 4.7318859287770465e-05,
+      "souletin": 0.20491991937160492,
+      "western": 4.7302120947279036e-05
+    }
+  },
+  {
+    "start_sec": 1400.0,
+    "end_sec": 1410.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9947479367256165,
+    "probs": {
+      "central": 0.00026778035680763423,
+      "nav-lab": 0.9947479367256165,
+      "navarrese": 2.5567235297785373e-06,
+      "souletin": 0.004980562720447779,
+      "western": 1.0664037972674123e-06
+    }
+  },
+  {
+    "start_sec": 1408.0,
+    "end_sec": 1418.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9888507723808289,
+    "probs": {
+      "central": 0.0001846496743382886,
+      "nav-lab": 0.9888507723808289,
+      "navarrese": 3.9920914218782855e-07,
+      "souletin": 0.010963532142341137,
+      "western": 6.107372882979689e-07
+    }
+  },
+  {
+    "start_sec": 1416.0,
+    "end_sec": 1426.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8739039897918701,
+    "probs": {
+      "central": 1.7928701709024608e-05,
+      "nav-lab": 0.8739039897918701,
+      "navarrese": 7.284738330781693e-06,
+      "souletin": 0.12607069313526154,
+      "western": 7.063835738563284e-08
+    }
+  },
+  {
+    "start_sec": 1424.0,
+    "end_sec": 1434.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6996564865112305,
+    "probs": {
+      "central": 0.0045341369695961475,
+      "nav-lab": 0.6996564865112305,
+      "navarrese": 0.004212825559079647,
+      "souletin": 0.28720664978027344,
+      "western": 0.0043898215517401695
+    }
+  },
+  {
+    "start_sec": 1432.0,
+    "end_sec": 1442.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9521116018295288,
+    "probs": {
+      "central": 0.002657282864674926,
+      "nav-lab": 0.9521116018295288,
+      "navarrese": 0.0062614139169454575,
+      "souletin": 0.038529299199581146,
+      "western": 0.00044037640327587724
+    }
+  },
+  {
+    "start_sec": 1440.0,
+    "end_sec": 1450.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9951981902122498,
+    "probs": {
+      "central": 1.744686596794054e-05,
+      "nav-lab": 0.9951981902122498,
+      "navarrese": 2.5267825549235567e-05,
+      "souletin": 0.0047537777572870255,
+      "western": 5.38636049896013e-06
+    }
+  },
+  {
+    "start_sec": 1448.0,
+    "end_sec": 1458.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.916163444519043,
+    "probs": {
+      "central": 0.06574862450361252,
+      "nav-lab": 0.916163444519043,
+      "navarrese": 0.0016741444123908877,
+      "souletin": 0.01595066860318184,
+      "western": 0.0004631080664694309
+    }
+  },
+  {
+    "start_sec": 1456.0,
+    "end_sec": 1466.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9847294688224792,
+    "probs": {
+      "central": 0.004707395564764738,
+      "nav-lab": 0.9847294688224792,
+      "navarrese": 0.0011614201357588172,
+      "souletin": 0.009374416433274746,
+      "western": 2.729710831772536e-05
+    }
+  },
+  {
+    "start_sec": 1464.0,
+    "end_sec": 1474.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.695588231086731,
+    "probs": {
+      "central": 0.05281730741262436,
+      "nav-lab": 0.695588231086731,
+      "navarrese": 0.004161274526268244,
+      "souletin": 0.2474307417869568,
+      "western": 2.412283265584847e-06
+    }
+  },
+  {
+    "start_sec": 1472.0,
+    "end_sec": 1482.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9805768132209778,
+    "probs": {
+      "central": 0.01422241609543562,
+      "nav-lab": 0.9805768132209778,
+      "navarrese": 0.0033519798889756203,
+      "souletin": 0.0018218125915154815,
+      "western": 2.705759288801346e-05
+    }
+  },
+  {
+    "start_sec": 1480.0,
+    "end_sec": 1490.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9182640910148621,
+    "probs": {
+      "central": 0.0032663822639733553,
+      "nav-lab": 0.9182640910148621,
+      "navarrese": 0.00018264228128828108,
+      "souletin": 0.07828611135482788,
+      "western": 7.604018605888996e-07
+    }
+  },
+  {
+    "start_sec": 1488.0,
+    "end_sec": 1498.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9876214861869812,
+    "probs": {
+      "central": 0.004629755858331919,
+      "nav-lab": 0.9876214861869812,
+      "navarrese": 3.637804547906853e-05,
+      "souletin": 0.007707155309617519,
+      "western": 5.150551714905305e-06
+    }
+  },
+  {
+    "start_sec": 1496.0,
+    "end_sec": 1506.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9676508903503418,
+    "probs": {
+      "central": 0.00034194684121757746,
+      "nav-lab": 0.9676508903503418,
+      "navarrese": 0.00015916784468572587,
+      "souletin": 0.03170868009328842,
+      "western": 0.0001393108832417056
+    }
+  },
+  {
+    "start_sec": 1504.0,
+    "end_sec": 1514.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9429137706756592,
+    "probs": {
+      "central": 0.05272672325372696,
+      "nav-lab": 0.9429137706756592,
+      "navarrese": 0.0021460657007992268,
+      "souletin": 0.0018346752040088177,
+      "western": 0.00037881467142142355
+    }
+  },
+  {
+    "start_sec": 1512.0,
+    "end_sec": 1522.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9176315069198608,
+    "probs": {
+      "central": 0.00472163874655962,
+      "nav-lab": 0.9176315069198608,
+      "navarrese": 0.00013995543122291565,
+      "souletin": 0.0774468183517456,
+      "western": 6.011938603478484e-05
+    }
+  },
+  {
+    "start_sec": 1520.0,
+    "end_sec": 1530.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9934490323066711,
+    "probs": {
+      "central": 0.002629872178658843,
+      "nav-lab": 0.9934490323066711,
+      "navarrese": 0.0029904681723564863,
+      "souletin": 0.0008398097124882042,
+      "western": 9.084859630092978e-05
+    }
+  },
+  {
+    "start_sec": 1528.0,
+    "end_sec": 1538.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9742000699043274,
+    "probs": {
+      "central": 0.0027163075283169746,
+      "nav-lab": 0.9742000699043274,
+      "navarrese": 2.3777707610861398e-05,
+      "souletin": 0.02305971086025238,
+      "western": 1.2971877083600702e-07
+    }
+  },
+  {
+    "start_sec": 1536.0,
+    "end_sec": 1546.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.7793247699737549,
+    "probs": {
+      "central": 0.0008094580261968076,
+      "nav-lab": 0.21986234188079834,
+      "navarrese": 3.073037078138441e-06,
+      "souletin": 0.7793247699737549,
+      "western": 3.742989918009698e-07
+    }
+  },
+  {
+    "start_sec": 1544.0,
+    "end_sec": 1554.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.5656248331069946,
+    "probs": {
+      "central": 0.009969527833163738,
+      "nav-lab": 0.4017679691314697,
+      "navarrese": 0.02156156115233898,
+      "souletin": 0.5656248331069946,
+      "western": 0.0010760945733636618
+    }
+  },
+  {
+    "start_sec": 1552.0,
+    "end_sec": 1562.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8486408591270447,
+    "probs": {
+      "central": 0.03088631108403206,
+      "nav-lab": 0.8486408591270447,
+      "navarrese": 0.007497768383473158,
+      "souletin": 0.11157440394163132,
+      "western": 0.0014005651464685798
+    }
+  },
+  {
+    "start_sec": 1560.0,
+    "end_sec": 1570.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7360779047012329,
+    "probs": {
+      "central": 0.008127562701702118,
+      "nav-lab": 0.7360779047012329,
+      "navarrese": 0.002678499324247241,
+      "souletin": 0.25286629796028137,
+      "western": 0.00024974808911792934
+    }
+  },
+  {
+    "start_sec": 1568.0,
+    "end_sec": 1578.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.933885395526886,
+    "probs": {
+      "central": 9.854674090092885e-07,
+      "nav-lab": 0.933885395526886,
+      "navarrese": 9.256386874767486e-06,
+      "souletin": 0.06610420346260071,
+      "western": 7.203087903917549e-08
+    }
+  },
+  {
+    "start_sec": 1576.0,
+    "end_sec": 1586.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7274282574653625,
+    "probs": {
+      "central": 0.010653563775122166,
+      "nav-lab": 0.7274282574653625,
+      "navarrese": 0.005391811020672321,
+      "souletin": 0.2548782527446747,
+      "western": 0.0016481351340189576
+    }
+  },
+  {
+    "start_sec": 1584.0,
+    "end_sec": 1594.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.6231873035430908,
+    "probs": {
+      "central": 0.0005646516801789403,
+      "nav-lab": 0.3762193024158478,
+      "navarrese": 1.8924747564597055e-05,
+      "souletin": 0.6231873035430908,
+      "western": 9.77781292021973e-06
+    }
+  },
+  {
+    "start_sec": 1592.0,
+    "end_sec": 1602.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.838294506072998,
+    "probs": {
+      "central": 0.001914496417157352,
+      "nav-lab": 0.838294506072998,
+      "navarrese": 0.00035201176069676876,
+      "souletin": 0.15937121212482452,
+      "western": 6.77637945045717e-05
+    }
+  },
+  {
+    "start_sec": 1600.0,
+    "end_sec": 1610.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9983175992965698,
+    "probs": {
+      "central": 1.2565875806558324e-07,
+      "nav-lab": 0.9983175992965698,
+      "navarrese": 5.7906838435428654e-08,
+      "souletin": 0.0016821668250486255,
+      "western": 5.257308477446543e-10
+    }
+  },
+  {
+    "start_sec": 1608.0,
+    "end_sec": 1618.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9852567315101624,
+    "probs": {
+      "central": 2.8699247195618227e-05,
+      "nav-lab": 0.9852567315101624,
+      "navarrese": 9.840588973020203e-06,
+      "souletin": 0.014704768545925617,
+      "western": 1.0418458096239647e-08
+    }
+  },
+  {
+    "start_sec": 1616.0,
+    "end_sec": 1626.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.9908791184425354,
+    "probs": {
+      "central": 0.9908791184425354,
+      "nav-lab": 0.008541743271052837,
+      "navarrese": 3.5029595892410725e-05,
+      "souletin": 0.00051054114010185,
+      "western": 3.351791747263633e-05
+    }
+  },
+  {
+    "start_sec": 1624.0,
+    "end_sec": 1634.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7057793140411377,
+    "probs": {
+      "central": 0.007049639709293842,
+      "nav-lab": 0.7057793140411377,
+      "navarrese": 1.078293462342117e-05,
+      "souletin": 0.2827955484390259,
+      "western": 0.004364703316241503
+    }
+  },
+  {
+    "start_sec": 1632.0,
+    "end_sec": 1642.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.5000056028366089,
+    "probs": {
+      "central": 0.04682297259569168,
+      "nav-lab": 0.5000056028366089,
+      "navarrese": 0.0006991603877395391,
+      "souletin": 0.22517770528793335,
+      "western": 0.22729451954364777
+    }
+  },
+  {
+    "start_sec": 1640.0,
+    "end_sec": 1650.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7055901885032654,
+    "probs": {
+      "central": 0.0048790485598146915,
+      "nav-lab": 0.7055901885032654,
+      "navarrese": 0.011583634652197361,
+      "souletin": 0.2596300542354584,
+      "western": 0.01831706427037716
+    }
+  },
+  {
+    "start_sec": 1648.0,
+    "end_sec": 1658.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7615575194358826,
+    "probs": {
+      "central": 2.7853571737068705e-05,
+      "nav-lab": 0.7615575194358826,
+      "navarrese": 9.488248906563967e-06,
+      "souletin": 0.23840393126010895,
+      "western": 1.1308335388093838e-06
+    }
+  },
+  {
+    "start_sec": 1656.0,
+    "end_sec": 1666.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8628652691841125,
+    "probs": {
+      "central": 2.2883270958118374e-06,
+      "nav-lab": 0.8628652691841125,
+      "navarrese": 1.6713163120130048e-07,
+      "souletin": 0.13712286949157715,
+      "western": 9.353141649626195e-06
+    }
+  },
+  {
+    "start_sec": 1664.0,
+    "end_sec": 1674.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6949516534805298,
+    "probs": {
+      "central": 0.07316312193870544,
+      "nav-lab": 0.6949516534805298,
+      "navarrese": 0.0021567775402218103,
+      "souletin": 0.19655749201774597,
+      "western": 0.03317093104124069
+    }
+  },
+  {
+    "start_sec": 1672.0,
+    "end_sec": 1682.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9952923059463501,
+    "probs": {
+      "central": 1.1073544555983972e-05,
+      "nav-lab": 0.9952923059463501,
+      "navarrese": 0.0005912063643336296,
+      "souletin": 0.004105369094759226,
+      "western": 8.684921937174295e-08
+    }
+  },
+  {
+    "start_sec": 1680.0,
+    "end_sec": 1690.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9216659665107727,
+    "probs": {
+      "central": 0.0008326120441779494,
+      "nav-lab": 0.9216659665107727,
+      "navarrese": 9.305130333814304e-06,
+      "souletin": 0.07748134434223175,
+      "western": 1.0838723028427921e-05
+    }
+  },
+  {
+    "start_sec": 1688.0,
+    "end_sec": 1698.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.6147496104240417,
+    "probs": {
+      "central": 0.1085173711180687,
+      "nav-lab": 0.27640101313591003,
+      "navarrese": 1.409818469255697e-05,
+      "souletin": 0.6147496104240417,
+      "western": 0.00031790463253855705
+    }
+  },
+  {
+    "start_sec": 1696.0,
+    "end_sec": 1706.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.7459675669670105,
+    "probs": {
+      "central": 0.0759473517537117,
+      "nav-lab": 0.17791303992271423,
+      "navarrese": 8.691203402122483e-05,
+      "souletin": 0.7459675669670105,
+      "western": 8.522173448000103e-05
+    }
+  },
+  {
+    "start_sec": 1704.0,
+    "end_sec": 1714.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9970705509185791,
+    "probs": {
+      "central": 0.0026506755966693163,
+      "nav-lab": 0.9970705509185791,
+      "navarrese": 2.0087465600227006e-05,
+      "souletin": 0.0002473170461598784,
+      "western": 1.1353411537129432e-05
+    }
+  },
+  {
+    "start_sec": 1712.0,
+    "end_sec": 1722.0,
+    "dialect": "souletin",
+    "dialect_name": "Zuberera",
+    "confidence": 0.8371801376342773,
+    "probs": {
+      "central": 0.0007222689455375075,
+      "nav-lab": 0.1620946228504181,
+      "navarrese": 2.6262455321557354e-06,
+      "souletin": 0.8371801376342773,
+      "western": 3.0024929742467066e-07
+    }
+  },
+  {
+    "start_sec": 1720.0,
+    "end_sec": 1730.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9962711334228516,
+    "probs": {
+      "central": 0.0013416582951322198,
+      "nav-lab": 0.9962711334228516,
+      "navarrese": 3.8035368561395444e-06,
+      "souletin": 0.0023834307212382555,
+      "western": 3.663169678702616e-08
+    }
+  },
+  {
+    "start_sec": 1728.0,
+    "end_sec": 1738.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.997305154800415,
+    "probs": {
+      "central": 1.876665191957727e-05,
+      "nav-lab": 0.997305154800415,
+      "navarrese": 4.180401163011993e-07,
+      "souletin": 0.0026757223531603813,
+      "western": 2.192276360446499e-09
+    }
+  },
+  {
+    "start_sec": 1736.0,
+    "end_sec": 1746.0,
+    "dialect": "central",
+    "dialect_name": "Erdialdekoa / Gipuzkera",
+    "confidence": 0.8399268984794617,
+    "probs": {
+      "central": 0.8399268984794617,
+      "nav-lab": 0.1479254812002182,
+      "navarrese": 0.011538977734744549,
+      "souletin": 0.00031881139148026705,
+      "western": 0.0002898527018260211
+    }
+  },
+  {
+    "start_sec": 1744.0,
+    "end_sec": 1754.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.7617218494415283,
+    "probs": {
+      "central": 0.06497293710708618,
+      "nav-lab": 0.7617218494415283,
+      "navarrese": 0.013368818908929825,
+      "souletin": 0.08120587468147278,
+      "western": 0.07873057574033737
+    }
+  },
+  {
+    "start_sec": 1752.0,
+    "end_sec": 1762.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8884419798851013,
+    "probs": {
+      "central": 0.0002744580851867795,
+      "nav-lab": 0.8884419798851013,
+      "navarrese": 0.00971994549036026,
+      "souletin": 0.00016592739848420024,
+      "western": 0.10139767080545425
+    }
+  },
+  {
+    "start_sec": 1760.0,
+    "end_sec": 1770.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8642347455024719,
+    "probs": {
+      "central": 0.0012751838658005,
+      "nav-lab": 0.8642347455024719,
+      "navarrese": 0.018496491014957428,
+      "souletin": 0.0005632269894704223,
+      "western": 0.11543036252260208
+    }
+  },
+  {
+    "start_sec": 1768.0,
+    "end_sec": 1778.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8999575972557068,
+    "probs": {
+      "central": 0.0016426090151071548,
+      "nav-lab": 0.8999575972557068,
+      "navarrese": 0.01072699110955,
+      "souletin": 0.0007080064387992024,
+      "western": 0.08696483820676804
+    }
+  },
+  {
+    "start_sec": 1776.0,
+    "end_sec": 1786.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.6654321551322937,
+    "probs": {
+      "central": 0.0038570493925362825,
+      "nav-lab": 0.6654321551322937,
+      "navarrese": 0.03011169284582138,
+      "souletin": 0.005332765635102987,
+      "western": 0.295266330242157
+    }
+  },
+  {
+    "start_sec": 1784.0,
+    "end_sec": 1794.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.8674514889717102,
+    "probs": {
+      "central": 0.0007602169644087553,
+      "nav-lab": 0.8674514889717102,
+      "navarrese": 0.007706900592893362,
+      "souletin": 0.0069613028317689896,
+      "western": 0.11712007969617844
+    }
+  },
+  {
+    "start_sec": 1792.0,
+    "end_sec": 1800.0,
+    "dialect": "nav-lab",
+    "dialect_name": "Napar-Lapurtera",
+    "confidence": 0.9185771346092224,
+    "probs": {
+      "central": 0.001545715262182057,
+      "nav-lab": 0.9185771346092224,
+      "navarrese": 0.03191489353775978,
+      "souletin": 0.01388792134821415,
+      "western": 0.034074317663908005
+    }
+  }
+]

@@ -1,7 +1,7 @@
 # Whisper encoder → dialect classifier config
 model: whisper_encoder_mlp
 whisper_model: xezpeleta/whisper-large-v3-eu
-pooling: mean_std_max       # mean_std_max (3840-dim, no re-extraction) or attention (num_segments × 1280, requires re-extraction)
+pooling: attention          # mean_std_max (3840-dim, no re-extraction) or attention (num_segments × 1280, requires re-extraction)
 
 input_dim: 3840             # automatically set based on pooling mode
 num_segments: 8             # only used with pooling=attention
