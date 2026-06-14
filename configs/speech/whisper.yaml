@@ -10,7 +10,7 @@ num_layers: 2
 num_classes: 5
 
 # Loss function
-loss: focal
+loss: crossentropy
 focal_gamma: 2.0
 
 # Class balancing
