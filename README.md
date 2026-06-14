@@ -331,23 +331,54 @@ tune focal gamma or downsample nav-lab to rebalance.
 
 ### Running the Speech Pipeline
 
-```bash
-# Requires GPU (NVIDIA L40 or similar, 16GB+ VRAM) for extraction
-# 1. Extract Whisper embeddings (one-time, ~25 min for 36K segments)
-uv run python -m src.models.speech.whisper_did extract \
-  --manifest data/processed/speech/ahotsak_full/train.csv \
-  --output models/speech/whisper_train_emb.pkl \
-  --pooling mean_std_max
+#### Inference (quick)
 
-# 2. Train MLP classifier (CPU, ~30s)
-uv run python -m src.models.speech.whisper_did train \
-  --train-emb models/speech/whisper_train_emb.pkl \
-  --val-emb models/speech/whisper_val_emb.pkl \
-  --test-emb models/speech/whisper_test_emb.pkl \
-  --config configs/speech/whisper.yaml
+```bash
+# Requires GPU (NVIDIA GPU with 8GB+ VRAM).
+# Predict dialect from any WAV file (16kHz mono recommended):
+uv run python -m src.models.speech.whisper_did predict \
+  audio.wav \
+  --model-dir models/speech/whisper_dialect_merged \
+  --device cuda
 ```
 
-Models: `models/speech/whisper_dialect/` (classifier.pkl + config.json).
+Example output:
+```
+Dialect: nav-lab (Napar-Lapurtera)
+Confidence: 0.5798
+
+Top predictions:
+  nav-lab      — 0.5798 — Napar-Lapurtera
+  souletin     — 0.3868 — Zuberera
+  western      — 0.0121 — Mendebaldekoa / Bizkaiera
+```
+
+#### Training (full pipeline)
+
+```bash
+# Step 1: Extract Whisper embeddings (GPU, ~7h for 197K segments)
+uv run python -m src.models.speech.whisper_did extract \
+  --manifest data/processed/speech/merged/train.csv \
+  --output models/speech/whisper_merged_train_emb.pkl \
+  --device cuda
+
+# Repeat for val.csv and test.csv
+
+# Step 2: Train MLP classifier (GPU, ~5 min)
+uv run python -m src.models.speech.whisper_did train \
+  --train-emb models/speech/whisper_merged_train_emb.pkl \
+  --val-emb models/speech/whisper_merged_val_emb.pkl \
+  --test-emb models/speech/whisper_merged_test_emb.pkl \
+  --output models/speech/whisper_dialect_merged \
+  --config configs/speech/whisper.yaml \
+  --device cuda
+```
+
+Or use the automated script: `bash run_full_pipeline.sh`
+
+Models saved to `models/speech/whisper_dialect_merged/`:
+- `classifier.pkl` — MLP weights, label encoder, scaler
+- `config.json` — training config and metrics
 
 ---
 

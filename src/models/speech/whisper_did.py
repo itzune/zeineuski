@@ -365,6 +365,117 @@ def train_mlp(
     }
 
 
+# ── Inference ──
+
+DIALECT_NAMES = {
+    "western": "Mendebaldekoa / Bizkaiera",
+    "central": "Erdialdekoa / Gipuzkera",
+    "navarrese": "Nafarrera",
+    "nav-lab": "Napar-Lapurtera",
+    "souletin": "Zuberera",
+}
+
+
+def load_speech_model(
+    model_dir: str = "models/speech/whisper_dialect_merged",
+    device: str = "cuda",
+) -> tuple:
+    """Load a trained speech dialect classifier.
+
+    Returns (encoder, mlp_model, label_encoder, scaler, config).
+    """
+    import pickle as _pickle
+
+    model_dir = Path(model_dir)
+    model_path = model_dir / "classifier.pkl"
+
+    with open(model_path, "rb") as f:
+        saved = _pickle.load(f)
+
+    # Rebuild encoder
+    whisper_model = saved["config"]["whisper_model"]
+    encoder = WhisperEncoder(whisper_model, device)
+    encoder.load()
+
+    # Rebuild MLP
+    mlp = MLPClassifier(
+        input_dim=saved["input_dim"],
+        num_classes=saved["num_classes"],
+        hidden_dim=saved["hidden_dim"],
+        dropout=saved["config"].get("dropout", 0.3),
+    )
+    # Load state dict from numpy arrays
+    state = {k: torch.from_numpy(v) for k, v in saved["model_state"].items()}
+    mlp.load_state_dict(state)
+    mlp.to(device)
+    mlp.eval()
+
+    return encoder, mlp, saved["label_encoder"], saved["scaler"], saved["config"]
+
+
+def predict_speech(
+    audio_path: str,
+    encoder: WhisperEncoder = None,
+    mlp_model=None,
+    label_encoder=None,
+    scaler=None,
+    model_dir: str = "models/speech/whisper_dialect_merged",
+    device: str = "cuda",
+) -> dict:
+    """Predict dialect from an audio file.
+
+    Args:
+        audio_path: Path to a WAV file (16kHz mono recommended).
+        encoder, mlp_model, label_encoder, scaler: Pre-loaded model parts
+            (auto-loaded from model_dir if None).
+        model_dir: Directory containing classifier.pkl.
+        device: 'cuda' or 'cpu'.
+
+    Returns:
+        dict with keys: dialect, dialect_name, confidence, predictions (top-3).
+    """
+    import numpy as _np
+
+    # Auto-load if needed
+    if encoder is None or mlp_model is None:
+        encoder, mlp_model, label_encoder, scaler, _ = load_speech_model(
+            model_dir, device
+        )
+
+    # Extract embedding
+    embedding = encoder.extract(audio_path)
+
+    # Scale
+    embedding_scaled = scaler.transform(embedding.reshape(1, -1))
+
+    # Predict
+    X = torch.tensor(embedding_scaled, dtype=torch.float32).to(device)
+    with torch.no_grad():
+        logits = mlp_model(X)
+        probs = torch.softmax(logits, dim=1).cpu().numpy().squeeze(0)
+
+    # Top-3
+    top3_idx = _np.argsort(probs)[::-1][:3]
+    predictions = []
+    for idx in top3_idx:
+        cls_name = label_encoder.classes_[idx]
+        predictions.append(
+            {
+                "dialect": cls_name,
+                "confidence": round(float(probs[idx]), 4),
+                "dialect_name": DIALECT_NAMES.get(cls_name, cls_name),
+            }
+        )
+
+    top = predictions[0]
+    return {
+        "dialect": top["dialect"],
+        "confidence": top["confidence"],
+        "dialect_name": top["dialect_name"],
+        "predictions": predictions,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -386,6 +497,16 @@ def main():
     p_train.add_argument("--device", default="cuda")
 
     p_train.add_argument("--seed", type=int, default=42)
+
+    # predict
+    p_predict = sub.add_parser("predict")
+    p_predict.add_argument("audio", help="Path to audio file (WAV)")
+    p_predict.add_argument(
+        "--model-dir",
+        default="models/speech/whisper_dialect_merged",
+        help="Directory with classifier.pkl",
+    )
+    p_predict.add_argument("--device", default="cuda")
 
     args = parser.parse_args()
 
@@ -421,6 +542,16 @@ def main():
         print(f"NUM_CLASSES: {results['num_classes']}")
         for cls_name, f1 in results["per_class_f1"].items():
             print(f"METRIC f1_{cls_name}={f1}")
+
+    elif args.cmd == "predict":
+        result = predict_speech(
+            args.audio, model_dir=args.model_dir, device=args.device
+        )
+        print(f"Dialect: {result['dialect']} ({result['dialect_name']})")
+        print(f"Confidence: {result['confidence']:.4f}")
+        print("\nTop predictions:")
+        for p in result["predictions"]:
+            print(f"  {p['dialect']:12s} — {p['confidence']:.4f} — {p['dialect_name']}")
 
 
 if __name__ == "__main__":
