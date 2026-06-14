@@ -9,8 +9,11 @@ GPU_DIR="/root/zeineuski"
 # ── Sync code changes to GPU ──────────────────────────────────────────────────
 rsync -az -e "ssh" \
   /home/xezpeleta/Dev/itzune/zeineuski/src/ \
+  "${GPU_HOST}:${GPU_DIR}/src/"
+
+rsync -az -e "ssh" \
   /home/xezpeleta/Dev/itzune/zeineuski/configs/ \
-  "${GPU_HOST}:${GPU_DIR}/" \
+  "${GPU_HOST}:${GPU_DIR}/configs/"
   2>&1 | tail -1
 
 # ── Train + evaluate on GPU ───────────────────────────────────────────────────
