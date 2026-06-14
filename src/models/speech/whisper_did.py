@@ -218,6 +218,10 @@ def extract_all_embeddings(
             sample["_seq_len"] = min(
                 seq_len, seq_len
             )  # original seq_len before padding
+        elif pooling == "mean":
+            # Plain mean pooling (1280-dim)
+            frames = encoder.extract(sample["path"], return_frames=True)
+            sample["embedding"] = frames.mean(axis=0)
         else:
             # Original mean_std_max pooling
             frames = encoder.extract(
@@ -765,7 +769,9 @@ def main():
     p_extract.add_argument("--whisper-model", default="xezpeleta/whisper-large-v3-eu")
     p_extract.add_argument("--device", default="cuda")
     p_extract.add_argument(
-        "--pooling", default="mean_std_max", choices=["mean_std_max", "attention"]
+        "--pooling",
+        default="mean_std_max",
+        choices=["mean", "mean_std_max", "attention"],
     )
     p_extract.add_argument("--num-segments", type=int, default=8)
     p_extract.add_argument(
