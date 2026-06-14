@@ -195,6 +195,46 @@ def train_mlp(
     X_test = scaler.transform(X_test)
 
     num_classes = len(label_encoder.classes_)
+
+    # ── Balanced subsampling ──
+    subsample_per_class = config.get("balanced_subsample", 0)
+    if subsample_per_class > 0:
+        indices = []
+        for cls_idx in range(num_classes):
+            cls_mask = y_train == cls_idx
+            cls_indices = np.where(cls_mask)[0]
+            n_available = len(cls_indices)
+            n_sample = min(subsample_per_class, n_available)
+            if n_sample < n_available:
+                sampled = np.random.choice(cls_indices, n_sample, replace=False)
+            else:
+                sampled = cls_indices
+            indices.append(sampled)
+            logger.info(
+                f"  Class {label_encoder.classes_[cls_idx]}: {n_sample}/{n_available} samples"
+            )
+        indices = np.concatenate(indices)
+        np.random.shuffle(indices)
+        X_train = X_train[indices]
+        y_train = y_train[indices]
+        logger.info(f"  Total after subsampling: {len(indices)} samples")
+
+    # ── Class weights ──
+    use_class_weights = config.get("class_weights", False)
+    class_weights_tensor = None
+    if use_class_weights:
+        from sklearn.utils.class_weight import compute_class_weight
+
+        class_weights = compute_class_weight(
+            "balanced", classes=np.unique(y_train), y=y_train
+        )
+        class_weights_tensor = torch.tensor(class_weights, dtype=torch.float32).to(
+            device
+        )
+        logger.info(
+            f"  Class weights: {dict(zip(label_encoder.classes_, class_weights))}"
+        )
+
     batch_size = int(config.get("batch_size", 32))
     lr = float(config.get("learning_rate", 1e-3))
     epochs = int(config.get("epochs", 30))
@@ -235,7 +275,9 @@ def train_mlp(
         criterion = FocalLoss(alpha=alpha, gamma=gamma)
         logger.info(f"Using Focal Loss (alpha={alpha}, gamma={gamma})")
     else:
-        criterion = nn.CrossEntropyLoss()
+        criterion = nn.CrossEntropyLoss(
+            weight=class_weights_tensor if use_class_weights else None
+        )
 
     X_train_t = torch.tensor(X_train, dtype=torch.float32)
     y_train_t = torch.tensor(y_train, dtype=torch.long)
@@ -337,6 +379,8 @@ def train_mlp(
                 "learning_rate": lr,
                 "epochs": epochs,
                 "train_time_s": round(train_time, 1),
+                "balanced_subsample": subsample_per_class,
+                "class_weights": use_class_weights,
             },
             f,
             indent=2,

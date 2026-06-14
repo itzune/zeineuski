@@ -13,6 +13,10 @@ num_classes: 5
 loss: focal
 focal_gamma: 2.0
 
+# Class balancing
+balanced_subsample: 0      # 0 = disabled, N = downsample each class to N samples
+class_weights: false        # sklearn compute_class_weight('balanced')
+
 # Training
 batch_size: 64
 learning_rate: 5e-4
