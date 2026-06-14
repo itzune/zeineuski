@@ -224,13 +224,9 @@ def main():
             town = passage.get("town_slug", "unknown")
             vimeo_url = passage.get("vimeo_url")
             if not vimeo_url:
-                # Lazy resolve — probe the passage page
-                vimeo_url = resolve_vimeo_url(town, passage_id)
-                if not vimeo_url:
-                    # No Vimeo content for this slot — skip silently
-                    skipped += 1
-                    continue
-                passage["vimeo_url"] = vimeo_url
+                # No Vimeo content for this slot — skip
+                skipped += 1
+                continue
 
             # Output filename: <town>_<passage_id>.wav
             filename = f"{town}_{passage_id.replace('/', '_')}.wav"
