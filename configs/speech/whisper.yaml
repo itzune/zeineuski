@@ -4,7 +4,7 @@ whisper_model: xezpeleta/whisper-large-v3-eu
 pooling: mean_std_max
 
 input_dim: 3840
-hidden_dim: 512
+hidden_dim: 768
 dropout: 0.3
 num_layers: 2
 num_classes: 5
