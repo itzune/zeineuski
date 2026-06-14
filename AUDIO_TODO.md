@@ -115,3 +115,65 @@ Analyzed 30-min Kanaldude documentary (225 segments) using the baseline model:
 - 78.7% nav-lab, 12.4% central, 8.0% souletin, 0.9% western
 - Results at `data/processed/speech/external_analysis/results.json`
 - Analysis script: `scripts/analyze_external_video.sh`
+
+---
+
+## Deployment Notes
+
+### Hardware for inference
+
+| Resource | Minimum | Recommended |
+|---|---|---|
+| GPU VRAM | ~4 GB | 6+ GB |
+| CPU RAM | 8 GB | 16 GB |
+| Disk | ~5.8 GB (Whisper model) | 8+ GB |
+| GPU required? | No — CPU works but 8-10× slower |
+
+- Whisper large-v3-eu encoder: 1.5B params, ~5.8 GB on disk (fp32), ~2.9 GB in memory (fp16)
+- MLP classifier: 5 MB (negligible)
+- Inference speed on L40: ~26 segments/second. On consumer GPU (RTX 3060): ~15-20/s. On CPU: ~2-3/s
+
+### WASM / browser deployment
+
+**Not feasible with the current architecture.** The Whisper large-v3-eu encoder is 1.5B parameters (~6 GB on disk), while browser WASM memory caps at 4 GB (realistically much less on mobile). Even if it could load, inference would take minutes per segment on CPU/WASM rather than the milliseconds needed for a usable UX.
+
+**The path to WASM deployment:**
+1. First, improve the teacher model — current best is macro F1 0.534. Fusion (strategy 2) needs Mintzoak ASR transcriptions to reach 0.65-0.70.
+2. Once the teacher is good enough, use knowledge distillation: run the teacher on all 197K segments to get soft labels, then train a tiny student model (CNN-based, 10-50 MB, e.g. MobileNet or ECAPA-TDNN-lite) to mimic the teacher's predictions from raw audio.
+3. Convert the student to ONNX → WASM-friendly format. At 10-50 MB and sub-100ms inference, browser/phone deployment becomes practical.
+
+**Bottom line:** The current pipeline proves the approach works (0.534 macro F1 with frozen Whisper + MLP), but deployment on edge devices requires distillation into a much smaller model, and that's only worth doing once the teacher crosses a reasonable quality threshold (≥0.65 macro F1).
+
+---
+
+## Conclusions
+
+### What worked
+
+1. **Mean_std_max pooling over frozen Whisper encoder** — simple but effective. The 3840-dim concatenated statistics (mean, std, max of encoder hidden states) capture enough phonetic variation to discriminate 5 Basque dialects at 0.519 macro F1 with just a 2-layer 768-dim MLP.
+
+2. **Subsampling to 10K/class** — the single most impactful change (+17.8pp macro F1). The 18:1 class imbalance (89K nav-lab vs 5K central) was the primary bottleneck. Simple balanced subsampling solved it without needing focal loss or class weights.
+
+3. **Embedding-level augmentation** — tripling navarrese via noise/dropout/scaling on the 1280-dim embeddings (no audio re-processing) improved navarrese from 0.32 → 0.38 (+5.5pp) and pushed overall macro F1 to 0.534. The tradeoff was central dropping from 0.39 → 0.34, suggesting the model re-allocates capacity away from the smallest class when navarrese expands.
+
+4. **Audio+text fusion* (partial)** — on the Ahotsak subset where transcriptions exist, concatenating fastText 5-class logits with Whisper embeddings improved macro F1 from 0.296 → 0.618 (+32pp). The text model captures lexical markers (erran/esan, bertze/beste) that the audio model misses. This is the most promising direction but is currently blocked by missing Mintzoak transcriptions.
+
+### What didn't work
+
+1. **Attention pooling** — learning frame-level attention weights over 8 temporal segments hurt overall performance (−4.3pp macro F1). The attention mechanism collapsed toward nav-lab-like segments, destroying western discrimination (−18.8pp). Fixed segment boundaries are too coarse; the model can't learn which specific time steps are dialect-bearing per class.
+
+2. **Focal loss + balanced data** — redundant when subsampling already handles imbalance. Label smoothing, mixup augmentation, SGD optimizer, and hidden_dim=1024 all performed worse than the simple mean_std_max + 768-dim + CE setup.
+
+3. **Unbalanced training** — the model defaults to nav-lab (82% F1) while navarrese gets 10% and central 35%. Without subsampling, the imbalance dominates everything else.
+
+### Remaining bottlenecks
+
+1. **Navarrese (37.6% F1)** — still the hardest non-lab dialect. Phonetically intermediate between central and nav-lab, with only 9K training samples (smallest after subsampling). Augmentation helped (+5.5pp) but more is needed — possibly targeted data collection or ASR-based text features.
+
+2. **Central (34.2% F1)** — largest geographic spread (187 towns, diverse sub-varieties) and inconsistent recording quality. Dropped −4.9pp after navarrese augmentation (model de-prioritized the smallest training class). Fusion with text features would directly help here since central has strong lexical markers.
+
+3. **Mintzoak transcriptions** — the 160K Iparralde segments (89K nav-lab, 10K souletin) have no text. Running Whisper ASR on them (est. 2-3h on L40) would unlock the full fusion pipeline and is the single highest-impact next step.
+
+### Next step
+
+Run Whisper ASR on Mintzoak segments → retrain audio+text fusion on the full merged dataset. Expected macro F1: 0.65-0.70. This would make knowledge distillation into a WASM-deployable student model worth pursuing.
