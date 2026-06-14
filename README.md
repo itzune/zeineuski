@@ -224,12 +224,12 @@ We built a speech-based Basque dialect classifier using audio recordings scraped
 from [Ahotsak.eus](https://ahotsak.eus) (2,422 files, 36,176 segments, 78.1 hours).
 
 The final pipeline uses a **frozen Whisper encoder** as a phonetic feature extractor
-followed by a 2-layer MLP with focal loss.
+followed by a 2-layer MLP with balanced class subsampling.
 
 ### Final Approach: Whisper Encoder + MLP
 
 ```
-Audio (16kHz) → Whisper Encoder (frozen) → mean+std+max pooling (3840-dim) → MLP (512→256→5) → Dialect
+Audio (16kHz) → Whisper Encoder (frozen) → mean+std+max pooling (3840-dim) → MLP (768→384→5) → Dialect
 ```
 
 The Whisper **encoder** captures phonetic and prosodic features (pronunciation,
@@ -237,7 +237,9 @@ intonation, rhythm) that are dialect-specific. By discarding the **decoder**
 (which normalizes speech to standard batua orthography), we preserve dialectal
 pronunciation patterns that would otherwise be erased.
 
-**Best config:** `lr=5e-4`, `focal loss (γ=2.0)`, `mean_std_max pooling`, `town-disjoint 80/10/10 split`.
+**Best config:** `balanced_subsample=10000`, `loss=crossentropy`, `lr=5e-4`,
+`hidden_dim=768`, `dropout=0.3`, `epochs=100`, `batch_size=64`,
+`mean_std_max pooling`, `town-disjoint 80/10/10 split`.
 
 ### Data Sources
 
@@ -267,33 +269,36 @@ Navarrese, Central, and Western are unaffected — Mintzoak only covers Iparrald
 
 #### Merged dataset (Ahotsak + Mintzoak)
 
-| Metric | Imbalanced (raw) | Balanced (10K/class) |
-|---|--:|--:|
-| Accuracy | 73.89% | 70.52% |
-| **Macro F1** | **0.433** | **0.510** |
-| Nav-Lab F1 | 0.86 | 0.82 |
-| Western F1 | 0.58 | **0.69** |
-| Central F1 | 0.35 | 0.33 |
-| Souletin F1 | 0.28 | **0.40** |
-| Navarrese F1 | 0.10 | **0.31** |
+| Metric | Imbalanced (raw) | Balanced (10K/class) | Optimized (dim=768) |
+|---|--:|--:|--:|
+| Accuracy | 73.89% | 70.52% | **70.33%** |
+| **Macro F1** | **0.433** | **0.510** | **0.519** |
+| Nav-Lab F1 | 0.86 | 0.82 | 0.82 |
+| Western F1 | 0.58 | 0.69 | **0.67** |
+| Central F1 | 0.35 | 0.33 | **0.39** |
+| Souletin F1 | 0.28 | 0.40 | **0.39** |
+| Navarrese F1 | 0.10 | 0.31 | **0.32** |
 
 #### Ahotsak-only → Merged (improvement over original)
 
-| Metric | Ahotsak only | +Mintzoak (imbalanced) | +Mintzoak (balanced) | Total gain |
-|---|--:|--:|--:|:--:|
-| Accuracy | 62.15% | 73.89% | 70.52% | **+8.4pp** |
-| Macro F1 | 0.361 | 0.433 | 0.510 | **+14.9pp** |
-| Nav-Lab F1 | 0.02 | 0.86 | 0.82 | **+80pp** 🔥 |
-| Souletin F1 | 0.11 | 0.28 | 0.40 | **+29pp** |
-| Western F1 | 0.79 | 0.58 | 0.69 | −10pp |
-| Navarrese F1 | 0.51 | 0.10 | 0.31 | −20pp |
-| Central F1 | 0.38 | 0.35 | 0.33 | −5pp |
+| Metric | Ahotsak only | +Mintzoak (imbalanced) | +Mintzoak (balanced) | Final (dim=768) |
+|---|--:|--:|--:|--:|
+| Accuracy | 62.15% | 73.89% | 70.52% | **70.33%** |
+| Macro F1 | 0.361 | 0.433 | 0.510 | **0.519** |
+| Nav-Lab F1 | 0.02 | 0.86 | 0.82 | 0.82 |
+| Souletin F1 | 0.11 | 0.28 | 0.40 | 0.39 |
+| Western F1 | 0.79 | 0.58 | 0.69 | 0.67 |
+| Navarrese F1 | 0.51 | 0.10 | 0.31 | **0.32** |
+| Central F1 | 0.38 | 0.35 | 0.33 | **0.39** |
 
 Key insight: Mintzoak's 89K nav-lab samples solved the minority dialect problem
 (2%→82% nav-lab, 11%→40% souletin), but the 18:1 class imbalance depressed
 western/navarrese. **Downsampling each class to 10K samples** (50K total balanced)
-recovers most of the loss: western +11pp, navarrese +21pp, while nav-lab holds
-at 82%. The balanced config is the recommended deployment model.
+recovers most of the loss. **Widening the MLP to 768-dim** adds another +9pp to
+central (+6pp over 512-dim) and +1pp to navarrese.
+
+The balanced 10K + hidden_dim=768 config is the recommended deployment model
+(macro F1 0.519).
 
 ### Discarded Approaches
 
@@ -304,19 +309,25 @@ at 82%. The balanced config is the recommended deployment model.
 | **ASR → text pipeline** | 42.0% | Whisper decoder normalizes toward batua, stripping dialect markers. fastText text model trained on clean written text, not noisy ASR output. Best result with beam=5 decoding still 17.6pp below direct encoder. |
 | **Whisper encoder fine-tuning** | 21.0% | 500-sample test with 3 unfrozen encoder layers (59M params) — NaN loss with fp16, random-guess with fp32. Full dataset would take 12+ hours with marginal expected gains. |
 | **5-seed ensemble** | 59.9% | No benefit over single model — just averages stochastic noise (±1-2pp). |
-| **Wider MLP (1024 dim)** | 59.3% | Overfits western majority, drags down minority classes. 2-layer 512-dim is the sweet spot. |
+| **hidden_dim=1024** | 59.3% (Ah), 0.488 (merged) | Overfits — too many params. 768 is the sweet spot. |
+| **hidden_dim=512** | 0.510 | Works but leaves central at 0.33. 768 recovers +6pp central. |
+| **Focal loss + balanced data** | 0.505 | Redundant — subsampling handles imbalance, focal adds no value. |
+| **Label smoothing** | 0.496 | Softens all classes equally, hurts central/souletin. |
+| **Mixup augmentation** | 0.506 | Helps central (+2pp) but blurs navarrese boundary (−5pp). |
+| **SGD optimizer** | 0.493 | Adaptive optimizer (AdamW) needed for this problem geometry. |
 
 ### Known Limitations
 
-- **Navarrese (31% F1)**: Still the weakest class. Navarrese is phonetically
-  intermediate between central and nav-lab — the model defaults to nav-lab for
-  ambiguous samples even with balanced data.
-- **Central (33% F1)**: Large geographic spread (658 towns) with diverse
-  sub-varieties and inconsistent recording quality.
-- **Nav-lab (82% F1)**: Now the strongest class thanks to Mintzoak data.
-  Risk of over-reliance on this class for ambiguous inputs.
-- **Souletin (40% F1)**: 30× more data from Mintzoak, but still the most
-  phonetically distinct dialect — the encoder may need more capacity.
+- **Navarrese (32% F1)**: The hardest class. Phonetically intermediate between
+  central and nav-lab — the model defaults to nav-lab for ambiguous samples
+  even with balanced data.
+- **Central (39% F1)**: Large geographic spread (658 towns) with diverse
+  sub-varieties and inconsistent recording quality. Widening to 768-dim helped
+  (+6pp vs 512) but it's still the second-weakest.
+- **Souletin (39% F1)**: 30× more data from Mintzoak, but still the most
+  phonetically distinct dialect — encoder may benefit from attention pooling.
+- **Nav-lab (82% F1)**: Strongest class thanks to Mintzoak data. Risk of
+  over-reliance for ambiguous inputs.
 - **Training speed**: ~90s on GPU with balanced 10K/class (down from 4 min with
   imbalanced 123K).
 - **GPU required for extraction**: Embedding extraction uses an NVIDIA L40 (46GB).
