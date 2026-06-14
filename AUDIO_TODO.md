@@ -19,13 +19,13 @@ nasalization, intonation contours). Attention can zoom in on those segments
 while mean pooling dilutes them across silence and shared phonemes.
 
 **Task:**
-- [ ] Modify `WhisperEncoder.extract()` to return frame-level embeddings (seq_len × 1280) instead of mean-pooled
-- [ ] Implement `AttentionPooling(nn.Module)` with a 2-layer Q/K/V or simple weighted sum
-- [ ] Re-extract all 197K embeddings (est. ~7h on L40)
+- [x] Modify `WhisperEncoder.extract()` to return frame-level embeddings (seq_len × 1280) instead of mean-pooled
+- [x] Implement `AttentionPooling(nn.Module)` with a 2-layer Q/K/V or simple weighted sum
+- [ ] Re-extract all 197K embeddings (est. ~2h on L40, running now)
 - [ ] Retrain MLP on attention-pooled representations
 - [ ] Tune attention hidden dim and number of heads
 
-**Tradeoff:** Re-extraction cost (~7h). Training time unchanged (~90s).
+**Tradeoff:** Re-extraction cost (~2h). Training time unchanged (~90s).
 
 ---
 
