@@ -44,8 +44,12 @@ class WhisperEncoder:
             torch_dtype=torch.float16,
         ).eval()
 
-    def extract(self, audio_path: str) -> np.ndarray:
-        """Extract 1280-dim pooled embedding from a single wav file."""
+    def extract(self, audio_path: str, return_frames: bool = False) -> np.ndarray:
+        """Extract embeddings from a single wav file.
+
+        With return_frames=False (default): returns mean-pooled (1280,).
+        With return_frames=True: returns full frame-level (seq_len, 1280).
+        """
         wav, sr = sf.read(audio_path)
         if len(wav.shape) > 1:
             wav = wav.mean(axis=1)  # mono
@@ -66,8 +70,11 @@ class WhisperEncoder:
 
         with torch.no_grad():
             out = self.model.encoder(mel)
-        # Mean pool across time dimension
-        return out.last_hidden_state.mean(dim=1).cpu().float().numpy().squeeze(0)
+
+        frames = out.last_hidden_state.cpu().float().squeeze(0)  # (seq_len, 1280)
+        if return_frames:
+            return frames.numpy()
+        return frames.mean(dim=0).numpy()
 
 
 class WhisperDialectDataset(Dataset):
@@ -104,43 +111,134 @@ class MLPClassifier(nn.Module):
         num_classes: int = 5,
         hidden_dim: int = 512,
         dropout: float = 0.3,
+        num_layers: int = 2,
     ):
         super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(input_dim, hidden_dim),
-            nn.ReLU(),
-            nn.BatchNorm1d(hidden_dim),
-            nn.Dropout(dropout),
-            nn.Linear(hidden_dim, hidden_dim // 2),
-            nn.ReLU(),
-            nn.BatchNorm1d(hidden_dim // 2),
-            nn.Dropout(dropout),
-            nn.Linear(hidden_dim // 2, num_classes),
-        )
+        layers = []
+        in_dim = input_dim
+        for i in range(num_layers):
+            out_dim = hidden_dim // (2**i) if i > 0 else hidden_dim
+            layers.extend(
+                [
+                    nn.Linear(in_dim, out_dim),
+                    nn.ReLU(),
+                    nn.BatchNorm1d(out_dim),
+                    nn.Dropout(dropout),
+                ]
+            )
+            in_dim = out_dim
+        layers.append(nn.Linear(in_dim, num_classes))
+        self.net = nn.Sequential(*layers)
 
     def forward(self, x):
         return self.net(x)
+
+
+class AttentionPooling(nn.Module):
+    """Learned attention pooling over per-segment mean embeddings.
+
+    Input: (batch, num_segments, embed_dim) — per-segment mean-pooled vectors.
+    Output: (batch, embed_dim) — attention-weighted sum of segments.
+
+    Uses a 2-layer bottleneck attention mechanism:
+      1. Project each segment to a lower-dim space
+      2. Score each segment with a learned query vector
+      3. Softmax over segments → weighted sum
+    """
+
+    def __init__(self, embed_dim: int = 1280, attention_dim: int = 256):
+        super().__init__()
+        self.attention = nn.Sequential(
+            nn.Linear(embed_dim, attention_dim),
+            nn.Tanh(),
+            nn.Linear(attention_dim, 1),
+        )
+
+    def forward(self, segments: torch.Tensor) -> torch.Tensor:
+        """
+        Args:
+            segments: (batch, num_segments, embed_dim)
+        Returns:
+            pooled: (batch, embed_dim) weighted sum
+        """
+        # Compute attention scores: (batch, num_segments, 1)
+        scores = self.attention(segments)
+        # Softmax over segment dimension
+        weights = torch.softmax(scores, dim=1)  # (batch, num_segments, 1)
+        # Weighted sum: (batch, embed_dim)
+        return (segments * weights).sum(dim=1)
 
 
 def extract_all_embeddings(
     encoder: WhisperEncoder,
     manifest_path: str,
     output_path: str,
+    pooling: str = "mean_std_max",
+    num_segments: int = 8,
     batch_report_every: int = 200,
 ):
-    """Extract and cache Whisper embeddings for all audio files."""
+    """Extract and cache Whisper embeddings for all audio files.
+
+    Args:
+        pooling: "mean_std_max" (3840-dim) or "attention" (segmented frame-level).
+        num_segments: Number of equal temporal segments for attention pooling.
+    """
     samples = []
     with open(manifest_path) as f:
         for row in csv.DictReader(f):
             samples.append({"path": row["path"], "label": row["dialect"]})
 
     t0 = time.time()
+    short_segments = 0
     for i, sample in enumerate(samples):
-        sample["embedding"] = encoder.extract(sample["path"])
+        if pooling == "attention":
+            # Extract full frame-level embeddings
+            frames = encoder.extract(
+                sample["path"], return_frames=True
+            )  # (seq_len, 1280)
+            seq_len = frames.shape[0]
+            if seq_len < num_segments:
+                short_segments += 1
+                # Pad with zeros to reach num_segments
+                pad = np.zeros(
+                    (num_segments - seq_len, frames.shape[1]), dtype=frames.dtype
+                )
+                frames = np.concatenate([frames, pad], axis=0)
+                seq_len = num_segments
+
+            # Split into num_segments equal parts and mean-pool each
+            seg_size = seq_len // num_segments
+            segments = np.zeros((num_segments, 1280), dtype=np.float32)
+            for s in range(num_segments):
+                start = s * seg_size
+                end = (s + 1) * seg_size if s < num_segments - 1 else seq_len
+                segments[s] = frames[start:end].mean(axis=0)
+
+            sample["embedding"] = segments  # (num_segments, 1280)
+            sample["_seq_len"] = min(
+                seq_len, seq_len
+            )  # original seq_len before padding
+        else:
+            # Original mean_std_max pooling
+            frames = encoder.extract(
+                sample["path"], return_frames=True
+            )  # (seq_len, 1280)
+            mean_vec = frames.mean(axis=0)
+            std_vec = frames.std(axis=0)
+            max_vec = frames.max(axis=0)
+            sample["embedding"] = np.concatenate(
+                [mean_vec, std_vec, max_vec]
+            )  # (3840,)
+
         if (i + 1) % batch_report_every == 0:
             elapsed = time.time() - t0
             rate = (i + 1) / elapsed if elapsed > 0 else 0
             logger.info(f"  Extracted {i + 1}/{len(samples)} ({rate:.1f}/s)")
+
+    if pooling == "attention" and short_segments > 0:
+        logger.info(
+            f"  {short_segments}/{len(samples)} segments < {num_segments} frames (zero-padded)"
+        )
 
     with open(output_path, "wb") as f:
         pickle.dump(samples, f)
@@ -188,11 +286,17 @@ def train_mlp(
     )
     logger.info(f"Embedding dim: {X_train.shape[1]}")
 
-    # Scale
-    scaler = StandardScaler().fit(X_train)
-    X_train = scaler.transform(X_train)
-    X_val = scaler.transform(X_val)
-    X_test = scaler.transform(X_test)
+    # Scale (only for flat 2D embeddings; attention uses 3D segment tensors)
+    pooling = config.get("pooling", "mean_std_max")
+    if pooling != "attention":
+        scaler = StandardScaler().fit(X_train)
+        X_train = scaler.transform(X_train)
+        X_val = scaler.transform(X_val)
+        X_test = scaler.transform(X_test)
+    else:
+        # For attention pooling: keep raw segment tensors, no StandardScaler
+        scaler = None
+        logger.info("Attention pooling: skipping StandardScaler (3D segment input)")
 
     num_classes = len(label_encoder.classes_)
 
@@ -245,14 +349,41 @@ def train_mlp(
         f"Config: lr={lr}, hidden_dim={hidden_dim}, dropout={dropout}, epochs={epochs}, batch_size={batch_size}"
     )
 
-    model = MLPClassifier(
-        input_dim=X_train.shape[1],
-        num_classes=num_classes,
-        hidden_dim=hidden_dim,
-        dropout=dropout,
-    ).to(device)
+    pooling = config.get("pooling", "mean_std_max")
+    if pooling == "attention":
+        num_segments = config.get("num_segments", 8)
+        attention_dim = int(config.get("attention_dim", 256))
+        logger.info(
+            f"Attention pooling: num_segments={num_segments}, attention_dim={attention_dim}"
+        )
+        # Build attention pooling + MLP
+        attn_pool = AttentionPooling(embed_dim=1280, attention_dim=attention_dim).to(
+            device
+        )
+        mlp = MLPClassifier(
+            input_dim=1280,  # attention output is 1280-dim
+            num_classes=num_classes,
+            hidden_dim=hidden_dim,
+            dropout=dropout,
+            num_layers=int(config.get("num_layers", 2)),
+        ).to(device)
+        model = nn.ModuleList([attn_pool, mlp])
+    else:
+        model = MLPClassifier(
+            input_dim=X_train.shape[1],
+            num_classes=num_classes,
+            hidden_dim=hidden_dim,
+            dropout=dropout,
+            num_layers=int(config.get("num_layers", 2)),
+        ).to(device)
 
-    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
+    # Collect all parameters for optimizer
+    if isinstance(model, nn.ModuleList):
+        all_params = list(model[0].parameters()) + list(model[1].parameters())
+    else:
+        all_params = model.parameters()
+
+    optimizer = optim.AdamW(all_params, lr=lr, weight_decay=1e-4)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
     # Loss function
     loss_type = config.get("loss", "crossentropy")
@@ -289,8 +420,20 @@ def train_mlp(
     best_val_acc = 0.0
     train_start = time.time()
 
+    def model_forward(x):
+        """Handle both attention pooling and direct MLP forwarding."""
+        if isinstance(model, nn.ModuleList):
+            # x: (batch, num_segments, 1280)
+            pooled = model[0](x)  # AttentionPooling → (batch, 1280)
+            return model[1](pooled)  # MLP → (batch, num_classes)
+        else:
+            return model(x)
+
     for epoch in range(epochs):
         model.train()
+        if isinstance(model, nn.ModuleList):
+            model[0].train()
+            model[1].train()
         perm = torch.randperm(len(X_train_t))
         total_loss = 0.0
         for i in range(0, len(X_train_t), batch_size):
@@ -298,7 +441,7 @@ def train_mlp(
             xb = X_train_t[idx].to(device)
             yb = y_train_t[idx].to(device)
             optimizer.zero_grad()
-            loss = criterion(model(xb), yb)
+            loss = criterion(model_forward(xb), yb)
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
@@ -307,8 +450,11 @@ def train_mlp(
 
         # Evaluate on val
         model.eval()
+        if isinstance(model, nn.ModuleList):
+            model[0].eval()
+            model[1].eval()
         with torch.no_grad():
-            val_preds = model(X_val_t.to(device)).argmax(dim=1).cpu()
+            val_preds = model_forward(X_val_t.to(device)).argmax(dim=1).cpu()
             val_acc = accuracy_score(y_val_t, val_preds)
 
         if val_acc > best_val_acc:
@@ -320,11 +466,29 @@ def train_mlp(
                 f"  Epoch {epoch + 1}/{epochs}  loss={total_loss:.3f}  val_acc={val_acc:.4f}"
             )
 
-    model.load_state_dict(best_state)
-    model.eval()
+    model = (
+        model if not isinstance(model, nn.ModuleList) else model
+    )  # keep model reference
+    model_state = best_state
+    if isinstance(model, nn.ModuleList):
+        model[0].load_state_dict(
+            {k: v for k, v in model_state.items() if k.startswith("0.")}
+        )
+        model[1].load_state_dict(
+            {
+                k.replace("1.", ""): v
+                for k, v in model_state.items()
+                if k.startswith("1.")
+            }
+        )
+        model[0].eval()
+        model[1].eval()
+    else:
+        model.load_state_dict(best_state)
+        model.eval()
 
     with torch.no_grad():
-        test_preds = model(X_test_t.to(device)).argmax(dim=1).cpu()
+        test_preds = model_forward(X_test_t.to(device)).argmax(dim=1).cpu()
         acc = accuracy_score(y_test_t, test_preds)
         macro_f1 = f1_score(y_test_t, test_preds, average="macro")
 
@@ -343,12 +507,22 @@ def train_mlp(
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     model_path = output_dir / "classifier.pkl"
+
+    # Build serializable state dict
+    if isinstance(model, nn.ModuleList):
+        serializable_state = {
+            "attention_pool": {
+                k: v.cpu().numpy() for k, v in model[0].state_dict().items()
+            },
+            "mlp": {k: v.cpu().numpy() for k, v in model[1].state_dict().items()},
+        }
+    else:
+        serializable_state = {k: v.cpu().numpy() for k, v in model.state_dict().items()}
+
     with open(model_path, "wb") as f:
         pickle.dump(
             {
-                "model_state": {
-                    k: v.numpy() for k, v in model.cpu().state_dict().items()
-                },
+                "model_state": serializable_state,
                 "config": config,
                 "classes": list(class_names),
                 "label_encoder": label_encoder,
@@ -379,6 +553,13 @@ def train_mlp(
                 "learning_rate": lr,
                 "epochs": epochs,
                 "train_time_s": round(train_time, 1),
+                "pooling": pooling,
+                "num_segments": int(config.get("num_segments", 8))
+                if pooling == "attention"
+                else None,
+                "attention_dim": int(config.get("attention_dim", 256))
+                if pooling == "attention"
+                else None,
                 "balanced_subsample": subsample_per_class,
                 "class_weights": use_class_weights,
             },
@@ -441,18 +622,41 @@ def load_speech_model(
     encoder = WhisperEncoder(whisper_model, device)
     encoder.load()
 
-    # Rebuild MLP
-    mlp = MLPClassifier(
-        input_dim=saved["input_dim"],
-        num_classes=saved["num_classes"],
-        hidden_dim=saved["hidden_dim"],
-        dropout=saved["config"].get("dropout", 0.3),
-    )
-    # Load state dict from numpy arrays
-    state = {k: torch.from_numpy(v) for k, v in saved["model_state"].items()}
-    mlp.load_state_dict(state)
-    mlp.to(device)
-    mlp.eval()
+    # Rebuild MLP / attention pooling
+    model_state = saved["model_state"]
+    pooling = saved["config"].get("pooling", "mean_std_max")
+
+    if pooling == "attention":
+        attention_dim = int(saved["config"].get("attention_dim", 256))
+        attn_pool = AttentionPooling(embed_dim=1280, attention_dim=attention_dim)
+        mlp = MLPClassifier(
+            input_dim=1280,
+            num_classes=saved["num_classes"],
+            hidden_dim=saved["hidden_dim"],
+            dropout=saved["config"].get("dropout", 0.3),
+            num_layers=int(saved["config"].get("num_layers", 2)),
+        )
+        attn_state = {
+            k: torch.from_numpy(v) for k, v in model_state["attention_pool"].items()
+        }
+        mlp_state = {k: torch.from_numpy(v) for k, v in model_state["mlp"].items()}
+        attn_pool.load_state_dict(attn_state)
+        mlp.load_state_dict(mlp_state)
+        attn_pool.to(device).eval()
+        mlp.to(device).eval()
+        mlp = (attn_pool, mlp)
+    else:
+        mlp = MLPClassifier(
+            input_dim=saved["input_dim"],
+            num_classes=saved["num_classes"],
+            hidden_dim=saved["hidden_dim"],
+            dropout=saved["config"].get("dropout", 0.3),
+            num_layers=int(saved["config"].get("num_layers", 2)),
+        )
+        state = {k: torch.from_numpy(v) for k, v in model_state.items()}
+        mlp.load_state_dict(state)
+        mlp.to(device)
+        mlp.eval()
 
     return encoder, mlp, saved["label_encoder"], saved["scaler"], saved["config"]
 
@@ -463,6 +667,7 @@ def predict_speech(
     mlp_model=None,
     label_encoder=None,
     scaler=None,
+    config=None,
     model_dir: str = "models/speech/whisper_dialect_merged",
     device: str = "cuda",
 ) -> dict:
@@ -482,20 +687,49 @@ def predict_speech(
 
     # Auto-load if needed
     if encoder is None or mlp_model is None:
-        encoder, mlp_model, label_encoder, scaler, _ = load_speech_model(
+        encoder, mlp_model, label_encoder, scaler, config = load_speech_model(
             model_dir, device
         )
 
     # Extract embedding
-    embedding = encoder.extract(audio_path)
+    pooling = (
+        config.get("pooling", "mean_std_max")
+        if isinstance(mlp_model, tuple)
+        else "mean_std_max"
+    )
+    if pooling == "attention":
+        frames = encoder.extract(audio_path, return_frames=True)  # (seq_len, 1280)
+        num_segments = int(config.get("num_segments", 8))
+        seq_len = frames.shape[0]
+        if seq_len < num_segments:
+            pad = _np.zeros(
+                (num_segments - seq_len, frames.shape[1]), dtype=frames.dtype
+            )
+            frames = _np.concatenate([frames, pad], axis=0)
+            seq_len = num_segments
+        seg_size = seq_len // num_segments
+        segments = _np.zeros((num_segments, 1280), dtype=_np.float32)
+        for s in range(num_segments):
+            start = s * seg_size
+            end = (s + 1) * seg_size if s < num_segments - 1 else seq_len
+            segments[s] = frames[start:end].mean(axis=0)
+        embedding = segments  # (num_segments, 1280)
+    else:
+        embedding = encoder.extract(audio_path)  # (1280,) or (3840,)
 
-    # Scale
-    embedding_scaled = scaler.transform(embedding.reshape(1, -1))
+    # Scale (only for flat embeddings; attention uses unscaled segments)
+    if pooling != "attention":
+        embedding = scaler.transform(embedding.reshape(1, -1)).squeeze(0)
 
     # Predict
-    X = torch.tensor(embedding_scaled, dtype=torch.float32).to(device)
+    X = torch.tensor(embedding, dtype=torch.float32).unsqueeze(0).to(device)
     with torch.no_grad():
-        logits = mlp_model(X)
+        if isinstance(mlp_model, tuple):
+            attn_pool, mlp = mlp_model
+            pooled = attn_pool(X)  # (1, 1280)
+            logits = mlp(pooled)
+        else:
+            logits = mlp_model(X)
         probs = torch.softmax(logits, dim=1).cpu().numpy().squeeze(0)
 
     # Top-3
@@ -530,6 +764,13 @@ def main():
     p_extract.add_argument("--output", default="models/speech/whisper_embeddings.pkl")
     p_extract.add_argument("--whisper-model", default="xezpeleta/whisper-large-v3-eu")
     p_extract.add_argument("--device", default="cuda")
+    p_extract.add_argument(
+        "--pooling", default="mean_std_max", choices=["mean_std_max", "attention"]
+    )
+    p_extract.add_argument("--num-segments", type=int, default=8)
+    p_extract.add_argument(
+        "--config", default=None, help="YAML config with pooling settings"
+    )
 
     # train
     p_train = sub.add_parser("train")
@@ -557,7 +798,25 @@ def main():
     if args.cmd == "extract":
         encoder = WhisperEncoder(args.whisper_model, args.device)
         encoder.load()
-        extract_all_embeddings(encoder, args.manifest, args.output)
+
+        # Determine pooling settings from args or config
+        pooling = args.pooling
+        num_segments = args.num_segments
+        if args.config:
+            import yaml
+
+            with open(args.config) as f:
+                cfg = yaml.safe_load(f)
+            pooling = cfg.get("pooling", pooling)
+            num_segments = int(cfg.get("num_segments", num_segments))
+
+        extract_all_embeddings(
+            encoder,
+            args.manifest,
+            args.output,
+            pooling=pooling,
+            num_segments=num_segments,
+        )
         torch.cuda.empty_cache()
 
     elif args.cmd == "train":
