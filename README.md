@@ -328,10 +328,10 @@ The balanced 10K + hidden_dim=768 config is the recommended deployment model
   phonetically distinct dialect — encoder may benefit from attention pooling.
 - **Nav-lab (82% F1)**: Strongest class thanks to Mintzoak data. Risk of
   over-reliance for ambiguous inputs.
-- **Training speed**: ~90s on GPU with balanced 10K/class (down from 4 min with
+- **Training speed**: ~70s on GPU with balanced 10K/class (down from 4 min with
   imbalanced 123K).
-- **GPU required for extraction**: Embedding extraction uses an NVIDIA L40 (46GB).
-  Training is ~90s on GPU after embeddings are cached.
+- **GPU required**: Embedding extraction uses an NVIDIA L40 (46GB) and takes ~2h
+  for the full 197K dataset. Training is ~70s on GPU after embeddings are cached.
 
 ### Remaining Ideas
 
@@ -344,10 +344,12 @@ The balanced 10K + hidden_dim=768 config is the recommended deployment model
 
 ### Running the Speech Pipeline
 
-#### Inference (quick)
+#### Inference with pre-trained model
+
+A trained model is included at `models/speech/whisper_dialect_merged/` (macro F1 0.519,
+hidden_dim=768, balanced 10K/class). Requires GPU with 8GB+ VRAM.
 
 ```bash
-# Requires GPU (NVIDIA GPU with 8GB+ VRAM).
 # Predict dialect from any WAV file (16kHz mono recommended):
 uv run python -m src.models.speech.whisper_did predict \
   audio.wav \
@@ -369,7 +371,7 @@ Top predictions:
 #### Training (full pipeline)
 
 ```bash
-# Step 1: Extract Whisper embeddings (GPU, ~7h for 197K segments)
+# Step 1: Extract Whisper embeddings (GPU, ~2h for 197K segments, ~26/s)
 uv run python -m src.models.speech.whisper_did extract \
   --manifest data/processed/speech/merged/train.csv \
   --output models/speech/whisper_merged_train_emb.pkl \
