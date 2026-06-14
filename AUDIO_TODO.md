@@ -172,8 +172,16 @@ Analyzed 30-min Kanaldude documentary (225 segments) using the baseline model:
 
 2. **Central (34.2% F1)** — largest geographic spread (187 towns, diverse sub-varieties) and inconsistent recording quality. Dropped −4.9pp after navarrese augmentation (model de-prioritized the smallest training class). Fusion with text features would directly help here since central has strong lexical markers.
 
-3. **Mintzoak transcriptions** — the 160K Iparralde segments (89K nav-lab, 10K souletin) have no text. Running Whisper ASR on them (est. 2-3h on L40) would unlock the full fusion pipeline and is the single highest-impact next step.
+3. **Mintzoak transcriptions** — the 160K Iparralde segments (89K nav-lab, 10K souletin) have no text in the current dataset. There are two paths to get them:
+
+   **Path A (ASR):** Run Whisper ASR on Mintzoak audio segments (est. 2-3h on L40). Noisy but works on all segments. The ASR output will be batua-normalized, which strips some dialect markers, but lexical features like word choice (erran/esan) survive.
+
+   **Path B (Vimeo subtitles):** Some Mintzoak videos have subtitles on Vimeo — they show a "CC" icon on the passage page and Google results note "Cette vidéo dispose de sous-titres". These subtitles exist as VTT/SRT text tracks inside Vimeo. To extract them:
+   - Step 1: Re-scrape Mintzoak passage pages to detect which ones have the CC icon / subtitle flag
+   - Step 2: Use the Vimeo API (`https://api.vimeo.com/videos/{id}/texttracks`) with an OAuth token to download the VTT/SRT files
+   - Step 3: Parse the subtitle text → per-passage transcriptions
+   - Barrier: Vimeo API requires authentication (OAuth token). The public player doesn't expose text tracks via unauthenticated endpoints. How many passages actually have subtitles is unknown until we scrape.
+
+   Both paths are viable. ASR covers everything but is noisy; Vimeo subtitles would be human-transcribed and higher quality but cover fewer passages and need API access. A hybrid approach (Vimeo where available, ASR as fallback) would be ideal.
 
 ### Next step
-
-Run Whisper ASR on Mintzoak segments → retrain audio+text fusion on the full merged dataset. Expected macro F1: 0.65-0.70. This would make knowledge distillation into a WASM-deployable student model worth pursuing.
