@@ -239,6 +239,33 @@ pronunciation patterns that would otherwise be erased.
 
 **Best config:** `lr=5e-4`, `focal loss (γ=2.0)`, `mean_std_max pooling`, `town-disjoint 80/10/10 split`.
 
+### Data Sources
+
+| Source | Content | Dialects | Segments | Hours | Towns |
+|---|---|--:|--:|--:|
+| [Ahotsak.eus](https://ahotsak.eus) | Oral history (Hegoalde) | western, central, navarrese, nav-lab, souletin | 36,176 | 78.1h | 187 |
+| [Mintzoak.eus](https://mintzoak.eus) | Oral history (Iparralde) | nav-lab, souletin | 160,472 | 180.8h | 124 |
+| **Merged total** | | **all 5 dialects** | **196,648** | **258.9h** | **311** |
+
+Mintzoak.eus is Ahotsak's sister site for the Northern Basque Country (French side),
+featuring Vimeo-hosted video recordings. Audio extracted via yt-dlp at 16kHz mono.
+
+**Per-dialect distribution (train set):**
+
+| Dialect | Ahotsak segs | + Mintzoak segs | Increase |
+|---|---|--:|--:|
+| Souletin | 348 | 10,283 | **30×** |
+| Nav-Lab | 2,291 | 88,791 | **39×** |
+| Navarrese | 9,072 | 9,072 | — |
+| Central | 4,880 | 4,880 | — |
+| Western | 9,638 | 9,638 | — |
+
+Navarrese, Central, and Western are unaffected — Mintzoak only covers Iparralde
+(French Basque Country).
+
+> ⏳ **In progress:** Whisper embeddings extracting on NVIDIA L40 (122K train, ~4h).
+> MLP retraining with merged dataset pending.
+
 ### Results (5-class, town-disjoint split)
 
 | Metric | Value |
@@ -264,21 +291,24 @@ pronunciation patterns that would otherwise be erased.
 
 ### Known Limitations
 
-- **Nav-lab (0-2% F1)**: Nearly indistinguishable from Navarrese in town-disjoint
-  splits — effectively a 4.5-class problem.
-- **Souletin (8-13% F1)**: Only 37 source towns and 348 training segments — severe
-  data scarcity for this phonetically distinct dialect.
+- **Nav-lab (2% F1 on Ahotsak)**: Nearly indistinguishable from Navarrese with limited
+  data. Mintzoak adds 89K nav-lab train segments — expected to dramatically improve.
+- **Souletin (11% F1 on Ahotsak)**: Only 348 training segments from 37 towns.
+  Mintzoak adds 10K segments from 29 Zuberoa towns — 30× increase.
 - **Stochastic variance**: MLP training has ±1-2pp variance between runs due to
   random initialization.
 - **GPU required for extraction**: Embedding extraction uses an NVIDIA L40 (46GB).
   Training is ~30s on CPU after embeddings are cached.
+- **Class imbalance after merge**: Nav-lab (89K) dominates Western (10K) and
+  Central (5K). Focal loss handles this but may need tuning.
 
 ### Remaining Ideas
 
 - **3-class mode** (western/central/navarrese) — should exceed 65-70% accuracy
 - **Attention pooling** during training (instead of frozen mean+std+max) — proven
   in the ADI-20 Arabic dialect paper (arxiv 2511.10070)
-- **Souletin data expansion** — scrape remaining unscraped Zuberoa towns from Ahotsak
+- **Mintzoak transcriptions** — same passage pages contain dialectal Basque text;
+  could be used for text-based classifier augmentation
 
 ### Running the Speech Pipeline
 
