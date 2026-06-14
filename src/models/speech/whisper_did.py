@@ -781,25 +781,18 @@ def predict_speech(
 
 
 def augment_embeddings(
-    encoder: WhisperEncoder,
+    encoder: WhisperEncoder | None,
     embeddings_path: str,
     output_path: str,
     labels: list[str] | None = None,
     factor: float = 2.0,
 ) -> str:
-    """Augment specific dialect classes via audio-level transforms and re-extraction.
+    """Augment specific dialect classes via embedding-level transforms.
 
-    Loads WAV files from the stored embeddings, applies random SpecAugment + pitch
-    shift + speed perturbation, re-extracts Whisper embeddings, and appends the
-    augmented samples to the original set.
+    Noise injection + dropout + scaling on the stored embeddings.
+    Generates (factor - 1) copies per target sample.
+    No audio re-processing needed — works directly on pre-extracted embeddings.
     """
-    try:
-        import torchaudio
-        import torchaudio.functional as F
-        import torchaudio.transforms as T
-    except ImportError:
-        import torchaudio
-
     with open(embeddings_path, "rb") as f:
         original_samples = pickle.load(f)
 
@@ -809,95 +802,56 @@ def augment_embeddings(
         if labels is None or s["label"] in labels:
             target_indices.append(i)
 
-    # Determine how many augmented copies per sample
-    # If factor=2.0, we make ~1 new copy per sample (doubling count)
     n_target = len(target_indices)
-    n_copies = max(1, int((factor - 1.0) * n_target / n_target + 0.5))  # at least 1
+    n_copies = max(1, int(factor - 1.0))
 
     logger.info(
-        f"Augmenting {n_target} samples (labels={labels}), {n_copies} copy each"
+        f"Augmenting {n_target} samples (labels={labels}), {n_copies} copies each"
     )
-    logger.info(f"Target labels: {labels}")
 
     new_samples = []
     t0 = time.time()
+    rng = np.random.RandomState(42)
 
     for idx, sample_idx in enumerate(target_indices):
         sample = original_samples[sample_idx]
-        wav_path = sample["path"]
-
-        if not Path(wav_path).exists():
-            logger.warning(f"File not found: {wav_path}, skipping")
-            continue
-
-        try:
-            waveform, sr = torchaudio.load(wav_path)
-        except Exception as e:
-            logger.warning(f"Error loading {wav_path}: {e}")
-            continue
-
-        if waveform.shape[0] > 1:
-            waveform = waveform.mean(0, keepdim=True)  # mono
+        original_emb = sample["embedding"]
 
         for copy_idx in range(n_copies):
-            aug = waveform.clone()
+            emb = original_emb.copy()
 
-            # Random augmentation chain (apply 1-3 transforms randomly)
-            n_transforms = np.random.randint(1, 4)
-            transforms_chosen = np.random.choice(
-                ["specaug", "pitch", "speed", "noise"],
-                size=n_transforms,
-                replace=False,
+            n_transforms = rng.randint(1, 3)
+            transforms = rng.choice(
+                ["noise", "dropout", "scale"], size=n_transforms, replace=False
             )
 
-            for transform_name in transforms_chosen:
-                if transform_name == "specaug":
-                    # Time masking: mask 10-15% in time domain
-                    mask_pct = np.random.uniform(0.05, 0.15)
-                    mask_len = int(aug.shape[1] * mask_pct)
-                    if mask_len > 0:
-                        start = np.random.randint(0, aug.shape[1] - mask_len)
-                        aug[:, start : start + mask_len] = 0
-                elif transform_name == "pitch":
-                    # Pitch shift: ±100 cents (1 semitone)
-                    shift_cents = np.random.randint(-100, 101)
-                    aug = F.pitch_shift(aug, sr, n_steps=shift_cents / 100.0)
-                elif transform_name == "speed":
-                    # Speed perturbation: 0.9× to 1.1×
-                    speed_factor = np.random.uniform(0.9, 1.1)
-                    aug = F.speed(aug, sr, speed_factor)
-                    # Trim/pad to original length for consistency
-                    if aug.shape[1] > waveform.shape[1]:
-                        aug = aug[:, : waveform.shape[1]]
-                    elif aug.shape[1] < waveform.shape[1]:
-                        pad_len = waveform.shape[1] - aug.shape[1]
-                        aug = torch.nn.functional.pad(aug, (0, pad_len))
-                elif transform_name == "noise":
-                    # Gaussian noise at -30 to -20 dB SNR
-                    rms = aug.pow(2).mean().sqrt()
-                    snr_db = np.random.uniform(20, 30)
-                    noise_rms = rms / (10 ** (snr_db / 20))
-                    noise = torch.randn_like(aug) * noise_rms
-                    aug = aug + noise
-
-            # Extract Whisper embedding for augmented audio
-            with torch.no_grad():
-                embedding = encoder.extract_from_tensor(aug.to(encoder.device))
+            for t in transforms:
+                if t == "noise":
+                    emb_std = emb.std()
+                    snr_db = rng.uniform(20, 30)
+                    noise_std = emb_std / (10 ** (snr_db / 20))
+                    emb += rng.randn(*emb.shape).astype(np.float32) * noise_std
+                elif t == "dropout":
+                    mask_pct = rng.uniform(0.05, 0.15)
+                    mask = rng.rand(*emb.shape) > mask_pct
+                    emb *= mask.astype(np.float32)
+                elif t == "scale":
+                    scale = rng.uniform(0.85, 1.15)
+                    emb *= scale
 
             new_samples.append(
                 {
-                    "path": sample["path"],  # original path (for reference)
+                    "path": sample["path"],
                     "label": sample["label"],
-                    "embedding": embedding.cpu().numpy(),
+                    "embedding": emb,
                     "augmented": True,
-                    "original_idx": sample_idx,
                 }
             )
 
-        if (idx + 1) % 500 == 0:
+        if (idx + 1) % 5000 == 0:
             elapsed = time.time() - t0
             rate = (idx + 1) / elapsed if elapsed > 0 else 0
-            logger.info(f"  Augmented {idx + 1}/{n_target} ({rate:.1f}/s)")
+            logger.info(f"  Augmented {idx + 1}/{n_target} ({rate:.0f}/s)")
 
     elapsed = time.time() - t0
     logger.info(f"Generated {len(new_samples)} new samples in {elapsed:.0f}s")
@@ -907,7 +861,6 @@ def augment_embeddings(
     with open(output_path, "wb") as f:
         pickle.dump(combined, f)
 
-    # Report new class counts
     from collections import Counter
 
     counts = Counter(s["label"] for s in combined)
@@ -1029,17 +982,8 @@ def main():
             print(f"METRIC f1_{cls_name}={f1}")
 
     elif args.cmd == "augment":
-        whisper_model = "xezpeleta/whisper-large-v3-eu"
-        if hasattr(args, "config") and args.config:
-            import yaml
-
-            with open(args.config) as f:
-                cfg = yaml.safe_load(f)
-            whisper_model = cfg.get("whisper_model", whisper_model)
-        encoder = WhisperEncoder(whisper_model, args.device)
-        encoder.load()
         augmented_path = augment_embeddings(
-            encoder,
+            None,  # embedding-level augment, no audio re-extraction needed
             args.embeddings,
             args.output,
             labels=args.labels,

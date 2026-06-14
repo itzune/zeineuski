@@ -32,9 +32,14 @@ Attention pooling with 8 fixed temporal segments hurts overall performance:
   - Fixed 8-segment boundaries are too coarse; the model can't learn *which* segments
     are dialect-bearing for each class separately
 
-**Next idea:** try multi-head attention with learned segment boundaries, or
-pooling over variable-length segments based on energy/VAD. Or accept that
-mean_std_max (3840-dim) already captures sufficient temporal statistics.
+**Result:** ✅ Positive! Macro F1 0.5342 (+1.5pp vs 0.5193 baseline).
+Embedding-level augmentation (noise + dropout + scaling) on 9K navarrese → 27K train samples.
+  - Navarrese +5.5pp (0.32 → 0.38) — biggest gain in the bottleneck class
+  - Souletin +2.7pp, Western +2.5pp, Nav-lab +1.7pp
+  - Central −4.9pp — model de-prioritized the smallest class
+
+Still a new best! To improve central, could try augmenting central too (×1.5 → 7.2K)
+or using a higher subsample cap (12K instead of 10K).
 
 **Tradeoff:** Re-extraction cost (~2h). Training time unchanged (~90s).
 

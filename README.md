@@ -281,24 +281,20 @@ Navarrese, Central, and Western are unaffected — Mintzoak only covers Iparrald
 
 #### Ahotsak-only → Merged (improvement over original)
 
-| Metric | Ahotsak only | +Mintzoak (imbalanced) | +Mintzoak (balanced) | Final (dim=768) |
+| Metric | Ahotsak only | +Mintzoak (balanced) | Final (dim=768) | +Augmentation |
 |---|--:|--:|--:|--:|
-| Accuracy | 62.15% | 73.89% | 70.52% | **70.33%** |
-| Macro F1 | 0.361 | 0.433 | 0.510 | **0.519** |
-| Nav-Lab F1 | 0.02 | 0.86 | 0.82 | 0.82 |
-| Souletin F1 | 0.11 | 0.28 | 0.40 | 0.39 |
-| Western F1 | 0.79 | 0.58 | 0.69 | 0.67 |
-| Navarrese F1 | 0.51 | 0.10 | 0.31 | **0.32** |
-| Central F1 | 0.38 | 0.35 | 0.33 | **0.39** |
+| Accuracy | 62.15% | 70.52% | 70.33% | **72.86%** |
+| Macro F1 | 0.361 | 0.510 | 0.519 | **0.534** |
+| Nav-Lab F1 | 0.02 | 0.82 | 0.82 | 0.83 |
+| Souletin F1 | 0.11 | 0.40 | 0.39 | **0.42** |
+| Western F1 | 0.79 | 0.69 | 0.67 | **0.70** |
+| Navarrese F1 | 0.51 | 0.31 | 0.32 | **0.38** |
+| Central F1 | 0.38 | 0.33 | 0.39 | 0.34 |
 
-Key insight: Mintzoak's 89K nav-lab samples solved the minority dialect problem
-(2%→82% nav-lab, 11%→40% souletin), but the 18:1 class imbalance depressed
-western/navarrese. **Downsampling each class to 10K samples** (50K total balanced)
-recovers most of the loss. **Widening the MLP to 768-dim** adds another +9pp to
-central (+6pp over 512-dim) and +1pp to navarrese.
-
-The balanced 10K + hidden_dim=768 config is the recommended deployment model
-(macro F1 0.519).
+Key insight: embedding-level augmentation (noise + dropout + scaling, ×3) on the
+navarrese class (9K→27K) improves navarrese by +5.5pp and overall macro F1 by +1.5pp.
+The tradeoff is central (−4.9pp), which gets relatively less representation in the
+balanced 10K subsample after navarrese augmentation expands.
 
 ### Discarded Approaches
 
@@ -318,9 +314,8 @@ The balanced 10K + hidden_dim=768 config is the recommended deployment model
 
 ### Known Limitations
 
-- **Navarrese (32% F1)**: The hardest class. Phonetically intermediate between
-  central and nav-lab — the model defaults to nav-lab for ambiguous samples
-  even with balanced data.
+- **Navarrese (38% F1)**: Embedding-level augmentation (noise+dropout+scale, ×3) improved
+  from 32% to 38% — the largest single gain. Still the hardest non-central class.
 - **Central (39% F1)**: Large geographic spread (658 towns) with diverse
   sub-varieties and inconsistent recording quality. Widening to 768-dim helped
   (+6pp vs 512) but it's still the second-weakest.
