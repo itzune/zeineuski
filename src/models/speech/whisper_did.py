@@ -77,6 +77,20 @@ class WhisperEncoder:
             return frames.numpy()
         return frames.mean(dim=0).numpy()
 
+    def extract_from_tensor(self, waveform: torch.Tensor) -> torch.Tensor:
+        """Extract mean-pooled embedding from a torch tensor (1, samples) at 16kHz."""
+        mel = self.processor(
+            waveform.squeeze(0).cpu().numpy(),
+            sampling_rate=16000,
+            return_tensors="pt",
+        ).input_features.to(self.device, torch.float16)
+
+        with torch.no_grad():
+            out = self.model.encoder(mel)
+
+        frames = out.last_hidden_state.float().squeeze(0)
+        return frames.mean(dim=0)  # (1280,) on device
+
 
 class WhisperDialectDataset(Dataset):
     """Loads pre-extracted embeddings from a manifest CSV."""
@@ -766,6 +780,144 @@ def predict_speech(
     }
 
 
+def augment_embeddings(
+    encoder: WhisperEncoder,
+    embeddings_path: str,
+    output_path: str,
+    labels: list[str] | None = None,
+    factor: float = 2.0,
+) -> str:
+    """Augment specific dialect classes via audio-level transforms and re-extraction.
+
+    Loads WAV files from the stored embeddings, applies random SpecAugment + pitch
+    shift + speed perturbation, re-extracts Whisper embeddings, and appends the
+    augmented samples to the original set.
+    """
+    try:
+        import torchaudio
+        import torchaudio.functional as F
+        import torchaudio.transforms as T
+    except ImportError:
+        import torchaudio
+
+    with open(embeddings_path, "rb") as f:
+        original_samples = pickle.load(f)
+
+    # Find samples for target labels
+    target_indices = []
+    for i, s in enumerate(original_samples):
+        if labels is None or s["label"] in labels:
+            target_indices.append(i)
+
+    # Determine how many augmented copies per sample
+    # If factor=2.0, we make ~1 new copy per sample (doubling count)
+    n_target = len(target_indices)
+    n_copies = max(1, int((factor - 1.0) * n_target / n_target + 0.5))  # at least 1
+
+    logger.info(
+        f"Augmenting {n_target} samples (labels={labels}), {n_copies} copy each"
+    )
+    logger.info(f"Target labels: {labels}")
+
+    new_samples = []
+    t0 = time.time()
+
+    for idx, sample_idx in enumerate(target_indices):
+        sample = original_samples[sample_idx]
+        wav_path = sample["path"]
+
+        if not Path(wav_path).exists():
+            logger.warning(f"File not found: {wav_path}, skipping")
+            continue
+
+        try:
+            waveform, sr = torchaudio.load(wav_path)
+        except Exception as e:
+            logger.warning(f"Error loading {wav_path}: {e}")
+            continue
+
+        if waveform.shape[0] > 1:
+            waveform = waveform.mean(0, keepdim=True)  # mono
+
+        for copy_idx in range(n_copies):
+            aug = waveform.clone()
+
+            # Random augmentation chain (apply 1-3 transforms randomly)
+            n_transforms = np.random.randint(1, 4)
+            transforms_chosen = np.random.choice(
+                ["specaug", "pitch", "speed", "noise"],
+                size=n_transforms,
+                replace=False,
+            )
+
+            for transform_name in transforms_chosen:
+                if transform_name == "specaug":
+                    # Time masking: mask 10-15% in time domain
+                    mask_pct = np.random.uniform(0.05, 0.15)
+                    mask_len = int(aug.shape[1] * mask_pct)
+                    if mask_len > 0:
+                        start = np.random.randint(0, aug.shape[1] - mask_len)
+                        aug[:, start : start + mask_len] = 0
+                elif transform_name == "pitch":
+                    # Pitch shift: ±100 cents (1 semitone)
+                    shift_cents = np.random.randint(-100, 101)
+                    aug = F.pitch_shift(aug, sr, n_steps=shift_cents / 100.0)
+                elif transform_name == "speed":
+                    # Speed perturbation: 0.9× to 1.1×
+                    speed_factor = np.random.uniform(0.9, 1.1)
+                    aug = F.speed(aug, sr, speed_factor)
+                    # Trim/pad to original length for consistency
+                    if aug.shape[1] > waveform.shape[1]:
+                        aug = aug[:, : waveform.shape[1]]
+                    elif aug.shape[1] < waveform.shape[1]:
+                        pad_len = waveform.shape[1] - aug.shape[1]
+                        aug = torch.nn.functional.pad(aug, (0, pad_len))
+                elif transform_name == "noise":
+                    # Gaussian noise at -30 to -20 dB SNR
+                    rms = aug.pow(2).mean().sqrt()
+                    snr_db = np.random.uniform(20, 30)
+                    noise_rms = rms / (10 ** (snr_db / 20))
+                    noise = torch.randn_like(aug) * noise_rms
+                    aug = aug + noise
+
+            # Extract Whisper embedding for augmented audio
+            with torch.no_grad():
+                embedding = encoder.extract_from_tensor(aug.to(encoder.device))
+
+            new_samples.append(
+                {
+                    "path": sample["path"],  # original path (for reference)
+                    "label": sample["label"],
+                    "embedding": embedding.cpu().numpy(),
+                    "augmented": True,
+                    "original_idx": sample_idx,
+                }
+            )
+
+        if (idx + 1) % 500 == 0:
+            elapsed = time.time() - t0
+            rate = (idx + 1) / elapsed if elapsed > 0 else 0
+            logger.info(f"  Augmented {idx + 1}/{n_target} ({rate:.1f}/s)")
+
+    elapsed = time.time() - t0
+    logger.info(f"Generated {len(new_samples)} new samples in {elapsed:.0f}s")
+
+    # Combine with originals
+    combined = original_samples + new_samples
+    with open(output_path, "wb") as f:
+        pickle.dump(combined, f)
+
+    # Report new class counts
+    from collections import Counter
+
+    counts = Counter(s["label"] for s in combined)
+    logger.info("Final label distribution:")
+    for label, count in counts.most_common():
+        logger.info(f"  {label}: {count}")
+
+    return output_path
+
+
 def main():
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -796,6 +948,22 @@ def main():
     p_train.add_argument("--device", default="cuda")
 
     p_train.add_argument("--seed", type=int, default=42)
+
+    # augment
+    p_augment = sub.add_parser("augment")
+    p_augment.add_argument(
+        "--embeddings", required=True, help="Train embeddings pickle"
+    )
+    p_augment.add_argument(
+        "--output", required=True, help="Output augmented embeddings pickle"
+    )
+    p_augment.add_argument(
+        "--labels", nargs="+", default=["navarrese"], help="Labels to augment"
+    )
+    p_augment.add_argument(
+        "--factor", type=float, default=2.0, help="Multiplier: 2 = double the samples"
+    )
+    p_augment.add_argument("--device", default="cuda")
 
     # predict
     p_predict = sub.add_parser("predict")
@@ -859,6 +1027,25 @@ def main():
         print(f"NUM_CLASSES: {results['num_classes']}")
         for cls_name, f1 in results["per_class_f1"].items():
             print(f"METRIC f1_{cls_name}={f1}")
+
+    elif args.cmd == "augment":
+        whisper_model = "xezpeleta/whisper-large-v3-eu"
+        if hasattr(args, "config") and args.config:
+            import yaml
+
+            with open(args.config) as f:
+                cfg = yaml.safe_load(f)
+            whisper_model = cfg.get("whisper_model", whisper_model)
+        encoder = WhisperEncoder(whisper_model, args.device)
+        encoder.load()
+        augmented_path = augment_embeddings(
+            encoder,
+            args.embeddings,
+            args.output,
+            labels=args.labels,
+            factor=args.factor,
+        )
+        print(f"Augmented embeddings saved → {augmented_path}")
 
     elif args.cmd == "predict":
         result = predict_speech(
