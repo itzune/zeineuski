@@ -1,119 +1,117 @@
 # Audio Pipeline — Pending Improvements
 
-Three strategies to further improve the Whisper encoder + MLP dialect classifier
-(current best: macro F1 0.519, 5-class, merged Ahotsak+Mintzoak, 10K balanced).
+Three strategies to further improve the Whisper encoder + MLP dialect classifier.
 
-## 1. Attention Pooling over Time Dimension
+**Current best: macro F1 0.5342** (5-class, merged Ahotsak+Mintzoak, 10K balanced + navarrese augmentation ×3).
 
-**Expected impact:** High. Proven in ADI-20 Arabic dialect paper (arxiv 2511.10070).
+## Results Summary
 
-Instead of mean+std+max pooling (3840-dim static vector), use a learnable
-attention layer that weights each encoder time step by its dialect relevance.
-This lets the model focus on dialect-bearing temporal segments (stressed
-syllables, vowel length transitions, specific phoneme realizations) rather than
-averaging the entire utterance.
-
-**Why it helps navarrese/central:** These phonetically intermediate dialects
-differ from nav-lab/western in specific time-localized features (e.g., vowel
-nasalization, intonation contours). Attention can zoom in on those segments
-while mean pooling dilutes them across silence and shared phonemes.
-
-**Task:**
-- [x] Modify `WhisperEncoder.extract()` to return frame-level embeddings (seq_len × 1280) instead of mean-pooled
-- [x] Implement `AttentionPooling(nn.Module)` with a 2-layer Q/K/V or simple weighted sum
-- [x] Re-extract all 197K embeddings (~2h on L40, done)
-- [x] Retrain MLP on attention-pooled representations
-- [x] Tune attention hidden dim and number of heads
-
-**Result:** ❌ Negative. Macro F1 0.4765 (vs 0.5193 baseline).
-Attention pooling with 8 fixed temporal segments hurts overall performance:
-  - Nav-lab +3.2pp (0.82 → 0.85) but western −18.8pp (0.67 → 0.48)
-  - Attention learns to focus on nav-lab-like segments, collapsing western discrimination
-  - Fixed 8-segment boundaries are too coarse; the model can't learn *which* segments
-    are dialect-bearing for each class separately
-
-**Result:** ✅ Positive! Macro F1 0.5342 (+1.5pp vs 0.5193 baseline).
-Embedding-level augmentation (noise + dropout + scaling) on 9K navarrese → 27K train samples.
-  - Navarrese +5.5pp (0.32 → 0.38) — biggest gain in the bottleneck class
-  - Souletin +2.7pp, Western +2.5pp, Nav-lab +1.7pp
-  - Central −4.9pp — model de-prioritized the smallest class
-
-Still a new best! To improve central, could try augmenting central too (×1.5 → 7.2K)
-or using a higher subsample cap (12K instead of 10K).
-
-**Tradeoff:** Re-extraction cost (~2h). Training time unchanged (~90s).
-
----
-
-## 2. Audio + Text Model Fusion
-
-**Expected impact:** Medium-High. Combines complementary signal types.
-
-The fastText text model achieves 82.5% weighted F1 on 12-class azpieuskalki
-using lexical-morphological features (dialectal word choice, case endings, verb
-forms). The audio model captures phonetic features (pronunciation, prosody).
-Humans use both to ID dialects — the models should too.
-
-**Approach:** Late-fusion MLP that concatenates audio logits (or embeddings) from
-the Whisper pipeline with text logits from the fastText model, then trains a
-small fusion layer.
-
-**Why it helps:** Navarrese shares phonetics with nav-lab but has distinct
-lexical markers (erran vs esan, bertze vs beste, guti vs gutxi). The text model
-can separate these while the audio model handles pronunciation differences.
-
-**Task:**
-- [ ] Transcribe all test audio via Whisper ASR (or use pre-transcribed data)
-- [ ] Run fastText text model on transcriptions → text logits/embeddings
-- [ ] Implement `AudioTextFusion(nn.Module)` with concatenation + 1-2 MLP layers
-- [ ] Train on combined (audio_embedding, text_logits) pairs
-- [ ] Tune fusion weight (learned or fixed)
-
-**Tradeoff:** ASR bottleneck — Whisper decoder accuracy is ~42% on dialectal
-speech (batua normalization strips dialect markers). Can mitigate by using
-pre-existing Ahotsak/Mintzoak transcriptions where available, or accepting
-noisy ASR as a soft signal.
-
----
-
-## 3. Navarrese Data Augmentation
-
-**Expected impact:** Low-Medium. Directly targets the bottleneck class.
-
-Navarrese has only 9,072 train segments — even with balanced 10K subsampling,
-it's the hardest class (macro F1 0.32). Augmentation can double or triple this
-by creating synthetic variants of existing samples.
-
-**Techniques:**
-- **SpecAugment:** Time masking (mask 10-15% of time steps), frequency masking (mask 10-15% of mel bins)
-- **Pitch shift:** ±50 cents (preserves dialect identity, varies speaker range)
-- **Speed perturbation:** 0.9× and 1.1× (adds tempo variation)
-- **Background noise:** Mix in 5-10dB of random Ahotsak/Mintzoak background audio
-
-All augmentations use `torchaudio` transforms applied to the raw waveform before
-re-extraction.
-
-**Task:**
-- [ ] Implement augmentation pipeline in `src/models/speech/whisper_did.py`
-- [ ] Augment navarrese samples 2× (9K → 18K), optionally central 1.5× (5K → 7.5K)
-- [ ] Re-extract embeddings for augmented samples (est. ~30 min on L40)
-- [ ] Retrain MLP with augmented + balanced dataset
-- [ ] Verify dialect signal isn't destroyed by aggressive augmentation (validate F1 on unaugmented test)
-
-**Tradeoff:** Re-extraction for ~15K new samples (~30 min). Risk of destroying
-subtle dialectal phonetic features with too-aggressive augmentation — need
-ablation on augmentation strength.
-
----
-
-## Decision Framework
-
-| Strategy | Central gain | Navarrese gain | Effort | Risk |
+| Strategy | Macro F1 | vs baseline | Dataset | Status |
 |---|---|---|---|---|
-| Attention pooling | Medium (+3-5pp) | Medium (+3-5pp) | High (7h re-extract) | Low |
-| Audio+text fusion | Low (+1-2pp) | Medium (+3-5pp) | Medium (ASR + code) | Medium (ASR noise) |
-| Navarrese augmentation | None | Medium (+3-5pp) | Low (30min re-extract) | Low-Medium |
+| **Baseline (mean_std_max, 768dim)** | **0.5193** | — | Full merged | ✅ Done |
+| **Strategy 3: Navarrese augmentation** | **0.5342** | **+1.5pp** | Full merged | ✅ **New best** |
+| Strategy 1: Attention pooling | 0.4765 | −4.3pp | Full merged | ❌ Rejected |
+| Strategy 2: Audio+Text fusion | 0.6175 | +9.8pp | Ahotsak subset (21%) | ⚠️ Partial |
 
-**Recommended order:** Attention pooling → Navarrese augmentation → Audio+text fusion.
-Start with the highest-impact, lowest-risk option. Augmentation is a quick win
-for navarrese while attention pooling runs. Fusion is the long-term play.
+### Per-class breakdown (best model vs baseline)
+
+| Class | Baseline | +Augmentation | Δ |
+|---|---|---|---|
+| **Macro F1** | 0.5193 | **0.5342** | **+1.5pp** |
+| Central | 0.3918 | 0.3424 | −4.9pp |
+| Nav-Lab | 0.8174 | 0.8348 | +1.7pp |
+| Navarrese | 0.3210 | **0.3760** | **+5.5pp** |
+| Souletin | 0.3929 | 0.4197 | +2.7pp |
+| Western | 0.6733 | 0.6984 | +2.5pp |
+
+---
+
+## 1. Attention Pooling over Time Dimension ❌
+
+**Expected impact:** High. **Actual:** Negative (−4.3pp).
+
+Modified `WhisperEncoder.extract()` to return frame-level embeddings (seq_len × 1280) instead of mean-pooled. Implemented `AttentionPooling(nn.Module)` with a 2-layer bottleneck (1280→256→1), softmax-weighted sum over 8 temporal segments.
+
+**Re-extraction:** ~2h on L40 (197K segments). Stores (8, 1280) tensors per sample (~4.7GB for train).
+
+**Result:** ❌ Macro F1 0.4765 (vs 0.5193 baseline). Nav-lab +3.2pp but western −18.8pp. Attention learns to focus on nav-lab-like segments, collapsing western discrimination. Fixed 8-segment boundaries are too coarse.
+
+**Files:** `src/models/speech/whisper_did.py` (AttentionPooling class, extraction modes, training adapters).
+
+---
+
+## 2. Audio + Text Model Fusion ⚠️ Partial
+
+**Expected impact:** High (when transcriptions available). **Actual:** +32pp on Ahotsak subset, but only 21% data coverage.
+
+Late-fusion MLP that concatenates Whisper audio embeddings (1280-dim) with fastText logits (5-dim) from transcriptions. Implemented as `FusionMLP` with separate projection heads:
+
+```
+Audio embed (1280) → Linear(768) → ReLU → Dropout
+Text logits (5) → Linear(192) → ReLU
+                  → Concat → Linear(384) → Linear(5) → Dialect
+```
+
+**Approach:**
+1. Loaded Ahotsak passages JSONL with transcriptions (2,508 passages)
+2. Mapped audio segment filenames → passage_id via regex parsing
+3. Ran fastText `euskalki_5class.bin` on each transcription → 5-class probability vector
+4. Concatenated audio embeddings + text logits → 1285-dim feature vectors
+5. Trained FusionMLP (hidden_dim=512, dropout=0.3, lr=5e-4, 100 epochs)
+
+**Result on Ahotsak subset (7.6K test samples):**
+- Audio-only baseline: **macro F1 0.296**
+- Audio+Text fusion: **macro F1 0.618** (+32.2pp!)
+- Per-class: Central 0.33→0.66 (+33pp), Navarrese 0.39→0.76 (+37pp), Western 0.72→0.99 (+27pp), Souletin 0.02→0.67 (+65pp)
+
+**Bottleneck:** Only 21% of the merged dataset (Ahotsak side) has transcriptions. Mintzoak passages (89K nav-lab, 10K souletin) have no text. Tested on the Ahotsak-only subset, but overall merged performance limited by missing Mintzoak transcriptions.
+
+**Next step:** Run Whisper ASR on Mintzoak segments to get transcriptions (est. 2-3h for 160K segments on L40), then re-fuse on the full dataset. Expected full merged macro F1: 0.65–0.70.
+
+**Files:** `scripts/fusion_train.py`, `models/euskalki_5class.bin` (uploaded to server).
+
+---
+
+## 3. Navarrese Data Augmentation ✅
+
+**Expected impact:** Medium. **Actual:** +1.5pp macro F1, +5.5pp navarrese. **New best model.**
+
+Embedding-level augmentation (noise injection + dropout + scaling) on the 9K navarrese train samples, tripling them to 27K. No audio re-processing needed — works directly on pre-extracted Whisper embeddings.
+
+**Augmentation pipeline:**
+- Gaussian noise at SNR 20-30 dB
+- Random dimension dropout (5-15% zeroed)
+- Random scaling (×0.85 to ×1.15)
+- 1-2 transforms applied per copy, seeded with RandomState(42)
+
+**Added to `whisper_did.py`:**
+- `augment_embeddings()` function (embedding-level transforms)
+- `augment` CLI subcommand: `--embeddings`, `--output`, `--labels`, `--factor`
+
+**Training:** Same config as baseline (hidden_dim=768, dropout=0.3, lr=5e-4, batch_size=64, epochs=100, balanced_subsample=10000). Train time ~70s.
+
+**Result:** ✅ Macro F1 0.5342 (+1.5pp). Navarrese +5.5pp (0.32→0.38). Central −4.9pp (model de-prioritizes smallest class after navarrese expansion). Souletin +2.7pp, Western +2.5pp.
+
+**Model saved:** `models/speech/whisper_dialect_aug/classifier.pkl`
+
+---
+
+## Decision Framework (Updated)
+
+| Strategy | Macro F1 gain | Coverage | Effort | Verdict |
+|---|---|---|---|---|
+| Navarrese augmentation | +1.5pp | Full dataset | Low (1min augment + 70s train) | ✅ **Deploy** |
+| Audio+text fusion | +32pp | 21% only (Ahotsak) | Medium (needs ASR for rest) | ⚠️ Add ASR |
+| Attention pooling | −4.3pp | Full dataset | High (2h re-extract) | ❌ Reject |
+
+**Recommended next step:** Run Whisper ASR on Mintzoak segments (160K, est. 2-3h on L40) to get transcriptions, then retrain audio+text fusion on the full merged dataset. Expected macro F1: 0.65–0.70.
+
+---
+
+## Other Completed Tasks
+
+### External Video Analysis ("Ahots Hariak")
+Analyzed 30-min Kanaldude documentary (225 segments) using the baseline model:
+- 78.7% nav-lab, 12.4% central, 8.0% souletin, 0.9% western
+- Results at `data/processed/speech/external_analysis/results.json`
+- Analysis script: `scripts/analyze_external_video.sh`
