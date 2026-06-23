@@ -110,6 +110,54 @@ azpieuskalki mapping provides the ground truth labels for sub-dialect classifica
 We use the same label names as Ahotsak (e.g., `mendebal-sortaldea`, `ekialde-nafarra`,
 etc.) rather than translating or renaming them.
 
+## Training Data Sources
+
+Each model tier has its own training data, all drawn from Basque-language sources
+publicly available via [Klasikoak](https://klasikoak.armiarma.eus), [Ahotsak.eus](https://ahotsak.eus),
+and the [SÜ AZIA](https://web.archive.org/web/20110920103304/http://www.suazia.com) Zuberotarra corpus.
+
+### Tier 1 — Batua vs dialectal (binary)
+
+| Source | Content | Type | Lines | Labels |
+|---|---|--:|:--|
+| [Klasikoak](https://klasikoak.armiarma.eus) | Classical literature | Written | 15,000 | `batua` |
+| [Klasikoak](https://klasikoak.armiarma.eus) | Classical literature | Written | ~15,000 | `dialectal` (all 5 euskalkis) |
+| [Ahotsak.eus](https://ahotsak.eus) | Oral history transcriptions | Spoken | ~44,000 | `dialectal` (all 5 euskalkis) |
+
+- **batua** samples come exclusively from Klasikoak (Standard Basque literature).
+- **dialectal** samples combine Klasikoak literary dialects + Ahotsak oral transcriptions,
+  mapped from azpieuskalki → 5 euskalkis via the official Ahotsak municipality→dialect mapping.
+- Combined into `train_binary.txt` (74,044 lines).
+
+### Tier 2 — 5-class euskalki (dialect)
+
+| Source | Content | Type | Lines | Labels |
+|---|---|--:|:--|
+| [Klasikoak](https://klasikoak.armiarma.eus) | Classical literature (author birthplace → dialect) | Written | ~15,000 | western, central, navarrese, nav-lab, souletin |
+| [Ahotsak.eus](https://ahotsak.eus) | Oral history transcriptions (municipality → azpieuskalki → euskalki) | Spoken | ~44,000 | western, central, navarrese, nav-lab, souletin |
+
+- Same two data sources as Tier 1, but without the `batua` class and with
+  full 5-class euskalki labels instead of binary.
+- Combined into `train_euskalki_combined.txt` (59,044 lines).
+- Distribution: central 17,488 / western 16,974 / nav-lab 9,537 / navarrese 8,048 / souletin 6,997.
+
+### Tier 3 — Azpieuskalki (sub-dialect)
+
+| Source | Content | Type | Sentences | Labels |
+|---|---|--:|:--|
+| [Ahotsak.eus](https://ahotsak.eus) | Oral history transcriptions (municipality → azpieuskalki) | Spoken | ~35,000 | 12 azpieuskalkis |
+| [SÜ AZIA](https://web.archive.org/web/20110920103304/http://www.suazia.com) | Pastoral plays + blog articles | Written | 6,676 | zuberera |
+| Zuazo 2010 | *Sakanako euskara* example sentences | Written (academic) | 53 | nafar-hego-sartaldea |
+
+- Primary source is Ahotsak.eus oral transcriptions, labeled via the official
+  Ahotsak municipality→azpieuskalki mapping.
+- SÜ AZIA Zuberotarra adds 6,676 written Zuberotarra sentences, bringing zuberera
+  from 1.9% to 14.3% of the training set (critical for this minority dialect).
+- 53 Sakana dialect examples from Zuazo's academic monograph provide seed data for
+  the nafar-hego-sartaldea class.
+- Training file: `train_azpieuskalki.txt` (42,229 sentences after filtering).
+- See [docs/data_sources/suazia_zuberotarra.md](docs/data_sources/suazia_zuberotarra.md) for the SÜ AZIA corpus documentation.
+
 ## Results
 
 ### Batua vs dialectal (Binary) classification
@@ -457,16 +505,6 @@ uv run python eval_all.py
 - `test_expanded_3class.txt` — 2,505 samples, 3-class XNLI (western, central, nav-lab), 0% train overlap
 - `test_6class.txt` — 4,005 samples, 4-class (batua, western, central, nav-lab), 0% train overlap
 - `test_azpieuskalki.txt` — 7,445 samples, 12 azpieuskalki classes, 15% stratified hold-out from Ahotsak + external corpora
-
-### Data sources
-
-| Source | Content | Dialects | Status |
-|---|---|---|---|
-| [Klasikoak](https://klasikoak.armiarma.eus/) | Literary texts (pre-20th c.) | 5 euskalkis (6-class) | Train |
-| [Ahotsak.eus](https://ahotsak.eus) | Oral history transcriptions | 12 azpieuskalkis | Train + Test |
-| [SÜ AZIA](https://web.archive.org/web/20110920103304/http://www.suazia.com) | Pastoral scripts + blog articles | Zuberera | Train + Test |
-
-See [docs/data_sources/suazia_zuberotarra.md](docs/data_sources/suazia_zuberotarra.md) for the SÜ AZIA corpus documentation.
 
 `val_6class.txt` was found to have 68.4% overlap with `train_6class.txt` and is **not used**
 for evaluation. Navarrese and Souletin lack clean test splits — all their samples were
