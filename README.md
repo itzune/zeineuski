@@ -119,7 +119,7 @@ and the [SÜ AZIA](https://web.archive.org/web/20110920103304/http://www.suazia.
 ### Tier 1 — Batua vs dialectal (binary)
 
 | Source | Content | Type | Lines | Labels |
-|---|---|--:|:--|
+|---|---|---|--:|---|
 | [Klasikoak](https://klasikoak.armiarma.eus) | Classical literature | Written | 15,000 | `batua` |
 | [Klasikoak](https://klasikoak.armiarma.eus) | Classical literature | Written | ~15,000 | `dialectal` (all 5 euskalkis) |
 | [Ahotsak.eus](https://ahotsak.eus) | Oral history transcriptions | Spoken | ~44,000 | `dialectal` (all 5 euskalkis) |
@@ -132,7 +132,7 @@ and the [SÜ AZIA](https://web.archive.org/web/20110920103304/http://www.suazia.
 ### Tier 2 — 5-class euskalki (dialect)
 
 | Source | Content | Type | Lines | Labels |
-|---|---|--:|:--|
+|---|---|---|--:|---|
 | [Klasikoak](https://klasikoak.armiarma.eus) | Classical literature (author birthplace → dialect) | Written | ~15,000 | western, central, navarrese, nav-lab, souletin |
 | [Ahotsak.eus](https://ahotsak.eus) | Oral history transcriptions (municipality → azpieuskalki → euskalki) | Spoken | ~44,000 | western, central, navarrese, nav-lab, souletin |
 
@@ -144,7 +144,7 @@ and the [SÜ AZIA](https://web.archive.org/web/20110920103304/http://www.suazia.
 ### Tier 3 — Azpieuskalki (sub-dialect)
 
 | Source | Content | Type | Sentences | Labels |
-|---|---|--:|:--|
+|---|---|---|--:|---|
 | [Ahotsak.eus](https://ahotsak.eus) | Oral history transcriptions (municipality → azpieuskalki) | Spoken | ~35,000 | 12 azpieuskalkis |
 | [SÜ AZIA](https://web.archive.org/web/20110920103304/http://www.suazia.com) | Pastoral plays + blog articles | Written | 6,676 | zuberera |
 | Zuazo 2010 | *Sakanako euskara* example sentences | Written (academic) | 53 | nafar-hego-sartaldea |
@@ -292,7 +292,7 @@ pronunciation patterns that would otherwise be erased.
 ### Data Sources
 
 | Source | Content | Dialects | Segments | Hours | Towns |
-|---|---|--:|--:|--:|
+|---|---|---|--:|--:|--:|
 | [Ahotsak.eus](https://ahotsak.eus) | Oral history (Hegoalde) | western, central, navarrese, nav-lab, souletin | 36,176 | 78.1h | 187 |
 | [Mintzoak.eus](https://mintzoak.eus) | Oral history (Iparralde) | nav-lab, souletin | 160,472 | 180.8h | 124 |
 | **Merged total** | | **all 5 dialects** | **196,648** | **258.9h** | **311** |
@@ -303,7 +303,7 @@ featuring Vimeo-hosted video recordings. Audio extracted via yt-dlp at 16kHz mon
 **Per-dialect distribution (train set):**
 
 | Dialect | Ahotsak segs | + Mintzoak segs | Increase |
-|---|---|--:|--:|
+|---|---|---|--:|
 | Souletin | 348 | 10,283 | **30×** |
 | Nav-Lab | 2,291 | 88,791 | **39×** |
 | Navarrese | 9,072 | 9,072 | — |
@@ -318,7 +318,7 @@ Navarrese, Central, and Western are unaffected — Mintzoak only covers Iparrald
 #### Merged dataset (Ahotsak + Mintzoak)
 
 | Metric | Imbalanced (raw) | Balanced (10K/class) | Optimized (dim=768) |
-|---|--:|--:|--:|
+|---|---|---:|---:|
 | Accuracy | 73.89% | 70.52% | **70.33%** |
 | **Macro F1** | **0.433** | **0.510** | **0.519** |
 | Nav-Lab F1 | 0.86 | 0.82 | 0.82 |
@@ -330,7 +330,7 @@ Navarrese, Central, and Western are unaffected — Mintzoak only covers Iparrald
 #### Ahotsak-only → Merged (improvement over original)
 
 | Metric | Ahotsak only | +Mintzoak (balanced) | Final (dim=768) | +Augmentation |
-|---|--:|--:|--:|--:|
+|---|---|---:|---:|---:|
 | Accuracy | 62.15% | 70.52% | 70.33% | **72.86%** |
 | Macro F1 | 0.361 | 0.510 | 0.519 | **0.534** |
 | Nav-Lab F1 | 0.02 | 0.82 | 0.82 | 0.83 |
